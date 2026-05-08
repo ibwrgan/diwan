@@ -3,6 +3,7 @@ import {Header} from '@/components/Header';
 import {Footer} from '@/components/Footer';
 import {PageHero} from '@/components/PageHero';
 import {CTABand} from '@/components/CTABand';
+import {TEAM} from '@/data/team';
 
 export default async function AboutPage({
   params,
@@ -12,9 +13,16 @@ export default async function AboutPage({
   const {locale} = await params;
   setRequestLocale(locale);
   const t = await getTranslations('About');
+  const isAr = locale === 'ar';
 
   const principles = t.raw('principles.items') as Array<{n: string; t: string; b: string}>;
-  const team = t.raw('team.members') as Array<{name: string; role: string; bio: string}>;
+  // Team is now edited in /src/data/team.ts (one file, bilingual, photos)
+  const team = TEAM.map((m) => ({
+    name: isAr ? m.nameAr : m.nameEn,
+    role: isAr ? m.roleAr : m.roleEn,
+    bio: isAr ? m.bioAr : m.bioEn,
+    photo: m.photo,
+  }));
 
   return (
     <>
@@ -76,12 +84,26 @@ export default async function AboutPage({
                 <p className="lede max-w-[460px]">{t('team.lede')}</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-5">
               {team.map((m, i) => (
                 <article key={i} className="flex flex-col gap-3 border-t border-ink-12 pt-6">
-                  <div className="aspect-[3/4] bg-limestone-200 rounded-sm relative overflow-hidden mb-3">
-                    <div className="absolute inset-0 bg-gradient-to-b from-limestone-200 to-brass-500/40" />
-                    <span className="absolute bottom-3 left-3 font-serif font-bold text-clay-700/40 tabular" style={{fontSize: '52px', lineHeight: 1}}>0{i + 1}</span>
+                  <div className="aspect-[3/4] rounded-sm relative overflow-hidden mb-3 bg-gradient-to-b from-limestone-200 to-brass-500/40">
+                    {m.photo && (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{backgroundImage: `url('${m.photo}')`}}
+                        role="img"
+                        aria-label={m.name}
+                      />
+                    )}
+                    {!m.photo && (
+                      <span
+                        className="absolute bottom-3 left-3 rtl:left-auto rtl:right-3 font-serif font-bold text-clay-700/40 tabular"
+                        style={{fontSize: '52px', lineHeight: 1}}
+                      >
+                        0{i + 1}
+                      </span>
+                    )}
                   </div>
                   <h3 className="font-serif font-bold" style={{fontSize: '20px'}}>{m.name}</h3>
                   <p className="font-sans uppercase text-clay-700" style={{fontSize: '11px', letterSpacing: '0.18em'}}>{m.role}</p>
