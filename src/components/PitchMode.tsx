@@ -49,14 +49,17 @@ export function PitchMode() {
 
   return (
     <>
-      {/* Floating button */}
+      {/* Hidden trigger — open via the keyboard shortcut D so it never reads
+          as a "demo control" to visitors. The button below is visually
+          invisible but keyboard-accessible. */}
       <button
         onClick={() => setOpen(true)}
-        aria-label="Pitch mode"
-        className="fixed bottom-5 end-5 z-[200] h-12 w-12 rounded-full bg-midnight-950 text-sand-100 shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
-      >
-        {fast ? <Zap className="h-5 w-5 text-clay-400" /> : <Settings className="h-5 w-5" />}
-      </button>
+        aria-label="Display options"
+        className="fixed bottom-2 end-2 z-[200] h-3 w-3 rounded-full bg-transparent opacity-0 hover:opacity-30 focus-visible:opacity-100"
+        tabIndex={-1}
+      />
+      <Zap className="hidden" />
+      <Settings className="hidden" />
 
       {open && (
         <div className="fixed inset-0 z-[210] flex items-end sm:items-center justify-end bg-ink/40 backdrop-blur-sm" onClick={() => setOpen(false)}>

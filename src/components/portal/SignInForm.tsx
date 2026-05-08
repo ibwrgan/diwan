@@ -89,9 +89,6 @@ export function SignInForm({onSignedIn, onSwitchToApply}: Props) {
         </button>
       </div>
 
-      <p className="font-sans italic text-ink-60 text-center" style={{fontSize: '11px'}}>
-        {t('demoNote')}
-      </p>
     </form>
   );
 }

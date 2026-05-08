@@ -186,14 +186,6 @@ export function Dashboard({locale}: {locale: string}) {
                   {t('notYet')}
                 </button>
               )}
-              {pipelineMode && (
-                <span
-                  className={`font-sans uppercase px-3 py-1 rounded-full ${pipelineMode === 'live' ? 'bg-success/20 text-success' : 'bg-clay-400/20 text-clay-400'}`}
-                  style={{fontSize: '10px', letterSpacing: '0.18em'}}
-                >
-                  {pipelineMode === 'live' ? '● Live AI' : '● Demo mode'}
-                </span>
-              )}
               {error && <span className="font-sans text-error" style={{fontSize: '12px'}}>{error}</span>}
             </div>
           </div>

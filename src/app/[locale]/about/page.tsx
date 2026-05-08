@@ -111,7 +111,6 @@ export default async function AboutPage({
                 </article>
               ))}
             </div>
-            <p className="font-sans italic text-ink-60 mt-12 text-center" style={{fontSize: '13px'}}>{t('team.placeholderNote')}</p>
           </div>
         </section>
 

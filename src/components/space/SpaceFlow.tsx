@@ -495,7 +495,6 @@ function UploadPlanZone({t, onUploaded, active}: {t: ReturnType<typeof useTransl
         <span className="font-serif" style={{fontSize: '17px'}}>{file ?? t('step2.uploadPrompt')}</span>
         <input type="file" className="hidden" accept=".png,.jpg,.jpeg,.pdf,.dwg,image/*" onChange={(e) => handleFile(e.target.files?.[0])} />
       </label>
-      <p className="font-sans italic text-ink-60" style={{fontSize: '12px'}}>{t('step2.uploadNote')}</p>
     </div>
   );
 }

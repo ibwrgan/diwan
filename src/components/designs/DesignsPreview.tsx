@@ -53,18 +53,10 @@ export function DesignsPreview({locale}: {locale: string}) {
   return (
     <section className="py-14 md:py-20">
       <div className="max-w-[1240px] mx-auto px-6 md:px-12 flex flex-col gap-12">
-        <header className="flex items-end justify-between gap-6 flex-wrap">
-          <div className="flex flex-col gap-3 max-w-[680px]">
-            <span className="eyebrow">{t('eyebrow')}</span>
-            <h1 className="h-display">{t('title')}</h1>
-            <p className="lede !text-ink-60">{t('lede')}</p>
-          </div>
-          <span
-            className={`font-sans uppercase px-3 py-1.5 rounded-full ${designs.source === 'live' ? 'bg-success/15 text-success' : 'bg-clay-700/15 text-clay-700'}`}
-            style={{fontSize: '11px', letterSpacing: '0.18em'}}
-          >
-            {designs.source === 'live' ? `● ${t('modeLive')}` : `● ${t('modeMock')}`} · {t('generatedIn', {sec: (Math.round(designs.durationMs / 100) / 10).toString()})}
-          </span>
+        <header className="flex flex-col gap-3 max-w-[680px]">
+          <span className="eyebrow">{t('eyebrow')}</span>
+          <h1 className="h-display">{t('title')}</h1>
+          <p className="lede !text-ink-60">{t('lede')}</p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
