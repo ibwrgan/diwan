@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+  <!-- Najdi-inspired arch frame (clay) -->
+  <path
+    d="M10 56 V28 a22 22 0 0 1 44 0 V56"
+    stroke="currentColor"
+    stroke-width="3.6"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <!-- Inner step (lighter / mid) -->
+  <path
+    d="M20 56 V32 a12 12 0 0 1 24 0 V56"
+    stroke="currentColor"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    fill="none"
+    opacity="0.55"
+  />
+  <!-- Stylised Arabic letter ﺩ (dāl) — first letter of ديوان — at the threshold -->
+  <path
+    d="M27 46 q5 -2 10 0 q-1 4 -5 4 q-4 0 -5 -4 z"
+    fill="currentColor"
+  />
+  <!-- Floor line -->
+  <line x1="6" y1="56" x2="58" y2="56" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,737 @@
+{
+  "Site": {
+    "title": "Diwan — Where spaces take shape",
+    "description": "AI-powered turnkey interior fit-out for Saudi Arabia. Three personalized photorealistic 3D design concepts within 72 hours; full installation in 30 days."
+  },
+  "Nav": {
+    "howItWorks": "How it works",
+    "forBusinesses": "For businesses",
+    "forSuppliers": "For suppliers",
+    "about": "About",
+    "start": "Start your space",
+    "switchTo": "العربية"
+  },
+  "Hero": {
+    "eyebrow": "Pre-Seed · Designed in Riyadh",
+    "headlineLine1": "Your space,",
+    "headlineLine2": "fully designed and installed",
+    "headlineLine3": "in thirty days.",
+    "lede": "Take a 12-question taste quiz. Diwan returns three photorealistic design concepts in 72 hours, sourced from a vetted Saudi supplier network, delivered turnkey under one accountability.",
+    "ctaPrimary": "Start your space",
+    "ctaSecondary": "How it works",
+    "metrics": {
+      "m1Value": "72",
+      "m1Unit": "hours",
+      "m1Label": "From quiz to three design concepts",
+      "m2Value": "30",
+      "m2Unit": "days",
+      "m2Label": "From approval to keys-in-hand handover",
+      "m3Value": "80+",
+      "m3Unit": "",
+      "m3Label": "Vetted KSA suppliers and contractors"
+    }
+  },
+  "Pillars": {
+    "eyebrow": "What we are building",
+    "title": "Four pillars.",
+    "lede": "Every screen, every API, every line of the platform exists to serve one of these four. If a feature does not advance one of them, we do not build it.",
+    "p1Number": "01", "p1Title": "Design ideas", "p1Body": "Three credible, costed, photorealistic concepts for your actual space — within seventy-two hours, not weeks.",
+    "p2Number": "02", "p2Title": "Full visualization", "p2Body": "Walk through your future home in 3D and AR before a single piece of furniture moves. Swap items in real time.",
+    "p3Number": "03", "p3Title": "Production-ready specs", "p3Body": "Every supplier and contractor receives a complete, unambiguous brief. No back-and-forth. No rework.",
+    "p4Number": "04", "p4Title": "Single accountability", "p4Body": "One phone number for the whole project. One warranty across the entire fit-out. Diwan furnished your home — not eight separate suppliers."
+  },
+  "Partners": {
+    "eyebrow": "Channel partners",
+    "title": "Partnered with the developers shaping Saudi Arabia's homes",
+    "labels": ["ROSHN", "NHC", "KAFD", "Saudi Downtown Co.", "Diriyah Gate"]
+  },
+  "CTA": {
+    "eyebrow": "Begin",
+    "title": "Twelve questions. Seventy-two hours. Three designs.",
+    "lede": "A photo of your room. A few minutes of your taste. The rest is ours.",
+    "button": "Start your space",
+    "secondary": "Talk to a designer"
+  },
+  "Footer": {
+    "tag": "Where spaces take shape",
+    "tagAr": "حيث تتشكل المساحات",
+    "navCol": "Navigate", "legalCol": "Legal", "contactCol": "Contact",
+    "rights": "© 2026 Diwan. All rights reserved.",
+    "address": "Riyadh, Kingdom of Saudi Arabia",
+    "email": "hello@diwan.sa",
+    "linkAbout": "About", "linkHowItWorks": "How it works", "linkForSuppliers": "For suppliers",
+    "linkPrivacy": "Privacy", "linkTerms": "Terms", "linkSharia": "Sharia advisory"
+  },
+  "About": {
+    "hero": {
+      "eyebrow": "About Diwan",
+      "title": "We design and execute the homes of the Kingdom — under one signature.",
+      "lede": "Diwan was built in Riyadh for the Kingdom's particular cadence: a young population moving into 1.5 million new homes in a decade, who deserve interiors that honor where they are from and look like where they are going. We do this with software, suppliers, and a single accountability — so the customer signs once and lives in the result thirty days later."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "From a single problem worth solving.",
+      "p1": "In 2025, the Saudi housing market produced more units than the country had ever seen in one year. The interiors industry did not produce more designers, more vetted suppliers, or more capacity to project-manage at that scale. Customers received keys to empty boxes and faced six months of WhatsApp threads, eight separate showroom visits, and three contractors with overlapping promises.",
+      "p2": "Diwan exists because the design and the execution of that interior are one decision — not eight. The customer's relationship is with us. The eight suppliers' relationship is also with us. We carry the difference.",
+      "p3": "Our AI design engine is not a gimmick. It is the only way to give a customer who has never read a floor plan three credible, costed, photorealistic options for their actual space inside seventy-two hours — and to give the supplier network downstream a clean, sequenced production brief on the same day."
+    },
+    "principles": {
+      "eyebrow": "What we believe",
+      "title": "Six principles, kept short.",
+      "items": [
+        {"n": "01", "t": "The customer signs once.", "b": "One contract. One phone number. One warranty across the entire fit-out — not eight separate aftercare numbers from eight suppliers."},
+        {"n": "02", "t": "Design is rooted, not imported.", "b": "Najdi geometry, Hijazi airiness, contemporary Saudi minimalism — the design language is shaped by where we are, not pasted from elsewhere."},
+        {"n": "03", "t": "Suppliers thrive when we thrive.", "b": "Walk-in conversion in furniture retail is 1.5%. Diwan-routed conversion is 100%. Our suppliers earn more, with less customer service load, predictably."},
+        {"n": "04", "t": "Sharia, by structure not ornament.", "b": "Murabaha and Ijarah financing co-developed with a licensed Islamic bank and reviewed by an independent Sharia advisor."},
+        {"n": "05", "t": "Speed is a moat.", "b": "Seventy-two hours from quiz to designs. Thirty days from approval to keys-in-hand. The alternative is six months and eleven WhatsApp threads."},
+        {"n": "06", "t": "Defensibility comes from operations.", "b": "Anyone can build a beautiful render. Very few can render, source, sequence, install, and warrant — at one signature."}
+      ]
+    },
+    "team": {
+      "eyebrow": "Team",
+      "title": "Operators, designers, technologists.",
+      "lede": "Built by a small team in Riyadh. Backed by founders, advisors, and a network of suppliers who have shaped Saudi homes for thirty years.",
+      "members": [
+        {"name": "Lead Founder", "role": "CEO · Strategy & operations", "bio": "Operator background in KSA real estate and turnkey delivery."},
+        {"name": "Design Principal", "role": "Head of Design", "bio": "Twenty years of regional residential interior design across Riyadh and Jeddah."},
+        {"name": "Engineering Lead", "role": "CTO · Platform & AI", "bio": "ML engineer with experience shipping production AI products at scale."},
+        {"name": "Supply Lead", "role": "Head of Supplier Network", "bio": "Two decades of supplier relationships across the Saudi furniture and finishes market."}
+      ],
+      "placeholderNote": "Names and identifying details intentionally blurred for the pre-seed pitch."
+    }
+  },
+  "HIW": {
+    "hero": {
+      "eyebrow": "How it works",
+      "title": "Six steps. Thirty days. One signature.",
+      "lede": "From the moment you take the quiz to the moment you receive the keys, every step is operated by Diwan. The customer signs once, at deposit, and again at handover."
+    },
+    "steps": {
+      "eyebrow": "The customer journey",
+      "title": "From quiz to keys.",
+      "items": [
+        {"n": "01", "duration": "10 minutes", "t": "Take the taste quiz", "b": "Twelve visual questions about how you live, what you love, and how you receive guests. Answers map to a taste vector that will shape every recommendation."},
+        {"n": "02", "duration": "5 minutes", "t": "Share your space", "b": "Upload photos and rough dimensions of every room. We support floor-plan sketches, AutoCAD, and lidar scans from your phone."},
+        {"n": "03", "duration": "Up to 72 hours", "t": "Receive three designs", "b": "Three photorealistic, costed, room-by-room concepts. View in 3D in your browser. Walk through them in AR on your phone. Swap items in real time."},
+        {"n": "04", "duration": "Up to 7 days", "t": "Approve and pay deposit", "b": "Choose one design. Pay 40% via card, mada, or Tamara/Tabby. Sharia-compliant Murabaha financing available for projects above SAR 100,000."},
+        {"n": "05", "duration": "Up to 21 days", "t": "Production and install", "b": "We dispatch purchase orders to the supplier network the same day. A Diwan project manager owns sequencing, QC, and the install schedule on your behalf."},
+        {"n": "06", "duration": "Day 30", "t": "Walk-through and handover", "b": "We hand over the finished space, walk you through every item, and start the warranty clock. One number to call for any issue across the next twelve months."}
+      ]
+    },
+    "sla": {
+      "eyebrow": "What we promise",
+      "title": "The four service-level agreements.",
+      "items": [
+        {"v": "72h", "l": "From completed quiz to three designs ready to review."},
+        {"v": "100%", "l": "Of orders matched to vetted suppliers with QC at delivery."},
+        {"v": "30d", "l": "From signed deposit to keys-in-hand handover."},
+        {"v": "12m", "l": "Unified warranty across the entire fit-out, with one number."}
+      ]
+    },
+    "faq": {
+      "eyebrow": "Common questions",
+      "title": "Things customers ask.",
+      "items": [
+        {"q": "What does it cost?", "a": "Projects start at SAR 60,000 for a small apartment fit-out and scale by space, finishes, and furniture density. The quote at the design stage is itemized — you see what you are paying for."},
+        {"q": "Can I customize after I see the designs?", "a": "Yes. Every item in every concept is swappable. Substitute a sofa, change a fabric, choose a different rug — quotes recompute live and the production brief updates automatically."},
+        {"q": "Is the financing Sharia-compliant?", "a": "We offer Murabaha financing, structured with a licensed Saudi Islamic bank and reviewed by an independent Sharia advisor. Larger projects qualify for Ijarah."},
+        {"q": "What if something is damaged on delivery?", "a": "We perform a Diwan QC inspection at delivery, before the customer is involved. Issues are routed back to the supplier and replaced before install. The customer never argues with a supplier."},
+        {"q": "Do you work outside Riyadh?", "a": "Riyadh is our launch market. Jeddah and Dammam are on the 2026 expansion plan, in partnership with channel developer customers."}
+      ]
+    }
+  },
+  "Suppliers": {
+    "hero": {
+      "eyebrow": "For suppliers",
+      "title": "Pre-qualified leads, on-time payment, none of the showroom traffic.",
+      "lede": "If you produce furniture, finishes, or fittings in the Kingdom, Diwan is the channel that delivers paying customers without the cost of acquiring them. You build, ship, and get paid. We carry the customer relationship and the warranty."
+    },
+    "economics": {
+      "eyebrow": "The numbers",
+      "title": "Why suppliers in our network earn more.",
+      "lede": "A side-by-side of what walk-in retail looks like in Riyadh furniture today, versus what a Diwan-routed order looks like.",
+      "rows": [
+        {"k": "Lead conversion", "walkin": "≈ 1.5%", "diwan": "100% of orders are paid"},
+        {"k": "Effective customer-acquisition cost", "walkin": "SAR 800–1,500 per inquiry", "diwan": "SAR 0 — Diwan absorbs CAC"},
+        {"k": "Customer service load per order", "walkin": "3–7 visits, custom requests, refunds", "diwan": "Diwan handles all customer interaction"},
+        {"k": "Payment terms", "walkin": "25–30% deposit, balance often delayed", "diwan": "50% on PO acceptance, 50% on QC sign-off"},
+        {"k": "Volume predictability", "walkin": "Seasonal, hard to plan production", "diwan": "Quarterly committed volume from top tier"},
+        {"k": "Warranty handling", "walkin": "Direct to customer", "diwan": "Diwan handles warranty intake"}
+      ]
+    },
+    "values": {
+      "eyebrow": "What you receive",
+      "title": "Six concrete benefits.",
+      "items": [
+        {"n": "01", "t": "Pre-qualified leads, paid in advance.", "b": "Every order Diwan sends is a paying order. The customer has already signed and paid forty percent at the deposit stage."},
+        {"n": "02", "t": "Zero customer-service load.", "b": "Diwan owns the customer relationship. You receive a clean PO with exact SKU, quantity, finish, delivery address, and timing."},
+        {"n": "03", "t": "Predictable production volume.", "b": "Top-tier partners commit to quarterly volume in exchange for agreed pricing — you can plan tooling, materials, and labor around it."},
+        {"n": "04", "t": "Exposure to channel partners.", "b": "Our partnerships with ROSHN, NHC, KAFD, and Saudi Downtown Co. funnel buyers into Diwan that no individual supplier could acquire alone."},
+        {"n": "05", "t": "Co-marketing and brand lift.", "b": "Featured in case studies, on the marketing site, and in Diwan's social channels — meaningful brand-equity transfer for mid-tier suppliers."},
+        {"n": "06", "t": "On-time payment, every time.", "b": "Fifty percent on PO acceptance, fifty percent after our QC team signs off at delivery. Predictable, contractual, no chasing."}
+      ]
+    },
+    "circumvention": {
+      "eyebrow": "About the relationship",
+      "title": "We protect the network we build.",
+      "p1": "Suppliers in the Diwan network sign a non-circumvention clause: if a Diwan-introduced customer purchases directly from the supplier within eighteen months of the introduction, the supplier owes Diwan the missed margin. Enforced through audit rights and reconciliation, this is what allows Diwan to invest in lead generation, designer time, and the QC layer that protects the supplier's reputation as much as the customer's home.",
+      "p2": "In return, Diwan provides volume guarantees, predictable cash flow, and a customer-service buffer. The clause is unenforceable in spirit if either side is treated unfairly, so we run quarterly reviews and adjust pricing transparently."
+    },
+    "apply": {
+      "eyebrow": "Join the network",
+      "title": "If you produce in the Kingdom, we want to hear from you.",
+      "lede": "We are actively onboarding furniture, lighting, soft furnishings, kitchen and bathroom finishes, and fit-out contractors. Initial review takes one week.",
+      "primary": "Apply to the network",
+      "secondary": "Request a network briefing"
+    }
+  },
+  "Quiz": {
+    "intro": {
+      "eyebrow": "Begin",
+      "title": "Twelve questions about how you live.",
+      "lede": "Most take five minutes. Pick the option that feels closest — there is no right answer. You can stop anytime; we resume where you left off.",
+      "begin": "Start the quiz",
+      "resume": "Resume your quiz",
+      "saved": "Saved at question",
+      "of": "of"
+    },
+    "ui": {
+      "questionOf": "Question {n} of {total}",
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "tapToChoose": "Tap to choose",
+      "selectOne": "Select one",
+      "selectAll": "Select all that apply",
+      "currency": "SAR",
+      "weeks": "weeks",
+      "saved": "Saved"
+    },
+    "complete": {
+      "eyebrow": "Complete",
+      "title": "Your taste profile is ready.",
+      "lede": "We've captured how you live, what you favor, and what your space must accommodate. Next, share a photo of the space and we'll return three concepts within seventy-two hours.",
+      "continueButton": "Share your space",
+      "summaryTitle": "Your profile in five lines",
+      "vector": {
+        "style": "Style",
+        "warmth": "Warmth",
+        "density": "Density",
+        "formality": "Formality",
+        "regional": "Regional voice"
+      },
+      "axes": {
+        "traditional": "Traditional",
+        "contemporary": "Contemporary",
+        "muted": "Muted",
+        "vibrant": "Vibrant",
+        "minimal": "Minimal",
+        "layered": "Layered",
+        "casual": "Casual",
+        "ceremonial": "Ceremonial"
+      }
+    },
+    "questions": {
+      "q1": {
+        "title": "Which living room feels more like home?",
+        "subtitle": "We'll use this to anchor your style baseline.",
+        "optionA": {"label": "Modern Najdi", "tags": ["Geometric", "Earth tones", "Serene"]},
+        "optionB": {"label": "Riyadh Contemporary", "tags": ["Minimal", "Linen & limestone", "Quiet"]}
+      },
+      "q2": {
+        "title": "Which palette draws you in?",
+        "optionA": {"label": "Warm clay & brass", "tags": ["Sunset", "Tactile", "Inviting"]},
+        "optionB": {"label": "Cool stone & ink", "tags": ["Daylight", "Refined", "Composed"]}
+      },
+      "q3": {
+        "title": "How is your space dressed?",
+        "optionA": {"label": "Layered & rich", "tags": ["Rugs", "Patterns", "Soft layers"]},
+        "optionB": {"label": "Spare & crafted", "tags": ["Statement objects", "Negative space"]}
+      },
+      "q4": {
+        "title": "Which accent feels most you?",
+        "optionA": {"label": "Carved geometry", "tags": ["Najdi craft", "Repeating motifs"]},
+        "optionB": {"label": "Coastal openness", "tags": ["Hijazi air", "Light timber"]}
+      },
+      "q5": {
+        "title": "How do you receive guests?",
+        "optionA": {"label": "Formal majlis", "tags": ["Ceremonial seating", "A clear room of its own"]},
+        "optionB": {"label": "Open living", "tags": ["Soft boundaries", "Family and guests share"]}
+      },
+      "q6": {
+        "title": "Pick the bedroom you'd actually sleep in.",
+        "optionA": {"label": "Cocoon", "tags": ["Deep tones", "Heavy textiles"]},
+        "optionB": {"label": "Quiet daylight", "tags": ["Linen", "Pale woods"]}
+      },
+      "q7": {
+        "title": "Pick the dining experience.",
+        "optionA": {"label": "Long evenings", "tags": ["Brass pendants", "Walnut", "Rich"]},
+        "optionB": {"label": "Bright mornings", "tags": ["Travertine", "Light oak", "Airy"]}
+      },
+      "q8": {
+        "title": "Pick the kitchen rhythm.",
+        "optionA": {"label": "Warm hub", "tags": ["Open shelves", "Visible spice", "Lived-in"]},
+        "optionB": {"label": "Quiet workshop", "tags": ["Concealed", "Stone surfaces", "Edited"]}
+      },
+      "q9": {
+        "title": "What's your investment range for the fit-out?",
+        "subtitle": "Rough is fine. We can refine after we see the space.",
+        "min": "60,000",
+        "max": "500,000",
+        "unit": "SAR"
+      },
+      "q10": {
+        "title": "When do you want to be moved in?",
+        "subtitle": "Sliding scale, in weeks from today.",
+        "min": 4,
+        "max": 16,
+        "unit": "weeks"
+      },
+      "q11": {
+        "title": "Which of these must your home accommodate?",
+        "subtitle": "Pick all that apply — these become non-negotiables.",
+        "options": [
+          {"k": "majlis", "v": "Formal majlis"},
+          {"k": "prayer", "v": "Dedicated prayer space"},
+          {"k": "segregated", "v": "Gender-segregated zones"},
+          {"k": "kids", "v": "One or more kids' rooms"},
+          {"k": "accessibility", "v": "Accessibility (wheelchair, ageing-in-place)"},
+          {"k": "study", "v": "Quiet work / study room"},
+          {"k": "guest", "v": "Guest suite"},
+          {"k": "outdoor", "v": "Outdoor / terrace dining"}
+        ]
+      },
+      "q12": {
+        "title": "How vocal is your color story?",
+        "subtitle": "Honest answers produce better designs.",
+        "options": [
+          {"k": "muted", "v": "Quiet & muted", "tags": "Sand, stone, bone"},
+          {"k": "warm", "v": "Warm earth", "tags": "Clay, brass, terracotta"},
+          {"k": "deep", "v": "Deep & moody", "tags": "Midnight, ink, evergreen"},
+          {"k": "vibrant", "v": "Vibrant accents", "tags": "Saffron, peacock, ruby"}
+        ]
+      }
+    }
+  },
+  "Space": {
+    "header": {
+      "eyebrow": "Your space",
+      "title": "Show us where you live.",
+      "lede": "Three steps. Five minutes if you have a floor plan; thirty if you'd like our surveyor to come measure it for free."
+    },
+    "stepNav": {
+      "step1": "Measurements",
+      "step2": "Floor plan",
+      "step3": "Tag rooms",
+      "step4": "Inspirations",
+      "next": "Next",
+      "back": "Back",
+      "finish": "Generate my designs",
+      "saved": "Saved"
+    },
+    "step1": {
+      "title": "How precise are your measurements?",
+      "subtitle": "All three options lead to the same outcome — pick what's easiest.",
+      "options": {
+        "diy": {
+          "title": "I'll provide my own",
+          "body": "You enter dimensions. Designs start immediately.",
+          "tag": "Fastest"
+        },
+        "visit": {
+          "title": "Schedule a free measurement visit",
+          "body": "A Diwan surveyor visits with LiDAR and tools. Two-centimetre accuracy. Designs start the same day as the visit.",
+          "tag": "Most accurate · Free"
+        },
+        "later": {
+          "title": "Upload my plan, I'll measure later",
+          "body": "Saves your work. Designs queue up; we begin when measurements arrive.",
+          "tag": "Save and resume"
+        }
+      }
+    },
+    "step2": {
+      "title": "Pick a floor plan or upload yours.",
+      "subtitle": "Sample plans are KSA-typical — you can re-tag every room in the next step.",
+      "tabSamples": "Sample plans",
+      "tabUpload": "Upload yours",
+      "uploadPrompt": "Drop a PNG, PDF, or DWG here, or click to choose",
+      "uploadNote": "For the demo, uploads are previewed; in production we extract dimensions automatically.",
+      "categoryResidential": "Residential",
+      "categoryCommercial": "Commercial",
+      "areaUnit": "m²",
+      "bedrooms": "{n, plural, =0 {No bedrooms} =1 {1 bedroom} other {# bedrooms}}",
+      "selected": "Selected"
+    },
+    "step3": {
+      "title": "Tag every room.",
+      "subtitle": "Click a room to change what it is. Adjust dimensions if you have them.",
+      "selectRoom": "Click a room on the plan to edit it",
+      "dimensionsLabel": "Dimensions",
+      "metersAbbr": "m",
+      "totalArea": "Total area"
+    },
+    "step4": {
+      "title": "Inspirations.",
+      "subtitle": "Optional. Pick boards we've curated, paste Pinterest links, or upload reference images.",
+      "tabBoards": "Diwan-curated boards",
+      "tabPinterest": "Pinterest links",
+      "tabUpload": "Upload images",
+      "boardsPrompt": "Tap any board to add it to your brief. The taste vector adjusts in real time.",
+      "pinterestPrompt": "Paste up to ten Pinterest pin URLs.",
+      "pinterestPlaceholder": "https://pinterest.com/pin/...",
+      "pinterestAdd": "Add pin",
+      "uploadPrompt": "Drop reference images here, or click to choose. Up to ten files.",
+      "skip": "Skip — go straight to designs"
+    },
+    "roomTypes": {
+      "majlis-men": "Majlis (men's)",
+      "majlis-women": "Majlis (women's)",
+      "family-living": "Family living",
+      "master-bedroom": "Master bedroom",
+      "kids-bedroom": "Kids' bedroom",
+      "kitchen": "Kitchen",
+      "dining": "Dining",
+      "office": "Office / study",
+      "prayer": "Prayer",
+      "gaming": "Gaming / media",
+      "guest": "Guest suite",
+      "outdoor": "Outdoor / terrace",
+      "bathroom": "Bathroom",
+      "storage": "Storage / utility"
+    },
+    "plans": {
+      "apt1br":   "1-bedroom apartment",
+      "apt2br":   "2-bedroom apartment",
+      "apt3br":   "3-bedroom apartment",
+      "villa4br": "4-bedroom villa",
+      "villa5br": "5-bedroom villa",
+      "cafe120":  "Cafe",
+      "clinic150":"Clinic",
+      "office200":"Office space"
+    },
+    "boards": {
+      "modernNajdi":         {"name": "Modern Najdi",        "tag": "Geometric · earth tones · serene"},
+      "coastalHijazi":       {"name": "Coastal Hijazi",      "tag": "Airy · pale wood · daylight"},
+      "riyadhContemporary":  {"name": "Riyadh Contemporary", "tag": "Linen · limestone · quiet"},
+      "cocoon":              {"name": "Cocoon",              "tag": "Deep tones · heavy textiles · enveloping"},
+      "openLiving":          {"name": "Open Living",         "tag": "Soft boundaries · family-first · bright"},
+      "workshopQuiet":       {"name": "Workshop Quiet",      "tag": "Crafted · stone · negative space"}
+    },
+    "visitModal": {
+      "title": "Schedule a free measurement visit",
+      "lede": "A Diwan surveyor will arrive with LiDAR and a laser measure. About forty-five minutes on site.",
+      "addressLabel": "Address",
+      "addressPlaceholder": "Building, district, city",
+      "phoneLabel": "Mobile number",
+      "phonePlaceholder": "+966 5_ ___ ____",
+      "cityLabel": "City",
+      "cities": ["Riyadh", "Jeddah", "Dammam"],
+      "slotLabel": "Available time slots",
+      "slotMorning": "Morning · 9–12",
+      "slotAfternoon": "Afternoon · 1–4",
+      "slotEvening": "Evening · 5–8",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "afterTomorrow": "Day after",
+      "submit": "Confirm visit",
+      "cancel": "Not now",
+      "confirmedTitle": "Booked.",
+      "confirmedBody": "A Diwan surveyor will call to confirm within four hours. Designs begin the same day as your visit.",
+      "close": "Close"
+    }
+  },
+  "Business": {
+    "hero": {
+      "eyebrow": "For businesses",
+      "title": "One brand. N locations. One signature.",
+      "lede": "If you operate cafes, clinics, salons, dental practices, co-working, retail, or hospitality — Diwan turns your brand guidelines into coordinated fit-outs across every location, on schedule, on brand."
+    },
+    "compare": {
+      "eyebrow": "B2C vs B2B",
+      "title": "B2C is taste. B2B is brand.",
+      "subtitle": "We separate the two pipelines for a reason. Businesses don't have moods of the day; they have brand books.",
+      "rows": [
+        {"k": "Input",         "b2c": "Twelve-question taste quiz",        "b2b": "Brand guidelines + logo + palette + voice"},
+        {"k": "Output",        "b2c": "One home",                          "b2b": "N locations, all on-brand"},
+        {"k": "LTV",           "b2c": "~ SAR 130K, one transaction",       "b2b": "~ SAR 3M+ over 5 years, recurring"},
+        {"k": "Repeat reason", "b2c": "Once per home",                     "b2b": "Every new branch, refresh, expansion"},
+        {"k": "Sales cycle",   "b2c": "4 weeks",                           "b2b": "8–16 weeks"},
+        {"k": "Contract",      "b2c": "Single project",                    "b2b": "Master agreement + per-location SOWs"}
+      ]
+    },
+    "verticals": {
+      "eyebrow": "Verticals we serve",
+      "title": "Built for the operators opening new locations every quarter.",
+      "items": [
+        {"k": "cafes",        "title": "Cafes & F&B",        "body": "From boutique brands opening their second branch to chains scaling past twelve."},
+        {"k": "clinics",      "title": "Clinics & dental",   "body": "Brand-consistent treatment rooms, reception, and patient-flow design."},
+        {"k": "coworking",    "title": "Co-working",         "body": "Members expect a recognizable feel across every floor and city."},
+        {"k": "retail",       "title": "Retail & boutique",  "body": "Visual merchandising baked into the spec, every store opening."},
+        {"k": "hospitality",  "title": "Boutique hospitality","body": "Maintain brand soul across rooms, lobbies, and dining."},
+        {"k": "salons",       "title": "Salons & wellness",  "body": "From single-suite salons to multi-floor wellness centers."}
+      ]
+    },
+    "brandFlow": {
+      "eyebrow": "How it works for businesses",
+      "title": "Four steps. Brand-consistent. Built once.",
+      "steps": [
+        {"n": "01", "title": "Upload your brand profile",  "body": "Logo, palette (≤6 colors with hex), type stack, materiality, voice, avoid-list, must-include list. Diwan locks the profile once you approve."},
+        {"n": "02", "title": "List the locations",          "body": "Address, square meters, intended program (kitchen, seating, treatment, retail, etc.), and any per-location flex (intimate vs flagship)."},
+        {"n": "03", "title": "Diwan generates the design",  "body": "AI generates location-specific designs filtered through your locked brand. Diwan designers human-review before delivery."},
+        {"n": "04", "title": "Synchronized installs",       "body": "Multi-location project management. Quarterly performance review. Brand drift dashboard tracks consistency across locations over time."}
+      ]
+    },
+    "drift": {
+      "eyebrow": "Brand drift dashboard",
+      "title": "We monitor brand consistency across every location.",
+      "lede": "Once you have multiple locations, drift creeps in: fabric substitutions, paint variants, signage tweaks. Our dashboard tracks compliance to your brand profile on every refresh, every replacement, every new branch — so the brand survives growth.",
+      "metrics": [
+        {"k": "compliance", "value": "97%", "label": "Brand-profile compliance across active locations"},
+        {"k": "drift",      "value": "0.4", "label": "Average drift score per location (0 = perfect)"},
+        {"k": "review",     "value": "Q1",  "label": "Cadence of partner-led drift review"}
+      ]
+    },
+    "apply": {
+      "eyebrow": "Talk to us",
+      "title": "Have a brand and a growth plan? Let's design it.",
+      "lede": "Initial consultation is free. We work with brands opening one or twelve locations.",
+      "primary": "Request a brand consultation",
+      "secondary": "Download the B2B brief"
+    }
+  },
+  "Library": {
+    "hero": {
+      "eyebrow": "The Living Library",
+      "title": "Diwan's curated mood pool, refreshed weekly.",
+      "lede": "Each customer's three concepts are sampled from this library. New references added weekly by Diwan's design team — drawn from Saudi photographers, Dezeen, AD Middle East, Pinterest, and our own commissioned photography. Tagged across five axes."
+    },
+    "stats": {
+      "totalLabel": "References curated",
+      "refreshLabel": "Last refreshed",
+      "addedThisWeekLabel": "Added this week",
+      "axesLabel": "Axes tagged"
+    },
+    "filters": {
+      "all": "All references",
+      "najdi": "Najdi",
+      "hijazi": "Hijazi",
+      "contemporary": "Contemporary",
+      "warm": "Warm palette",
+      "cool": "Cool palette",
+      "minimal": "Minimal",
+      "layered": "Layered"
+    },
+    "grid": {
+      "title": "Reference grid",
+      "subtitle": "Each entry is tagged across style, palette, density, formality, and regional voice — the same five axes the AI samples from."
+    }
+  },
+  "PitchMode": {
+    "title": "Pitch mode",
+    "subtitle": "Demo controls — visible only on this device.",
+    "fast": "Fast-forward demo",
+    "fastDesc": "Skip wait timers and animations.",
+    "reset": "Reset demo data",
+    "resetDesc": "Clear quiz, space, designs, and supplier session.",
+    "resetConfirm": "Reset everything? You will return to the start.",
+    "close": "Close",
+    "shortcut": "Press D to toggle"
+  },
+  "Portal": {
+    "title": "Diwan Supplier Network",
+    "subtitle": "The fulfillment side of Diwan.",
+    "nav": {"signin": "Sign in", "apply": "Apply to the network"},
+    "landing": {
+      "eyebrow": "For suppliers and contractors",
+      "title": "The home of Diwan-routed orders.",
+      "lede": "If you produce in the Kingdom, Diwan delivers paying customers without the cost of acquiring them. Sign in to manage your queue, or apply to join the network.",
+      "headlines": {
+        "title": "What you get inside",
+        "items": [
+          {"k": "leads",     "title": "Pre-qualified leads",       "body": "Every order arrives with the deposit already paid by the customer.",                                "lock": false},
+          {"k": "service",   "title": "Zero customer-service load","body": "Diwan handles all customer interaction. You receive clean POs.",                                  "lock": false},
+          {"k": "volume",    "title": "Predictable volume",        "body": "Quarterly committed volume from top-tier partners.",                                              "lock": false},
+          {"k": "channels",  "title": "Channel partner reach",     "body": "Buyers funneled in by ROSHN, NHC, KAFD, Saudi Downtown Co.",                                       "lock": false},
+          {"k": "pricing",   "title": "Framework pricing",         "body": "Locked unit pricing per SKU. Specifics inside the portal.",                                       "lock": true},
+          {"k": "payment",   "title": "On-time payment",           "body": "Schedule and terms detailed inside the portal once you sign in.",                                  "lock": true},
+          {"k": "audit",     "title": "Audit and reconciliation",  "body": "Quarterly statement, tooling for non-circumvention monitoring, and dispute resolution — inside.", "lock": true},
+          {"k": "docs",      "title": "Contract templates",        "body": "Master service agreement, framework pricing schedule, NDA — inside.",                              "lock": true}
+        ]
+      },
+      "tabs": {"signin": "Sign in", "apply": "Apply to the network"}
+    },
+    "signin": {
+      "eyebrow": "Existing supplier",
+      "title": "Welcome back.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@company.sa",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Your password",
+      "forgot": "Forgot your password?",
+      "submit": "Sign in",
+      "noAccount": "Not in the network yet?",
+      "applyLink": "Apply",
+      "demoNote": "Demo: any email + any 6+ character password works."
+    },
+    "signup": {
+      "eyebrow": "Apply to the network",
+      "title": "Tell us what you produce.",
+      "lede": "Initial review takes five business days. We respond to every application.",
+      "fields": {
+        "companyName": "Company name",
+        "contactName": "Primary contact",
+        "email": "Email",
+        "phone": "Mobile",
+        "city": "City",
+        "yearsInBusiness": "Years in business",
+        "categories": "Categories you produce",
+        "monthlyCapacity": "Monthly production capacity (units)",
+        "willingExclusive": "Willing to produce Diwan-exclusive variants",
+        "notes": "Anything else we should know"
+      },
+      "categoryOptions": ["Furniture", "Lighting", "Soft furnishings", "Kitchen", "Bathroom", "Finishes", "Joinery", "Fit-out / construction", "Smart home"],
+      "yes": "Yes",
+      "no": "Not yet",
+      "maybe": "Open to discussing",
+      "phonePlaceholder": "+966 5_ ___ ____",
+      "submit": "Submit application",
+      "submittedTitle": "Application received.",
+      "submittedBody": "Our supplier team will review and respond within five business days. You'll receive a confirmation email shortly."
+    },
+    "dashboard": {
+      "greeting": "Welcome, {company}.",
+      "tabsLabel": "Sections",
+      "tabs": {"orders": "Orders", "pricing": "Framework pricing", "performance": "Performance", "documents": "Documents"},
+      "signOut": "Sign out",
+      "orders": {
+        "title": "Your queue",
+        "subtitle": "Anonymized customer projects routed to your network of categories.",
+        "filter": {"all": "All", "pending": "Pending acceptance", "inProgress": "In production", "ready": "Ready to ship", "delivered": "Delivered"},
+        "columns": {"project": "Project", "items": "Items", "value": "Value", "deadline": "Deadline", "status": "Status", "action": "Action"},
+        "actions": {"accept": "Accept", "decline": "Decline", "view": "View", "markReady": "Mark ready"}
+      },
+      "pricing": {
+        "title": "Framework pricing schedule",
+        "subtitle": "Locked unit pricing for the current quarter. Volume commitments and revisions are negotiated each quarter.",
+        "columns": {"sku": "SKU", "category": "Category", "unitPrice": "Diwan unit price", "yourCost": "Your cost", "margin": "Your margin", "monthlyCap": "Quarterly cap", "status": "Status"}
+      },
+      "performance": {
+        "title": "Performance this quarter",
+        "subtitle": "Hard numbers Diwan delivers, measured against industry benchmarks.",
+        "metrics": {
+          "leads":   {"label": "Leads delivered",       "unit": "orders"},
+          "revenue": {"label": "Revenue routed",        "unit": "SAR"},
+          "cac":     {"label": "Equivalent walk-in CAC","unit": "SAR"},
+          "tickets": {"label": "Customer-service tickets you handled", "unit": "tickets"}
+        },
+        "vsBench": "vs industry"
+      },
+      "documents": {
+        "title": "Your documents",
+        "subtitle": "Master service agreement, framework pricing schedule, and quarterly statements.",
+        "items": [
+          {"k": "msa",          "name": "Master Service Agreement",       "status": "Signed",   "date": "2026-03-12"},
+          {"k": "framework",    "name": "Framework Pricing Schedule Q2",  "status": "Active",   "date": "2026-04-01"},
+          {"k": "noncircum",    "name": "Non-Circumvention Addendum",     "status": "Signed",   "date": "2026-03-12"},
+          {"k": "statement",    "name": "April 2026 Statement",           "status": "Issued",   "date": "2026-05-01"},
+          {"k": "tax",          "name": "ZATCA E-Invoicing Profile",      "status": "Verified", "date": "2026-02-08"}
+        ]
+      }
+    }
+  },
+  "Designs": {
+    "overview": {
+      "eyebrow": "Three concepts",
+      "title": "Your space, three ways.",
+      "lede": "Each concept covers every room you tagged. Tap into any concept to see its rooms, materials, and itemized quote.",
+      "exploreConcept": "Explore concept",
+      "savedNote": "Generated and saved on your device.",
+      "modeLive": "Live AI",
+      "modeMock": "Demo mode",
+      "generatedIn": "generated in {sec}s",
+      "rooms": "{n} rooms designed",
+      "items": "{n} items"
+    },
+    "detail": {
+      "back": "Back to all concepts",
+      "diwanPrice": "Diwan price",
+      "retailPrice": "Retail equivalent",
+      "youSave": "You save",
+      "ofRooms": "Concept covers {n} rooms",
+      "selectRoom": "Pick a room from the plan",
+      "roomItems": "Items in this room",
+      "supplier": "Supplier",
+      "leadTime": "Lead time",
+      "leadDays": "{n} days",
+      "exclusive": "Diwan-exclusive",
+      "express": "Express tier",
+      "bespoke": "Bespoke quote",
+      "skuId": "SKU"
+    },
+    "quote": {
+      "eyebrow": "Itemised quote",
+      "title": "Pricing, supplier by supplier.",
+      "subtitle": "Diwan negotiates framework rates per SKU with every supplier in the network. Your quote is locked the moment you approve.",
+      "expressLabel": "Express tier — instant locked quote",
+      "bespokeLabel": "Bespoke — supplier confirms within 48 hours",
+      "subtotal": "Supplier subtotal",
+      "totalLabel": "Total project",
+      "depositLabel": "Deposit (40%)",
+      "remainingLabel": "Remaining",
+      "vsRetail": "vs Retail SAR {n}",
+      "savings": "Diwan margin saving",
+      "items": "{n} items"
+    },
+    "timeline": {
+      "eyebrow": "Project timeline",
+      "title": "From signature to keys.",
+      "subtitle": "Your space, fully delivered in {weeks} weeks.",
+      "phases": [
+        {"k": "approve",  "label": "Brief and approval",   "lengthDays": 7},
+        {"k": "produce",  "label": "Supplier production",  "lengthDays": 18},
+        {"k": "qc",       "label": "Diwan QC and delivery","lengthDays": 3},
+        {"k": "install",  "label": "Install and handover", "lengthDays": 2}
+      ],
+      "today": "Today",
+      "handover": "Keys-in-hand"
+    },
+    "approve": {
+      "eyebrow": "Approve and reserve",
+      "title": "Lock this design in.",
+      "subtitle": "Forty percent deposit reserves your supplier slots and locks framework pricing. Fully refundable for fourteen days.",
+      "depositPay": "Pay deposit · SAR {n}",
+      "talk": "Request a designer call first",
+      "paymentMethods": "Card · mada · Tamara · Murabaha financing"
+    }
+  },
+  "Dashboard": {
+    "greeting": "Welcome back",
+    "subgreeting": "Your project is moving.",
+    "etaTitle": "Designs in progress",
+    "etaLede": "We're matching your taste vector to our supplier network and rendering three concepts. Updates arrive on this page.",
+    "etaProgressLabel": "Estimated time remaining",
+    "etaPhases": [
+      {"k": "brief",    "label": "AI design brief"},
+      {"k": "render",   "label": "Photorealistic render"},
+      {"k": "skuMatch", "label": "Supplier matching"},
+      {"k": "quote",    "label": "Itemized quote"},
+      {"k": "review",   "label": "Designer review"}
+    ],
+    "summaryTitle": "Your project at a glance",
+    "summary": {
+      "plan": "Floor plan",
+      "rooms": "Rooms tagged",
+      "area": "Total area",
+      "budget": "Budget",
+      "timeline": "Target timeline",
+      "inspirations": "Inspiration sources",
+      "weeks": "weeks",
+      "boards": "boards"
+    },
+    "viewDesigns": "View designs",
+    "designsReady": "Designs are ready",
+    "notYet": "Not ready yet",
+    "mockNote": "Demo mode — preview your three concepts now."
+  }
+}

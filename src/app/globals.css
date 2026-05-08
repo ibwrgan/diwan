@@ -2,26 +2,218 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ==============================================================
+   DIWAN — Global brand system. Tokens live in tailwind.config.ts;
+   this file holds reusable component classes and base resets.
+   ============================================================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: #F4EFE6;
+    color: #1F1A14;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+  /* Paper grain on the sand canvas (subtle, not an image) */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle at 13% 27%, rgba(31,26,20,.018) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 71% 49%, rgba(31,26,20,.018) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 39% 81%, rgba(31,26,20,.022) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 88% 12%, rgba(31,26,20,.018) 0 1px, transparent 1.5px);
+    background-size: 41px 41px, 53px 53px, 67px 67px, 47px 47px;
+  }
+  body > * { position: relative; z-index: 1; }
+
+  /* RTL niceties — Arabic gets slightly tighter line-height per the binder */
+  [dir="rtl"] {
+    font-family: var(--font-arabic), system-ui, sans-serif;
+  }
+  [dir="rtl"] .font-serif {
+    font-family: var(--font-arabic), system-ui, sans-serif;
+    letter-spacing: 0;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* The Diwan eyebrow — uppercase tracked label with hairline */
+  .eyebrow {
+    @apply inline-flex items-center gap-3.5 font-sans font-semibold text-clay-700 uppercase;
+    font-size: 13px;
+    letter-spacing: 0.32em;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+  [dir="rtl"] .eyebrow { letter-spacing: 0.16em; }
+
+  /* Display headlines */
+  .h-display-xl {
+    @apply font-serif font-bold;
+    font-size: clamp(56px, 8vw, 104px);
+    line-height: 1.02;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+  }
+  [dir="rtl"] .h-display-xl {
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1.18;
+    letter-spacing: 0;
+  }
+  .h-display {
+    @apply font-serif font-bold;
+    font-size: clamp(40px, 5.5vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  [dir="rtl"] .h-display {
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+  .h-section {
+    @apply font-serif font-bold;
+    font-size: clamp(32px, 3.5vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+  }
+  [dir="rtl"] .h-section { line-height: 1.25; letter-spacing: 0; }
+
+  /* Lede — italic serif, the binder signature */
+  .lede {
+    @apply font-serif italic;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.5;
+    color: #1F1A14;
+    text-wrap: pretty;
+  }
+  [dir="rtl"] .lede {
+    font-style: normal;
+    line-height: 1.7;
+  }
+  /* Arabic does not have a true italic — neutralize forced slants on Arabic content */
+  [dir="rtl"] .italic { font-style: normal; }
+
+  /* Body */
+  .body-text {
+    @apply font-sans;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #1F1A14;
+  }
+
+  /* Tabular figures for stats */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* Tag pill */
+  .tag {
+    @apply inline-block font-sans font-medium text-ink-60 uppercase rounded-full;
+    border: 1px solid rgba(31, 26, 20, 0.20);
+    padding: 5px 12px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  /* Hairline rule */
+  .rule {
+    @apply w-full;
+    height: 1px;
+    background: rgba(31, 26, 20, 0.12);
+    border: 0;
+  }
+
+  /* Primary button — clay on sand */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-medium uppercase transition-all duration-200;
+    background: #B8552E;
+    color: #FAFAF7;
+    padding: 14px 28px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    border-radius: 2px;
+  }
+  .btn-primary:hover {
+    background: #1A1F2E;
+    transform: translateY(-1px);
+  }
+
+  /* Ghost button — for secondary CTA */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-medium uppercase transition-all duration-200;
+    color: #1F1A14;
+    padding: 14px 28px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    border-radius: 2px;
+    border: 1px solid rgba(31, 26, 20, 0.20);
+  }
+  .btn-ghost:hover {
+    border-color: #B8552E;
+    color: #B8552E;
+  }
+
+  /* Wordmark — used in header and footer */
+  .wordmark {
+    @apply inline-flex items-baseline gap-3 font-serif font-bold;
+    letter-spacing: 0.32em;
+  }
+  .wordmark .ar {
+    @apply font-arabic;
+    letter-spacing: 0;
+    color: #B8552E;
+  }
+  [dir="rtl"] .wordmark { flex-direction: row-reverse; }
+
+  /* On midnight backgrounds */
+  .midnight {
+    background: #1A1F2E;
+    color: #F4EFE6;
+    position: relative;
+  }
+  .midnight::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(184,85,46,0.08), transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(184,153,104,0.05), transparent 60%);
+    z-index: 0;
+  }
+  .midnight > * { position: relative; z-index: 1; }
+  .midnight .eyebrow { color: #D9886B; }
+  .midnight .lede,
+  .midnight .body-text,
+  .midnight .h-display,
+  .midnight .h-display-xl,
+  .midnight .h-section { color: #F4EFE6; }
+  .midnight .rule { background: rgba(244, 239, 230, 0.20); }
+  .midnight .btn-ghost {
+    color: #F4EFE6;
+    border-color: rgba(244, 239, 230, 0.30);
+  }
+  .midnight .btn-ghost:hover {
+    border-color: #D9886B;
+    color: #D9886B;
+  }
+
+  /* Numbered marker (used for pillars) */
+  .num-marker {
+    @apply font-serif font-bold tabular;
+    font-size: 64px;
+    line-height: 1;
+    color: #B8552E;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
 }
