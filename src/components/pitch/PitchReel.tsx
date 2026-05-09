@@ -31,11 +31,73 @@ export function PitchReel({locale}: {locale: string}) {
   }, []);
 
   const toggleFullscreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    } else {
-      containerRef.current?.requestFullscreen().catch(() => {});
+    const el = containerRef.current as (HTMLDivElement & {webkitRequestFullscreen?: () => Promise<void>}) | null;
+    const doc = document as Document & {webkitFullscreenElement?: Element; webkitExitFullscreen?: () => Promise<void>};
+    const inFs = doc.fullscreenElement || doc.webkitFullscreenElement;
+    if (inFs) {
+      (doc.exitFullscreen ?? doc.webkitExitFullscreen)?.call(doc)?.catch?.(() => {});
+      return;
     }
+    if (!el) return;
+    const req = el.requestFullscreen ?? el.webkitRequestFullscreen;
+    if (req) {
+      const result = req.call(el);
+      // iOS Safari sometimes resolves but doesn't actually go fullscreen, or
+      // throws synchronously without rejecting. Fallback to opening the reel
+      // in a top-level tab where the fixed inset-0 layout fills the screen.
+      if (result && typeof result.catch === 'function') {
+        result.catch(() => openInTopWindow());
+      }
+    } else {
+      openInTopWindow();
+    }
+  };
+
+  // Fallback fullscreen: open /pitch in the parent window so the iframe
+  // chrome doesn't constrain it. Useful on iOS Safari where iframe
+  // requestFullscreen often doesn't work.
+  const openInTopWindow = () => {
+    try {
+      const target = `/${locale}/pitch`;
+      if (window.top && window.top !== window.self) {
+        window.top.location.href = target;
+      } else {
+        window.location.href = target;
+      }
+    } catch {
+      window.open(`/${locale}/pitch`, '_blank');
+    }
+  };
+
+  // Seek to a fraction of the timeline (0..1).
+  const seek = (frac: number) => {
+    const t = Math.max(0, Math.min(TOTAL_DURATION, frac * TOTAL_DURATION));
+    setTime(t);
+    if (voRef.current && hasVO) voRef.current.currentTime = t;
+  };
+
+  const onScrubPointer = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const target = e.currentTarget;
+    target.setPointerCapture(e.pointerId);
+    const rect = target.getBoundingClientRect();
+    const handle = (clientX: number) => {
+      const frac = (clientX - rect.left) / rect.width;
+      seek(frac);
+    };
+    handle(e.clientX);
+    const onMove = (ev: PointerEvent) => handle(ev.clientX);
+    const onUp = () => {
+      target.removeEventListener('pointermove', onMove);
+      target.removeEventListener('pointerup', onUp);
+      target.removeEventListener('pointercancel', onUp);
+      try {
+        target.releasePointerCapture(e.pointerId);
+      } catch {}
+    };
+    target.addEventListener('pointermove', onMove);
+    target.addEventListener('pointerup', onUp);
+    target.addEventListener('pointercancel', onUp);
   };
 
   useEffect(() => {
@@ -205,8 +267,28 @@ export function PitchReel({locale}: {locale: string}) {
           >
             {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
           </button>
-          <div className="flex-1 h-1 bg-bone/20 rounded-full overflow-hidden">
-            <div className="h-full bg-clay-400" style={{width: `${overallProgress * 100}%`}} />
+          <div
+            role="slider"
+            aria-label="Seek"
+            aria-valuenow={Math.round(overallProgress * 100)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            tabIndex={0}
+            onPointerDown={onScrubPointer}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') seek(Math.max(0, overallProgress - 0.02));
+              else if (e.key === 'ArrowRight') seek(Math.min(1, overallProgress + 0.02));
+            }}
+            className="flex-1 group cursor-pointer touch-none flex items-center"
+            style={{minHeight: 32, padding: '14px 0'}}
+          >
+            <div className="relative h-1 w-full bg-bone/20 rounded-full overflow-visible group-hover:h-1.5 transition-all">
+              <div className="absolute inset-y-0 left-0 bg-clay-400 rounded-full" style={{width: `${overallProgress * 100}%`}} />
+              <div
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-clay-400 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{left: `${overallProgress * 100}%`}}
+              />
+            </div>
           </div>
           <span className="font-mono text-bone/60 tabular" style={{fontSize: '11px'}}>
             scene {sceneIndex + 1} / {PITCH_SCRIPT.length}
