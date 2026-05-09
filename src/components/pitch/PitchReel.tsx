@@ -2,7 +2,7 @@
 
 import {useEffect, useRef, useState, useMemo} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import {Play, Pause, RotateCcw, Volume2, VolumeX} from 'lucide-react';
+import {Play, Pause, RotateCcw, Volume2, VolumeX, Maximize, Minimize} from 'lucide-react';
 import {SAMPLE_PLANS} from '@/data/floorPlans';
 import {FloorPlanSVG} from '@/components/space/FloorPlanSVG';
 import {PITCH_SCRIPT, ALL_SEGMENTS, TOTAL_DURATION} from './script';
@@ -20,6 +20,22 @@ export function PitchReel({locale}: {locale: string}) {
   const [hasVO, setHasVO] = useState(false);
   const [hasMusic, setHasMusic] = useState(false);
   const [started, setStarted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      containerRef.current?.requestFullscreen().catch(() => {});
+    }
+  };
 
   useEffect(() => {
     fetch(VO_SRC, {method: 'HEAD'}).then((r) => setHasVO(r.ok)).catch(() => setHasVO(false));
@@ -96,7 +112,7 @@ export function PitchReel({locale}: {locale: string}) {
   }, [time]);
 
   return (
-    <div className="fixed inset-0 bg-ink text-bone overflow-hidden flex flex-col" dir={isAr ? 'rtl' : 'ltr'}>
+    <div ref={containerRef} className="fixed inset-0 bg-ink text-bone overflow-hidden flex flex-col" dir={isAr ? 'rtl' : 'ltr'}>
       <audio
         ref={voRef}
         src={VO_SRC}
@@ -137,7 +153,7 @@ export function PitchReel({locale}: {locale: string}) {
               animate={{opacity: 1, y: 0}}
               exit={{opacity: 0, y: -8}}
               transition={{duration: 0.35}}
-              className="bg-ink/55 backdrop-blur-sm rounded-md px-7 py-4 mx-auto"
+              className="bg-ink/55 backdrop-blur-sm rounded-md px-5 py-2.5 mx-auto"
               style={{
                 width: 'fit-content',
                 maxWidth: '100%',
@@ -147,8 +163,8 @@ export function PitchReel({locale}: {locale: string}) {
               <p
                 className="font-arabic font-medium text-bone text-center"
                 style={{
-                  fontSize: 'clamp(22px, 2.9vw, 36px)',
-                  lineHeight: 1.5,
+                  fontSize: 'clamp(15px, 1.9vw, 24px)',
+                  lineHeight: 1.45,
                   textShadow: '0 1px 3px rgba(0,0,0,0.6)',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
@@ -186,6 +202,13 @@ export function PitchReel({locale}: {locale: string}) {
             aria-label={muted ? 'Unmute' : 'Mute'}
           >
             {muted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+          </button>
+          <button
+            onClick={toggleFullscreen}
+            className="text-bone/70 hover:text-bone transition-colors"
+            aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          >
+            {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
           </button>
           <div className="flex-1 h-1 bg-bone/20 rounded-full overflow-hidden">
             <div className="h-full bg-clay-400" style={{width: `${overallProgress * 100}%`}} />
@@ -234,21 +257,35 @@ function SceneFrame({scene, progress, isAr}: {scene: typeof PITCH_SCRIPT[number]
         transition={{duration: 0.6}}
         className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-ink via-midnight-950 to-clay-700"
       >
+        <motion.div
+          initial={{opacity: 0, scale: 0.85}}
+          animate={{opacity: 1, scale: 1}}
+          transition={{duration: 1.0, delay: 0.1}}
+          className="text-clay-400"
+          style={{width: 'clamp(80px, 9vw, 130px)', height: 'clamp(80px, 9vw, 130px)'}}
+        >
+          <svg viewBox="0 0 64 64" fill="none" className="h-full w-full" aria-hidden="true">
+            <path d="M10 56 V28 a22 22 0 0 1 44 0 V56" stroke="currentColor" strokeWidth="3.6" strokeLinecap="round" fill="none" />
+            <path d="M20 56 V32 a12 12 0 0 1 24 0 V56" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" fill="none" opacity="0.55" />
+            <path d="M27 46 q5 -2 10 0 q-1 4 -5 4 q-4 0 -5 -4 z" fill="currentColor" />
+            <line x1="6" y1="56" x2="58" y2="56" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+          </svg>
+        </motion.div>
         <motion.h1
-          initial={{opacity: 0, y: 24}}
+          initial={{opacity: 0, y: 16}}
           animate={{opacity: 1, y: 0}}
-          transition={{duration: 1.2, delay: 0.3}}
-          className="font-arabic font-bold text-clay-400"
-          style={{fontSize: 'clamp(64px, 12vw, 180px)', letterSpacing: '-0.02em'}}
+          transition={{duration: 1.0, delay: 0.6}}
+          className="font-arabic font-bold text-clay-400 mt-6"
+          style={{fontSize: 'clamp(56px, 10vw, 150px)', letterSpacing: '-0.02em', lineHeight: 1}}
         >
           ديوان
         </motion.h1>
         <motion.p
           initial={{opacity: 0}}
           animate={{opacity: 1}}
-          transition={{duration: 1.2, delay: 1.2}}
-          className="font-serif text-bone/70 mt-2"
-          style={{fontSize: 'clamp(16px, 2vw, 28px)', letterSpacing: '0.4em'}}
+          transition={{duration: 1.0, delay: 1.1}}
+          className="font-serif text-bone/70 mt-3"
+          style={{fontSize: 'clamp(14px, 1.6vw, 22px)', letterSpacing: '0.4em'}}
         >
           DIWAN
         </motion.p>

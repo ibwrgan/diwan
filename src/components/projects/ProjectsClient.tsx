@@ -153,6 +153,7 @@ function VideoSection({locale}: {locale: string}) {
               title={t('title')}
               className="absolute inset-0 w-full h-full border-0"
               allow="autoplay; fullscreen"
+              allowFullScreen
               loading="lazy"
             />
           </div>
