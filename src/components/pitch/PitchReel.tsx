@@ -25,9 +25,28 @@ export function PitchReel({locale}: {locale: string}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    const onChange = () => {
+      const fs = Boolean(
+        document.fullscreenElement ||
+          (document as Document & {webkitFullscreenElement?: Element}).webkitFullscreenElement,
+      );
+      setIsFullscreen(fs);
+      // Try to lock orientation on mobile when entering fullscreen, unlock on exit.
+      const orient = (screen as Screen & {orientation?: ScreenOrientation & {lock?: (o: string) => Promise<void>}}).orientation;
+      if (fs && orient?.lock) {
+        orient.lock('landscape').catch(() => {});
+      } else if (!fs && orient?.unlock) {
+        try {
+          orient.unlock();
+        } catch {}
+      }
+    };
     document.addEventListener('fullscreenchange', onChange);
-    return () => document.removeEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
   }, []);
 
   const toggleFullscreen = () => {
