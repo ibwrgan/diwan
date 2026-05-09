@@ -56,8 +56,18 @@ export function ProjectsClient({locale}: {locale: string}) {
               onClick={() => setActive(c)}
               className="text-start group flex flex-col gap-0 rounded-sm overflow-hidden border border-ink-12 bg-bone hover:border-clay-700/40 transition-all"
             >
-              <div className="aspect-[4/3] relative overflow-hidden">
-                <div style={{background: artTreatments[c.conceptArt]?.bg}} className="absolute inset-0" />
+              <div
+                className="aspect-[4/3] relative overflow-hidden"
+                style={{background: artTreatments[c.conceptArt]?.bg}}
+              >
+                {c.heroPhoto && (
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{backgroundImage: `url('${c.heroPhoto}')`}}
+                    role="img"
+                    aria-label={c.titleEn}
+                  />
+                )}
                 <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-ink/85 to-transparent" />
                 <div className="absolute top-4 start-4">
                   <span
@@ -204,8 +214,18 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
           </button>
 
           {/* Hero */}
-          <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden">
-            <div style={{background: artTreatments[study.conceptArt]?.bg}} className="absolute inset-0" />
+          <div
+            className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden"
+            style={{background: artTreatments[study.conceptArt]?.bg}}
+          >
+            {study.heroPhoto && (
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{backgroundImage: `url('${study.heroPhoto}')`}}
+                role="img"
+                aria-label={study.titleEn}
+              />
+            )}
             <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 text-sand-100">
               <div className="max-w-[760px] flex flex-col gap-3">
@@ -250,8 +270,15 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
                     <figure key={i} className="flex flex-col gap-1.5">
                       <div
                         style={{background: artTreatments[ins.art]?.bg}}
-                        className="aspect-[4/5] rounded-sm"
-                      />
+                        className="aspect-[4/5] rounded-sm relative overflow-hidden"
+                      >
+                        {ins.photo && (
+                          <div
+                            className="absolute inset-0 bg-cover bg-center"
+                            style={{backgroundImage: `url('${ins.photo}')`}}
+                          />
+                        )}
+                      </div>
                       <figcaption className="font-sans text-ink-60 leading-snug" style={{fontSize: '11px'}}>
                         {isAr ? ins.captionAr : ins.captionEn}
                       </figcaption>
@@ -272,6 +299,12 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
                         style={{background: artTreatments[r.art]?.bg}}
                         className="aspect-[4/3] rounded-sm relative overflow-hidden"
                       >
+                        {r.photo && (
+                          <div
+                            className="absolute inset-0 bg-cover bg-center"
+                            style={{backgroundImage: `url('${r.photo}')`}}
+                          />
+                        )}
                         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 to-transparent" />
                         <span className="absolute bottom-2 start-2 font-sans uppercase text-sand-100" style={{fontSize: '10px', letterSpacing: '0.16em'}}>
                           {isAr ? r.nameAr : r.nameEn}

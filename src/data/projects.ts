@@ -18,14 +18,19 @@ export type CaseStudy = {
   district: string;
   areaM2: number;
   rooms: number;
-  budget: number;          // SAR (project total)
+  budget: number;
   retailEquivalent: number;
   deliveredDays: number;
   itemCount: number;
   supplierCount: number;
   conceptName: string;
-  conceptArt: string;      // primary hero gradient
+  conceptArt: string;      // gradient fallback for the hero
   paletteHex: string[];
+
+  // Optional real photo for the hero. If set and the file/URL exists, the page
+  // shows it; otherwise the gradient falls through. Drop a JPG/PNG at
+  // /public/projects/{id}/hero.jpg and set heroPhoto to "/projects/{id}/hero.jpg".
+  heroPhoto?: string;
 
   // Bilingual content
   titleEn: string;
@@ -39,15 +44,16 @@ export type CaseStudy = {
   verdictEn: string;
   verdictAr: string;
 
-  // Pinterest-style inspirations the client brought (3-5 each)
-  inspirations: Array<{art: string; captionEn: string; captionAr: string}>;
+  // Pinterest-style inspirations the client brought (3-5 each).
+  // Set photo to /projects/{id}/inspiration-{n}.jpg to override the gradient.
+  inspirations: Array<{art: string; photo?: string; captionEn: string; captionAr: string}>;
 
-  // Signature pieces (3-4)
   highlightItemsEn: string[];
   highlightItemsAr: string[];
 
-  // Room thumbnails (4-6 per project, each a gradient)
-  roomViews: Array<{art: string; nameEn: string; nameAr: string}>;
+  // Room thumbnails (4-6 per project, each a gradient).
+  // Drop photos at /projects/{id}/rooms/{n}.jpg to override.
+  roomViews: Array<{art: string; photo?: string; nameEn: string; nameAr: string}>;
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -67,6 +73,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 6,
     conceptName: 'Modern Najdi',
     conceptArt: 'najdi-warm',
+    heroPhoto: '/projects/najdi-villa-nakheel/hero.jpg',
     paletteHex: ['#B8552E', '#B89968', '#1A1F2E', '#F4EFE6', '#1F1A14'],
     titleEn: 'A Najdi Villa Reimagined',
     titleAr: 'فيلا نجدية، مُعاد تخيُّلها',
@@ -112,6 +119,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 5,
     conceptName: 'Coastal Hijazi',
     conceptArt: 'hijazi-light',
+    heroPhoto: '/projects/coastal-jeddah-corniche/hero.jpg',
     paletteHex: ['#DDD3C3', '#B89968', '#3D4A6B', '#FAFAF7', '#1F1A14'],
     titleEn: 'Sea Air, Pale Wood, Open Plan',
     titleAr: 'هواء بحري، خشب فاتح، مخطّط مفتوح',
@@ -156,6 +164,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 7,
     conceptName: 'Riyadh Contemporary',
     conceptArt: 'stone-cool',
+    heroPhoto: '/projects/riyadh-contemporary-penthouse/hero.jpg',
     paletteHex: ['#F4EFE6', '#DDD3C3', '#3D4A6B', '#1A1F2E', '#1F1A14'],
     titleEn: 'A Penthouse of Quiet Discipline',
     titleAr: 'بنتهاوس بانضباط هادئ',
@@ -200,6 +209,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 8,
     conceptName: 'Cocoon',
     conceptArt: 'cocoon',
+    heroPhoto: '/projects/cocoon-family-compound/hero.jpg',
     paletteHex: ['#1A1F2E', '#B8552E', '#B89968', '#F4EFE6', '#1F1A14'],
     titleEn: 'A Family Compound, Built to Hold',
     titleAr: 'مجمّع عائلي، مبنيّ ليحتوي',
@@ -245,6 +255,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 5,
     conceptName: 'Open Living',
     conceptArt: 'open-living',
+    heroPhoto: '/projects/open-living-3br-villa/hero.jpg',
     paletteHex: ['#F4EFE6', '#FAFAF7', '#DDD3C3', '#B8552E', '#1F1A14'],
     titleEn: 'A First Family Home, Made for Sundays',
     titleAr: 'أوّل بيت عائلي، مصنوع للأحد',
@@ -289,6 +300,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 6,
     conceptName: 'Modern Najdi · Cafe',
     conceptArt: 'clay-brass',
+    heroPhoto: '/projects/boutique-cafe-dq/hero.jpg',
     paletteHex: ['#B8552E', '#B89968', '#1A1F2E', '#F4EFE6', '#1F1A14'],
     titleEn: 'Boutique Cafe — Specialty Coffee, Najdi Mood',
     titleAr: 'مقهى بوتيك — قهوة مختصّة، روح نجدية',
@@ -333,6 +345,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 7,
     conceptName: 'Workshop Quiet · Clinic',
     conceptArt: 'quiet-workshop',
+    heroPhoto: '/projects/workshop-dental-clinic/hero.jpg',
     paletteHex: ['#DDD3C3', '#FAFAF7', '#3D4A6B', '#B8552E', '#1F1A14'],
     titleEn: 'A Dental Clinic That Doesn\'t Smell Like One',
     titleAr: 'عيادة أسنان لا تشبه عيادة',
@@ -377,6 +390,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     supplierCount: 8,
     conceptName: 'Open Living · Office',
     conceptArt: 'open-living',
+    heroPhoto: '/projects/kafd-coworking-floor/hero.jpg',
     paletteHex: ['#F4EFE6', '#DDD3C3', '#B89968', '#3D4A6B', '#1F1A14'],
     titleEn: 'A Co-working Floor That Feels Like a Living Room',
     titleAr: 'طابق عمل مشترك يشبه صالة منزلية',
