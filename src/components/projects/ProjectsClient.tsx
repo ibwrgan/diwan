@@ -147,7 +147,7 @@ function VideoSection({locale}: {locale: string}) {
           </a>
         </div>
         <div className="lg:col-span-7">
-          <div className="aspect-video bg-ink rounded-sm relative overflow-hidden border border-cream-20 shadow-2xl">
+          <div className="aspect-[4/5] sm:aspect-[4/3] lg:aspect-video bg-ink rounded-sm relative overflow-hidden border border-cream-20 shadow-2xl">
             <iframe
               src={`/${locale}/pitch?embed=1`}
               title={t('title')}
