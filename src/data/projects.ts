@@ -10,6 +10,16 @@ export type Inspiration = {
   caption: string; // bilingual: "key" — replaced via messages later, kept inline for ease
 };
 
+export type CostBreakdown = {
+  furniture: number;        // sofas, beds, dining, chairs
+  cabinetry: number;        // built-ins, wardrobes, kitchen joinery, phone-room enclosures
+  lighting: number;         // fixtures, dimming, smart controls
+  softFurnishings: number;  // rugs, drapes, cushions, art
+  finishes: number;         // flooring, paint, hardware, stone, tile
+  labor: number;            // assembly, install, electrical/plumbing tie-ins
+  projectManagement: number;// Diwan PM, QC at delivery, warranty admin
+};
+
 export type CaseStudy = {
   id: string;
   category: 'residential' | 'commercial';
@@ -27,9 +37,13 @@ export type CaseStudy = {
   conceptArt: string;      // gradient fallback for the hero
   paletteHex: string[];
 
-  // Optional real photo for the hero. If set and the file/URL exists, the page
-  // shows it; otherwise the gradient falls through. Drop a JPG/PNG at
-  // /public/projects/{id}/hero.jpg and set heroPhoto to "/projects/{id}/hero.jpg".
+  // Itemised cost breakdown (sums to budget). Demystifies the headline number.
+  costBreakdown: CostBreakdown;
+
+  // Sample-plan id from /data/floorPlans.ts → renders a 2D engineering layout
+  // in the case-study modal so the customer can see exactly what they're getting.
+  floorPlanId?: string;
+
   heroPhoto?: string;
 
   // Bilingual content
@@ -75,6 +89,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'najdi-warm',
     heroPhoto: '/projects/najdi-villa-nakheel/hero.jpg',
     paletteHex: ['#B8552E', '#B89968', '#1A1F2E', '#F4EFE6', '#1F1A14'],
+    floorPlanId: 'villa-4br',
+    costBreakdown: {furniture: 120000, cabinetry: 60000, lighting: 15000, softFurnishings: 25000, finishes: 35000, labor: 18000, projectManagement: 12000},
     titleEn: 'A Najdi Villa Reimagined',
     titleAr: 'فيلا نجدية، مُعاد تخيُّلها',
     clientLabelEn: 'M Family · 4-bedroom villa',
@@ -121,6 +137,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'hijazi-light',
     heroPhoto: '/projects/coastal-jeddah-corniche/hero.jpg',
     paletteHex: ['#DDD3C3', '#B89968', '#3D4A6B', '#FAFAF7', '#1F1A14'],
+    floorPlanId: 'apt-2br',
+    costBreakdown: {furniture: 60000, cabinetry: 32000, lighting: 7000, softFurnishings: 13000, finishes: 17000, labor: 10000, projectManagement: 6000},
     titleEn: 'Sea Air, Pale Wood, Open Plan',
     titleAr: 'هواء بحري، خشب فاتح، مخطّط مفتوح',
     clientLabelEn: 'Couple · 2-bedroom apartment',
@@ -166,6 +184,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'stone-cool',
     heroPhoto: '/projects/riyadh-contemporary-penthouse/hero.jpg',
     paletteHex: ['#F4EFE6', '#DDD3C3', '#3D4A6B', '#1A1F2E', '#1F1A14'],
+    floorPlanId: 'apt-3br',
+    costBreakdown: {furniture: 160000, cabinetry: 88000, lighting: 25000, softFurnishings: 33000, finishes: 67000, labor: 30000, projectManagement: 17000},
     titleEn: 'A Penthouse of Quiet Discipline',
     titleAr: 'بنتهاوس بانضباط هادئ',
     clientLabelEn: 'Executive · 3-bedroom penthouse',
@@ -211,6 +231,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'cocoon',
     heroPhoto: '/projects/cocoon-family-compound/hero.jpg',
     paletteHex: ['#1A1F2E', '#B8552E', '#B89968', '#F4EFE6', '#1F1A14'],
+    floorPlanId: 'villa-5br',
+    costBreakdown: {furniture: 238000, cabinetry: 113000, lighting: 27000, softFurnishings: 54000, finishes: 59000, labor: 32000, projectManagement: 17000},
     titleEn: 'A Family Compound, Built to Hold',
     titleAr: 'مجمّع عائلي، مبنيّ ليحتوي',
     clientLabelEn: 'Established family · 5-bedroom villa',
@@ -257,6 +279,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'open-living',
     heroPhoto: '/projects/open-living-3br-villa/hero.jpg',
     paletteHex: ['#F4EFE6', '#FAFAF7', '#DDD3C3', '#B8552E', '#1F1A14'],
+    floorPlanId: 'apt-3br',
+    costBreakdown: {furniture: 80000, cabinetry: 45000, lighting: 10000, softFurnishings: 18000, finishes: 23000, labor: 12000, projectManagement: 8000},
     titleEn: 'A First Family Home, Made for Sundays',
     titleAr: 'أوّل بيت عائلي، مصنوع للأحد',
     clientLabelEn: 'Young family · 3-bedroom villa',
@@ -302,6 +326,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'clay-brass',
     heroPhoto: '/projects/boutique-cafe-dq/hero.jpg',
     paletteHex: ['#B8552E', '#B89968', '#1A1F2E', '#F4EFE6', '#1F1A14'],
+    floorPlanId: 'cafe-120',
+    costBreakdown: {furniture: 92000, cabinetry: 125000, lighting: 28000, softFurnishings: 15000, finishes: 60000, labor: 35000, projectManagement: 25000},
     titleEn: 'Boutique Cafe — Specialty Coffee, Najdi Mood',
     titleAr: 'مقهى بوتيك — قهوة مختصّة، روح نجدية',
     clientLabelEn: 'Specialty coffee chain · second branch',
@@ -347,6 +373,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'quiet-workshop',
     heroPhoto: '/projects/workshop-dental-clinic/hero.jpg',
     paletteHex: ['#DDD3C3', '#FAFAF7', '#3D4A6B', '#B8552E', '#1F1A14'],
+    floorPlanId: 'clinic-150',
+    costBreakdown: {furniture: 76000, cabinetry: 138000, lighting: 38000, softFurnishings: 12000, finishes: 92000, labor: 46000, projectManagement: 18000},
     titleEn: 'A Dental Clinic That Doesn\'t Smell Like One',
     titleAr: 'عيادة أسنان لا تشبه عيادة',
     clientLabelEn: 'Boutique dental practice · Olaya',
@@ -392,6 +420,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     conceptArt: 'open-living',
     heroPhoto: '/projects/kafd-coworking-floor/hero.jpg',
     paletteHex: ['#F4EFE6', '#DDD3C3', '#B89968', '#3D4A6B', '#1F1A14'],
+    floorPlanId: 'office-200',
+    costBreakdown: {furniture: 156000, cabinetry: 185000, lighting: 41000, softFurnishings: 41000, finishes: 81000, labor: 47000, projectManagement: 29000},
     titleEn: 'A Co-working Floor That Feels Like a Living Room',
     titleAr: 'طابق عمل مشترك يشبه صالة منزلية',
     clientLabelEn: 'Boutique co-working operator · second floor',
@@ -417,6 +447,197 @@ export const CASE_STUDIES: CaseStudy[] = [
       {art: 'warm-hub',       nameEn: 'Pantry',         nameAr: 'المُؤونة'},
       {art: 'najdi-geom',     nameEn: 'Prayer Room',    nameAr: 'المُصلَّى'},
       {art: 'quiet-workshop', nameEn: 'Director\'s Office', nameAr: 'مكتب المدير'},
+    ],
+  },
+
+  // 9 — Riyadh contemporary townhouse (Hittin)
+  {
+    id: 'hittin-townhouse-riyadh',
+    category: 'residential',
+    vertical: 'home',
+    city: 'Riyadh',
+    district: 'Hittin',
+    areaM2: 240,
+    rooms: 9,
+    budget: 198_000,
+    retailEquivalent: 231_000,
+    deliveredDays: 24,
+    itemCount: 38,
+    supplierCount: 5,
+    conceptName: 'Soft Najdi Townhouse',
+    conceptArt: 'open-living',
+    heroPhoto: '/projects/hittin-townhouse-riyadh/hero.jpg',
+    paletteHex: ['#F4EFE6', '#D9886B', '#B89968', '#1F1A14', '#FAFAF7'],
+    floorPlanId: 'apt-3br',
+    costBreakdown: {furniture: 82000, cabinetry: 44000, lighting: 11000, softFurnishings: 18000, finishes: 24000, labor: 12000, projectManagement: 7000},
+    titleEn: 'A Hittin Townhouse for a Young Riyadh Family',
+    titleAr: 'تاون هاوس في حِطّين لعائلة رياضيّة شابّة',
+    clientLabelEn: 'A. Family · 3-bedroom townhouse',
+    clientLabelAr: 'عائلة أ. · تاون هاوس بثلاث غرف',
+    taglineEn: 'A lighter Najdi register — bone walls, clay accents, brass restraint — for a family in their first home.',
+    taglineAr: 'نَفَسٌ نجدي أخف — جدران بلون العاج، لمسات طين، نُحاس مُحتشم — لعائلة في أوّل بيتها.',
+    storyEn: 'A young couple closing on their first Hittin townhouse came in with a Pinterest board split between Diriyah heritage and Scandinavian calm. We softened the Najdi vocabulary into bone-toned walls, clay velvet seating, and a single carved cedar feature, then layered in a quiet kitchen, a working majlis, and bedrooms tuned for slow Riyadh mornings. Delivered before Ramadan with the prayer corner and majlis fully ready to host.',
+    storyAr: 'زوجان شابّان عند تسلّم تاون هاوس أوّل في حِطّين، جاءا بلوحة Pinterest تتأرجح بين تراث الدرعية وهدوء إسكندنافي. خفّفنا اللغة النجديّة إلى جدران بلون العاج، وجلوس مخمل بلون الطين، ومشربية أرز محفورة واحدة، ثم رتّبنا مطبخاً هادئاً، ومجلساً عملياً، وغرف نوم تليق بصباحات الرياض البطيئة. سُلِّم قبل رمضان مع زاوية صلاة ومجلس جاهزَين للضيافة.',
+    verdictEn: 'They moved in eleven days before Ramadan and hosted both families on the first weekend.',
+    verdictAr: 'انتقلا قبل رمضان بأحد عشر يوماً واستضافا العائلتَين في أوّل نهاية أسبوع.',
+    inspirations: [
+      {art: 'open-living',    captionEn: 'Bone walls, soft clay seating',                  captionAr: 'جدران بلون العاج وجلوس بلون الطين الناعم'},
+      {art: 'najdi-geom',     captionEn: 'A single carved cedar feature, not many',         captionAr: 'قطعة أرز محفورة واحدة، لا أكثر'},
+      {art: 'warm-hub',       captionEn: 'Quiet white-and-walnut kitchen',                  captionAr: 'مطبخ هادئ بأبيض وجوز'},
+      {art: 'daylight-bed',   captionEn: 'Bedroom tuned for slow Riyadh mornings',          captionAr: 'غرفة نوم تليق بصباحات الرياض البطيئة'},
+    ],
+    highlightItemsEn: ['8-seat majlis in clay velvet', 'Carved cedar feature wall in entry', 'White-oak + bone-quartz kitchen', 'Linen-upholstered headboard wall'],
+    highlightItemsAr: ['مجلس بثمانية مقاعد بمخمل بلون الطين', 'جدار مدخل بمشربية أرز محفورة', 'مطبخ بلوط أبيض وكوارتز عاجي', 'جدار رأس سرير مكسوّ بالكتّان'],
+    roomViews: [
+      {art: 'open-living',    nameEn: 'Family Living',   nameAr: 'صالة العائلة'},
+      {art: 'najdi-warm',     nameEn: 'Majlis',          nameAr: 'المجلس'},
+      {art: 'warm-hub',       nameEn: 'Kitchen',         nameAr: 'المطبخ'},
+      {art: 'long-evening',   nameEn: 'Dining',          nameAr: 'الطعام'},
+      {art: 'daylight-bed',   nameEn: 'Master Bedroom',  nameAr: 'غرفة النوم الرئيسية'},
+      {art: 'najdi-geom',     nameEn: 'Prayer Corner',   nameAr: 'زاوية الصلاة'},
+    ],
+  },
+
+  // 10 — Riyadh specialty roastery cafe (Olaya)
+  {
+    id: 'olaya-roastery-riyadh',
+    category: 'commercial',
+    vertical: 'cafe',
+    city: 'Riyadh',
+    district: 'Olaya',
+    areaM2: 95,
+    rooms: 5,
+    budget: 312_000,
+    retailEquivalent: 358_800,
+    deliveredDays: 22,
+    itemCount: 41,
+    supplierCount: 6,
+    conceptName: 'Industrial Najdi · Roastery',
+    conceptArt: 'clay-brass',
+    heroPhoto: '/projects/olaya-roastery-riyadh/hero.jpg',
+    paletteHex: ['#1F1A14', '#B8552E', '#B89968', '#F4EFE6', '#3D4A6B'],
+    floorPlanId: 'cafe-120',
+    costBreakdown: {furniture: 68000, cabinetry: 102000, lighting: 26000, softFurnishings: 14000, finishes: 58000, labor: 28000, projectManagement: 16000},
+    titleEn: 'A Specialty Roastery on Olaya Street',
+    titleAr: 'محمصة قهوة مختصّة على شارع العُلَيّا',
+    clientLabelEn: 'Founder-led roastery · 95 m² flagship',
+    clientLabelAr: 'محمصة بإدارة مؤسّسها · مقرّ رئيسي 95 م²',
+    taglineEn: 'Production behind glass, Najdi geometry overhead, and a 9-seat bar that runs at 70% capacity from open to close.',
+    taglineAr: 'إنتاج خلف الزجاج، هندسة نجديّة في السقف، وبار بتسعة مقاعد يعمل بطاقة 70% من الفتح إلى الإغلاق.',
+    storyEn: 'A specialty-coffee founder with a Q-grader certificate and a bag-buying program in Yemen needed a Riyadh flagship that would not embarrass a third-wave guest from Tokyo. We built a glass-walled production room, a 9-seat brass-and-walnut bar, a Najdi-geometric ceiling treatment, and a tight retail wall for whole-bean. Floors are polished concrete with brass inlay marking the queue.',
+    storyAr: 'مُؤسِّس قهوة مختصّة حاصل على شهادة Q-grader وبرنامج شراء أكياس في اليمن، احتاج مقرّاً رياضيّاً لا يُحرج ضيفاً من الجيل الثالث قادماً من طوكيو. بنينا غرفة إنتاج بجدران زجاجيّة، وباراً بتسعة مقاعد بالنُحاس والجوز، ومُعالجة سقف بهندسة نجديّة، وحائط بيع للحبّ الكامل بإحكام. الأرضيات خرسانة مصقولة بمطعّم نُحاسي يرسم مسار الطابور.',
+    verdictEn: 'Daily covers tripled the projection by week three. The customer is opening a sister branch in Khobar this quarter.',
+    verdictAr: 'تجاوزت زيارات اليوم التوقّع بثلاثة أضعاف بنهاية الأسبوع الثالث. العميل يفتتح فرعاً شقيقاً في الخُبَر هذا الرّبع.',
+    inspirations: [
+      {art: 'clay-brass',     captionEn: 'Brass-and-walnut bar, third-wave register',       captionAr: 'بار بالنُحاس والجوز بنَفَس الجيل الثالث'},
+      {art: 'najdi-geom',     captionEn: 'Najdi geometric ceiling, soft-lit',                captionAr: 'سقف بهندسة نجديّة بإنارة ناعمة'},
+      {art: 'ink-stone',      captionEn: 'Glass-walled production room',                    captionAr: 'غرفة إنتاج بجدران زجاجيّة'},
+      {art: 'warm-hub',       captionEn: 'Polished concrete + brass queue inlay',            captionAr: 'خرسانة مصقولة ومسار طابور بمطعّم نُحاس'},
+    ],
+    highlightItemsEn: ['9-seat brass-and-walnut bar', 'Najdi-geometric acoustic ceiling, custom', 'Glass-walled roasting room with venting', 'Whole-bean retail wall with magnetic price tags'],
+    highlightItemsAr: ['بار بتسعة مقاعد بالنُحاس والجوز', 'سقف صوتي بهندسة نجديّة مخصّص', 'غرفة تحميص بجدران زجاجيّة وتهوية', 'حائط بيع للحبّ الكامل ببطاقات أسعار مغناطيسيّة'],
+    roomViews: [
+      {art: 'clay-brass',     nameEn: 'Bar',             nameAr: 'البار'},
+      {art: 'warm-hub',       nameEn: 'Seating',         nameAr: 'منطقة الجلوس'},
+      {art: 'ink-stone',      nameEn: 'Roasting Room',   nameAr: 'غرفة التحميص'},
+      {art: 'spare-craft',    nameEn: 'Retail Wall',     nameAr: 'حائط البيع'},
+      {art: 'najdi-geom',     nameEn: 'Ceiling Detail',  nameAr: 'تفصيل السقف'},
+    ],
+  },
+
+  // 11 — Heritage cafe near Diriyah / Al-Bujairi (Riyadh)
+  {
+    id: 'bujairi-heritage-cafe',
+    category: 'commercial',
+    vertical: 'cafe',
+    city: 'Riyadh',
+    district: 'Al-Bujairi',
+    areaM2: 130,
+    rooms: 6,
+    budget: 268_000,
+    retailEquivalent: 308_200,
+    deliveredDays: 26,
+    itemCount: 36,
+    supplierCount: 7,
+    conceptName: 'Najdi Heritage Cafe',
+    conceptArt: 'najdi-warm',
+    heroPhoto: '/projects/bujairi-heritage-cafe/hero.jpg',
+    paletteHex: ['#B8552E', '#D9886B', '#B89968', '#F4EFE6', '#1F1A14'],
+    floorPlanId: 'cafe-120',
+    costBreakdown: {furniture: 70000, cabinetry: 78000, lighting: 19000, softFurnishings: 16000, finishes: 52000, labor: 21000, projectManagement: 12000},
+    titleEn: 'A Heritage Cafe Steps from Al-Bujairi',
+    titleAr: 'مقهى تراثي على بُعد خطوات من البُجَيْري',
+    clientLabelEn: 'Family-run cafe · Al-Bujairi adjacent',
+    clientLabelAr: 'مقهى عائلي · بمحاذاة البُجَيْري',
+    taglineEn: 'Mud-tone walls, low majlis seating, and a date-and-coffee program tied to the Diriyah visitor flow.',
+    taglineAr: 'جدران بلون الطين، جلوس مجلس منخفض، وبرنامج تمر وقهوة مربوط بحركة زوّار الدرعية.',
+    storyEn: 'The owner — a Riyadh family that runs a date estate north of the city — wanted a cafe that would land for a weekend Diriyah visitor without leaning on costume. We poured mud-plaster walls in three custom tones, low majlis seating in clay wool, and a copper-clad coffee station that shows every step of the dallah pour. The date-and-coffee tasting flight is plated on a custom palm-leaf tray.',
+    storyAr: 'المالكون — عائلة رياضيّة تُدير مزرعة تمر شمال المدينة — أرادوا مقهى يصل إلى زائر الدرعية في الأسبوع دون تكلّف تنكُّري. صببنا جدران طين بثلاث درجات مخصّصة، وجلوس مجلس منخفض بصوف لون الطين، ومحطّة قهوة مكسوّة بالنُحاس تُظهر كلّ خطوة من سكب الدلّة. تُقدَّم تجربة تذوّق التمر والقهوة على صينية سعف نخل مخصّصة.',
+    verdictEn: 'Ranked top-ten Diriyah-area cafes on Google within nine weeks. Owner now plans a Souk Al-Zal companion location.',
+    verdictAr: 'دخل قائمة أفضل عشرة مقاهي قرب الدرعية على Google خلال تسعة أسابيع. يخطّط المالك لفرع رفيق في سوق الزَّل.',
+    inspirations: [
+      {art: 'najdi-warm',     captionEn: 'Mud-plaster wall in three custom tones',          captionAr: 'جدار طين مصبوب بثلاث درجات'},
+      {art: 'layered-rugs',   captionEn: 'Low majlis in clay wool',                          captionAr: 'مجلس منخفض بصوف لون الطين'},
+      {art: 'clay-brass',     captionEn: 'Copper-clad coffee station',                       captionAr: 'محطّة قهوة مكسوّة بالنُحاس'},
+      {art: 'najdi-geom',     captionEn: 'Carved-cedar window screens',                      captionAr: 'مشربيات أرز محفورة على النوافذ'},
+    ],
+    highlightItemsEn: ['Hand-poured mud-plaster walls, three tones', '14-seat low-majlis with clay-wool cushions', 'Copper-clad dallah pour station', 'Custom palm-leaf tasting trays (run of 40)'],
+    highlightItemsAr: ['جدران طين مصبوبة يدوياً بثلاث درجات', 'مجلس منخفض بأربعة عشر مقعداً ووسائد صوف الطين', 'محطّة سكب دلّة مكسوّة بالنُحاس', 'صواني تذوّق سعف نخل مخصّصة (دفعة 40)'],
+    roomViews: [
+      {art: 'najdi-warm',     nameEn: 'Low Majlis',      nameAr: 'المجلس المنخفض'},
+      {art: 'clay-brass',     nameEn: 'Coffee Station',  nameAr: 'محطّة القهوة'},
+      {art: 'layered-rugs',   nameEn: 'Tasting Corner',  nameAr: 'ركن التذوّق'},
+      {art: 'long-evening',   nameEn: 'Family Booths',   nameAr: 'بُوْثات العائلات'},
+      {art: 'najdi-geom',     nameEn: 'Window Screens',  nameAr: 'مشربيات النوافذ'},
+      {art: 'warm-hub',       nameEn: 'Pastry Counter',  nameAr: 'بار المعجّنات'},
+    ],
+  },
+
+  // 12 — KAFD private corporate floor (single tenant)
+  {
+    id: 'kafd-private-office',
+    category: 'commercial',
+    vertical: 'office',
+    city: 'Riyadh',
+    district: 'KAFD',
+    areaM2: 320,
+    rooms: 14,
+    budget: 1_120_000,
+    retailEquivalent: 1_310_000,
+    deliveredDays: 42,
+    itemCount: 92,
+    supplierCount: 11,
+    conceptName: 'Private Floor · Stone & Walnut',
+    conceptArt: 'ink-stone',
+    heroPhoto: '/projects/kafd-private-office/hero.jpg',
+    paletteHex: ['#1A1F2E', '#3D4A6B', '#B89968', '#DDD3C3', '#F4EFE6'],
+    floorPlanId: 'office-200',
+    costBreakdown: {furniture: 312000, cabinetry: 358000, lighting: 78000, softFurnishings: 64000, finishes: 168000, labor: 88000, projectManagement: 52000},
+    titleEn: 'A Private KAFD Floor for an Investment Firm',
+    titleAr: 'طابق خاص في KAFD لشركة استثمار',
+    clientLabelEn: 'Investment firm · single-tenant 14th floor',
+    clientLabelAr: 'شركة استثمار · مستأجر وحيد · الطابق 14',
+    taglineEn: 'Boardroom-grade weight throughout — limestone, walnut, midnight wool — calibrated for a deal floor.',
+    taglineAr: 'وقار قاعات الاجتماعات في كلّ ركن — حجر، جوز، صوف ليلي — مُعاير لطابق عقد صفقات.',
+    storyEn: 'A Riyadh-headquartered investment firm taking a full KAFD floor briefed us on three principles: no logos on the walls, no glass partitions, and no surface that reads as anything but stone, walnut, or wool. We built four partner offices, two boardrooms (one for clients, one internal), an associate bench in a single 14-meter walnut run, two phone rooms, a serving pantry that hosts a chef twice a week, and a prayer suite with mihrab — all delivered in 42 days from brief sign-off.',
+    storyAr: 'شركة استثمار مقرّها الرياض استأجرت طابقاً كاملاً في KAFD، وقدّمت لنا ثلاثة مبادئ: لا شعارات على الجدران، لا فواصل زجاجيّة، ولا سطح يُقرأ بغير الحجر أو الجوز أو الصوف. بنينا أربعة مكاتب شركاء، وقاعتَي اجتماعات (واحدة للعملاء، وأخرى داخليّة)، ومنصّة موظّفين بمسار جوز موحّد بطول أربعة عشر متراً، وغرفتَي هاتف، ومُؤونة خدمة يستضيف فيها شيف مرّتين أسبوعياً، وجناح صلاة بمحراب — كلّها سُلِّمت خلال اثنين وأربعين يوماً من توقيع الموجز.',
+    verdictEn: 'Audit by the firm\'s London partner came back with one note: "feels more grown-up than Mayfair." Brand guideline locked.',
+    verdictAr: 'عاد تدقيق الشريك في لندن بملاحظة واحدة: «يبدو أكثر نضجاً من ميفير». أُغلق دليل الهويّة.',
+    inspirations: [
+      {art: 'ink-stone',      captionEn: 'Midnight wool boardroom, limestone floor',         captionAr: 'قاعة اجتماعات بصوف ليلي وأرضيّة حجر'},
+      {art: 'spare-craft',    captionEn: 'Walnut associate bench, single 14m run',           captionAr: 'منصّة موظّفين جوز بمسار واحد 14م'},
+      {art: 'formal-majlis',  captionEn: 'Partner office in walnut and bronze',              captionAr: 'مكتب شريك بالجوز والبرونز'},
+      {art: 'najdi-geom',     captionEn: 'Prayer suite with carved mihrab',                  captionAr: 'جناح صلاة بمحراب محفور'},
+    ],
+    highlightItemsEn: ['Four partner offices in walnut + bronze', '14m continuous walnut associate bench', 'Two limestone-and-wool boardrooms', 'Prayer suite with carved cedar mihrab', 'Pantry sized for twice-weekly chef service'],
+    highlightItemsAr: ['أربعة مكاتب شركاء بالجوز والبرونز', 'منصّة موظّفين متّصلة بالجوز بطول 14م', 'قاعتا اجتماعات بالحجر والصوف', 'جناح صلاة بمحراب أرز محفور', 'مُؤونة بحجم يكفي خدمة شيف مرّتين أسبوعياً'],
+    roomViews: [
+      {art: 'ink-stone',      nameEn: 'Client Boardroom',  nameAr: 'قاعة اجتماعات العملاء'},
+      {art: 'formal-majlis',  nameEn: 'Partner Office',    nameAr: 'مكتب الشريك'},
+      {art: 'spare-craft',    nameEn: 'Associate Bench',   nameAr: 'منصّة الموظّفين'},
+      {art: 'open-living',    nameEn: 'Reception',         nameAr: 'الاستقبال'},
+      {art: 'warm-hub',       nameEn: 'Chef Pantry',       nameAr: 'مُؤونة الشيف'},
+      {art: 'najdi-geom',     nameEn: 'Prayer Suite',      nameAr: 'جناح الصلاة'},
     ],
   },
 ];

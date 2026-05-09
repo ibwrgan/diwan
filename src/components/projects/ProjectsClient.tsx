@@ -3,8 +3,10 @@
 import {useMemo, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
-import {ArrowLeft, ArrowRight, MapPin, Calendar, Sparkles, X, Check} from 'lucide-react';
+import {ArrowLeft, ArrowRight, MapPin, Calendar, Sparkles, X, Check, Sofa, Lightbulb, Layers, Hammer, Ruler, ClipboardCheck, Package} from 'lucide-react';
 import {CASE_STUDIES, artTreatments, type CaseStudy} from '@/data/projects';
+import {SAMPLE_PLANS} from '@/data/floorPlans';
+import {FloorPlanSVG} from '@/components/space/FloorPlanSVG';
 
 type FilterKey = 'all' | 'residential' | 'commercial';
 
@@ -287,6 +289,67 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
                 </div>
               </div>
 
+              {/* 2D Engineering layout */}
+              {study.floorPlanId && (() => {
+                const plan = SAMPLE_PLANS.find((p) => p.id === study.floorPlanId);
+                if (!plan) return null;
+                return (
+                  <div className="flex flex-col gap-3 mt-4">
+                    <h3 className="font-sans uppercase text-ink-60 inline-flex items-center gap-2" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
+                      <Ruler className="h-3 w-3" />
+                      2D engineering layout
+                    </h3>
+                    <div className="bg-bone border border-ink-12 rounded-sm p-4">
+                      <FloorPlanSVG
+                        size={plan.size}
+                        rooms={plan.rooms.map((r) => ({id: r.id, type: r.defaultType, label: r.label, x: r.x, y: r.y, w: r.w, h: r.h}))}
+                        height={360}
+                      />
+                      <p className="font-sans italic text-ink-60 mt-3" style={{fontSize: '12px'}}>
+                        Every Diwan project ships with a stamped 2D layout, supplier-by-supplier purchase orders, and a sequencing plan. The customer signs once on this drawing — production starts the same day.
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Cost breakdown — demystifies the budget */}
+              <div className="flex flex-col gap-3 mt-4">
+                <h3 className="font-sans uppercase text-ink-60 inline-flex items-center gap-2" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
+                  <Package className="h-3 w-3" />
+                  Where the budget goes
+                </h3>
+                <CostBreakdownPanel study={study} fmt={fmt} />
+                <p className="font-sans italic text-ink-60" style={{fontSize: '12px'}}>
+                  Diwan price covers everything inside this panel — furniture, joinery, lighting, soft goods, finishes, install labor, project management, and the twelve-month single-accountability warranty. No designer fees on top, no per-supplier markups, no chasing aftercare. Bundle pricing is what makes the headline number lower than the retail equivalent above.
+                </p>
+              </div>
+
+              {/* Material close-ups */}
+              <div className="flex flex-col gap-3 mt-4">
+                <h3 className="font-sans uppercase text-ink-60 inline-flex items-center gap-2" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
+                  <Layers className="h-3 w-3" />
+                  Material close-ups
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {[1, 2, 3].map((n) => (
+                    <div
+                      key={n}
+                      className="aspect-square rounded-sm relative overflow-hidden"
+                      style={{background: artTreatments[study.conceptArt]?.bg}}
+                    >
+                      <div
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{backgroundImage: `url('/projects/${study.id}/closeups/${String(n).padStart(2, '0')}.jpg')`}}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <p className="font-sans italic text-ink-60" style={{fontSize: '12px'}}>
+                  Tight macro shots of the materials we specified — wood grain, brass patina, fabric weave, stone honing. This is what shows up on installation day. Every supplier ships under one Diwan PO so the finish reads consistently across the whole project.
+                </p>
+              </div>
+
               {/* Building exterior */}
               <div className="flex flex-col gap-3 mt-4">
                 <h3 className="font-sans uppercase text-ink-60" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
@@ -426,6 +489,59 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
             </aside>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function CostBreakdownPanel({study, fmt}: {study: CaseStudy; fmt: (n: number) => string}) {
+  const cb = study.costBreakdown;
+  const total = cb.furniture + cb.cabinetry + cb.lighting + cb.softFurnishings + cb.finishes + cb.labor + cb.projectManagement;
+  const rows: Array<{key: string; label: string; sub: string; value: number; icon: React.ReactNode; color: string}> = [
+    {key: 'furniture',  label: 'Furniture',          sub: 'Sofas, beds, dining, chairs',           value: cb.furniture,         icon: <Sofa className="h-4 w-4" />,          color: '#B8552E'},
+    {key: 'cabinetry',  label: 'Built-in cabinetry', sub: 'Wardrobes, kitchen, joinery',           value: cb.cabinetry,         icon: <Layers className="h-4 w-4" />,        color: '#B89968'},
+    {key: 'finishes',   label: 'Surfaces & finishes',sub: 'Flooring, paint, hardware, stone',     value: cb.finishes,           icon: <Hammer className="h-4 w-4" />,        color: '#3D4A6B'},
+    {key: 'lighting',   label: 'Lighting',           sub: 'Fixtures, dimming, smart controls',    value: cb.lighting,           icon: <Lightbulb className="h-4 w-4" />,    color: '#C9994A'},
+    {key: 'soft',       label: 'Soft furnishings',   sub: 'Rugs, drapes, cushions, art',          value: cb.softFurnishings,    icon: <Sparkles className="h-4 w-4" />,      color: '#D9886B'},
+    {key: 'labor',      label: 'Installation labor', sub: 'Assembly, electrical, plumbing tie-ins',value: cb.labor,             icon: <Hammer className="h-4 w-4" />,        color: '#5C8A5C'},
+    {key: 'pm',         label: 'Project management', sub: 'Diwan PM, QC, 12-month warranty',      value: cb.projectManagement,  icon: <ClipboardCheck className="h-4 w-4" />, color: '#1A1F2E'},
+  ];
+
+  return (
+    <div className="bg-bone border border-ink-12 rounded-sm p-5 flex flex-col gap-4">
+      {/* Stacked bar */}
+      <div className="flex h-3 rounded-full overflow-hidden">
+        {rows.map((r) => (
+          <div key={r.key} title={`${r.label}: SAR ${fmt(r.value)}`} style={{background: r.color, flex: r.value}} />
+        ))}
+      </div>
+
+      {/* Itemised list */}
+      <ul className="flex flex-col divide-y divide-ink-12">
+        {rows.map((r) => {
+          const pct = ((r.value / total) * 100).toFixed(0);
+          return (
+            <li key={r.key} className="grid grid-cols-12 gap-3 items-center py-2.5">
+              <div className="col-span-1 flex justify-center">
+                <span className="inline-flex items-center justify-center h-7 w-7 rounded-full" style={{background: r.color, color: '#FAFAF7'}}>
+                  {r.icon}
+                </span>
+              </div>
+              <div className="col-span-6 flex flex-col">
+                <span className="font-serif font-bold" style={{fontSize: '14px'}}>{r.label}</span>
+                <span className="font-sans text-ink-60" style={{fontSize: '11px'}}>{r.sub}</span>
+              </div>
+              <div className="col-span-2 text-end font-sans tabular text-ink-60" style={{fontSize: '11px'}}>{pct}%</div>
+              <div className="col-span-3 text-end font-serif font-bold tabular" style={{fontSize: '14px'}}>SAR {fmt(r.value)}</div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Total bar */}
+      <div className="border-t-2 border-clay-700 pt-3 flex items-baseline justify-between">
+        <span className="font-sans uppercase text-clay-700" style={{fontSize: '11px', letterSpacing: '0.18em'}}>Diwan total</span>
+        <span className="font-serif font-bold tabular text-clay-700" style={{fontSize: '24px'}}>SAR {fmt(total)}</span>
       </div>
     </div>
   );

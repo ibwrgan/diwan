@@ -4,13 +4,17 @@
 //
 // Usage:  npm run generate-photos
 //         npm run generate-photos -- --force            (regenerate even if files exist)
-//         npm run generate-photos -- --only=projects    (just case studies)
+//         npm run generate-photos -- --only=projects    (just case-study heroes)
+//         npm run generate-photos -- --only=exteriors   (building exteriors)
+//         npm run generate-photos -- --only=rooms       (per-room photos)
+//         npm run generate-photos -- --only=closeups    (material macro detail shots)
 //         npm run generate-photos -- --only=inspirations
+//         npm run generate-photos -- --id=hittin-townhouse-riyadh   (one project across all passes)
 //
-// Cost at current Replicate pricing:
-//   Flux 1.1 Pro  ≈ $0.04/image  (used for case-study heroes — 8 photos ≈ $0.32)
-//   Flux Schnell  ≈ $0.003/image (used for inspiration responses — 18 photos ≈ $0.06)
-//   Total ≈ $0.40
+// Cost at current Replicate pricing (12 case studies):
+//   Flux 1.1 Pro  ≈ $0.04/image (heroes 12 + exteriors 12 = $0.96)
+//   Flux Schnell  ≈ $0.003/image (rooms ≈70, closeups 36, inspirations 18 ≈ $0.37)
+//   Total ≈ $1.35
 
 import Replicate from 'replicate';
 import {writeFileSync, mkdirSync, existsSync} from 'node:fs';
@@ -25,6 +29,8 @@ if (!TOKEN) {
 const args = new Set(process.argv.slice(2));
 const FORCE = args.has('--force');
 const ONLY = [...args].find((a) => a.startsWith('--only='))?.split('=')[1];
+const ONLY_ID = [...args].find((a) => a.startsWith('--id='))?.split('=')[1];
+const matchesId = (id) => !ONLY_ID || id === ONLY_ID;
 
 const replicate = new Replicate({auth: TOKEN});
 
@@ -106,6 +112,41 @@ const PROJECTS = [
       "Brass and ash detailing throughout. Quiet, focused, brand-coherent. " +
       "Interior architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
   },
+  {
+    id: 'hittin-townhouse-riyadh',
+    prompt:
+      "Editorial photograph of a young Saudi family's family-living interior in a Hittin townhouse, Riyadh. " +
+      "Bone-toned walls, clay-velvet 3-seat sofa, a single carved cedar mashrabiya feature wall in the entry, " +
+      "white-oak cabinetry visible at the kitchen edge, soft Najdi-pattern rug. Calm, refined, low-key. " +
+      "Soft morning light. Interior architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'olaya-roastery-riyadh',
+    prompt:
+      "Editorial photograph of a specialty-coffee roastery cafe interior on Olaya Street, Riyadh. " +
+      "9-seat brass-and-walnut bar, polished concrete floor with a brass inlay marking the queue, " +
+      "Najdi-geometric acoustic ceiling treatment overhead, glass-walled roasting room visible at the back, " +
+      "small whole-bean retail wall on one side. Industrial-Najdi mood. Late-afternoon directional light. " +
+      "Interior architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'bujairi-heritage-cafe',
+    prompt:
+      "Editorial photograph of a heritage cafe interior near Al-Bujairi, Riyadh. " +
+      "Hand-poured mud-plaster walls in three custom Najdi tones, low-majlis seating in clay-wool cushions, " +
+      "copper-clad dallah pour station as focal point, carved cedar mashrabiya screens on the windows, " +
+      "warm earth palette. Late-afternoon golden light. Interior architectural photography, 35mm, ultra-sharp, " +
+      "no text, no people, no watermark.",
+  },
+  {
+    id: 'kafd-private-office',
+    prompt:
+      "Editorial photograph of a private investment-firm boardroom interior on a single-tenant KAFD floor, Riyadh. " +
+      "Limestone floor, midnight-wool upholstered walls, walnut boardroom table for twelve, brushed-bronze " +
+      "linear pendants, no logos, no glass partitions. Calm, grown-up, ceremonial weight. " +
+      "Soft late-morning daylight from full-height windows. Interior architectural photography, 35mm, ultra-sharp, " +
+      "no text, no people, no watermark.",
+  },
 ];
 
 // -----------------------------------------------------------------------------
@@ -173,6 +214,38 @@ const EXTERIORS = [
       "Editorial architectural photograph of the entrance lobby on the second floor of a boutique co-working space " +
       "in Riyadh's KAFD. Warm walnut reception desk, limestone floor, large picture window overlooking the KAFD " +
       "skyline, brass and ash detailing. Soft late-morning daylight. Architectural photography, 35mm, ultra-sharp, " +
+      "no text, no people, no watermark.",
+  },
+  {
+    id: 'hittin-townhouse-riyadh',
+    prompt:
+      "Editorial architectural photograph of a contemporary Saudi family townhouse exterior in Riyadh's Hittin " +
+      "district. Bone-stucco facade, recessed Hijazi shutters, a small olive tree in a stone planter, brass-trimmed " +
+      "entry door, low-key restrained presence. Late-afternoon light. Architectural photography, 35mm, ultra-sharp, " +
+      "no text, no people, no watermark.",
+  },
+  {
+    id: 'olaya-roastery-riyadh',
+    prompt:
+      "Editorial architectural photograph of a specialty-coffee roastery storefront on Olaya Street, Riyadh, at dusk. " +
+      "Walnut-and-brass framed glass facade, warm interior glow visible through the windows, a single minimal " +
+      "Arabic-and-Latin wordmark, polished concrete spilling out to the pavement, two cane stools at the threshold. " +
+      "Golden-hour light. Architectural photography, 35mm, ultra-sharp, no text watermark, no people.",
+  },
+  {
+    id: 'bujairi-heritage-cafe',
+    prompt:
+      "Editorial architectural photograph of a heritage cafe storefront near Al-Bujairi, Riyadh. " +
+      "Hand-poured mud-plaster facade in warm Najdi tones, recessed carved-cedar door, carved-cedar window screens, " +
+      "low date palms in stone planters, lantern wall sconces, soft pavement seating. Late-afternoon golden light. " +
+      "Architectural photography, 35mm, ultra-sharp, no text watermark, no people.",
+  },
+  {
+    id: 'kafd-private-office',
+    prompt:
+      "Editorial architectural photograph from inside a single-tenant KAFD floor entry vestibule, Riyadh. " +
+      "Limestone floor, walnut-paneled vestibule walls, brushed-bronze elevator surround visible, no signage, " +
+      "city skyline through a tall window. Soft late-morning daylight. Architectural photography, 35mm, ultra-sharp, " +
       "no text, no people, no watermark.",
   },
 ];
@@ -266,6 +339,117 @@ const ROOM_PROMPTS = {
       "Director's office with walnut desk and a single ash armchair",
     ],
   },
+  'hittin-townhouse-riyadh': {
+    style: "Soft Najdi townhouse style for a young Riyadh family. Bone-toned walls, clay-velvet seating, white-oak cabinetry, a single carved cedar feature, soft Najdi rugs",
+    rooms: [
+      "Family living with clay-velvet 3-seat sofa and bone walls",
+      "Majlis with 8-seat clay-velvet seating around a Najdi rug",
+      "Quiet white-oak kitchen with bone-quartz island",
+      "Dining nook with walnut table for six and brass pendant",
+      "Master bedroom with linen-upholstered headboard wall",
+      "Prayer corner with a small wool rug and recessed niche",
+    ],
+  },
+  'olaya-roastery-riyadh': {
+    style: "Industrial-Najdi specialty roastery cafe. Brass-and-walnut bar, polished concrete with brass inlay queue, Najdi-geometric acoustic ceiling, glass-walled roasting room",
+    rooms: [
+      "9-seat brass-and-walnut coffee bar centre stage",
+      "Cafe seating zone with cane chairs on polished concrete",
+      "Glass-walled roasting room with venting and a Loring-style roaster",
+      "Whole-bean retail wall with magnetic price tags",
+      "Najdi-geometric acoustic ceiling close-up overhead",
+    ],
+  },
+  'bujairi-heritage-cafe': {
+    style: "Najdi heritage cafe near Diriyah. Hand-poured mud-plaster walls in three tones, low-majlis seating in clay wool, copper-clad coffee station, carved cedar window screens",
+    rooms: [
+      "Low majlis with clay-wool cushions and mud-plaster walls",
+      "Copper-clad coffee station with dallah pour ritual",
+      "Tasting corner with a custom palm-leaf tray on a low cedar table",
+      "Family booth with carved cedar dividers and warm sconces",
+      "Carved cedar window screens with afternoon light filtering through",
+      "Pastry counter with palm-leaf trays and stoneware",
+    ],
+  },
+  'kafd-private-office': {
+    style: "Private KAFD floor for an investment firm. Limestone, walnut, midnight wool, brushed bronze; no logos, no glass partitions, no plastic",
+    rooms: [
+      "Client boardroom with midnight-wool walls and limestone floor",
+      "Partner office in walnut and brushed bronze",
+      "Associate bench in a single 14-metre walnut run",
+      "Reception with limestone wall and a single Saudi-art commission",
+      "Chef pantry with walnut cabinetry and travertine counter",
+      "Prayer suite with carved cedar mihrab and wool rug",
+    ],
+  },
+};
+
+// -----------------------------------------------------------------------------
+// Material close-ups (3 per project) — saved as closeups/01.jpg, 02.jpg, 03.jpg
+// Tight macro / detail shots that demystify the build quality and the budget.
+// -----------------------------------------------------------------------------
+
+const CLOSEUPS = {
+  'najdi-villa-nakheel': [
+    "Tight macro photograph of a hand-carved cedar mashrabiya panel showing a Najdi geometric pattern. Warm directional light grazing the surface, sharp shadows in the carving. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a brass pendant detail with a warm glow and patina. Aged brass, hand-finished. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a clay-coloured velvet weave with a subtle nap and a hand-stitched seam at the corner of a majlis cushion. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'coastal-jeddah-corniche': [
+    "Tight macro photograph of a travertine slab edge with a soft honed finish and a single drop of sea-spray light reflecting at the corner. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of pale ash flooring grain with a single strand of natural light crossing it. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of bone-coloured linen weave on a sectional sofa, showing the warp-and-weft and a piped seam. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'riyadh-contemporary-penthouse': [
+    "Tight macro photograph of a honed limestone floor edge meeting a brushed-brass threshold strip. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a brushed-brass cabinet pull on a deep walnut drawer front. Warm reflected light. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a deep midnight-painted wall corner meeting a limestone floor with a single shadow line. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'cocoon-family-compound': [
+    "Tight macro photograph of deep midnight velvet weave with a hand-finished piped seam and a single brass-button detail. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a walnut grain panel with hand-rubbed oil finish, showing the rays in the wood. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a brass-inlay strip set into a walnut wall panel. Hand-fitted, polished. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'open-living-3br-villa': [
+    "Tight macro photograph of pale-oak floor grain with a small Hijazi-shutter shadow falling across it. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a white-oak kitchen cabinet front with a recessed pull and a quartz countertop edge. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a stain-resistant linen weave on a family-room sectional, showing a hand-piped corner seam. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'boutique-cafe-dq': [
+    "Tight macro photograph of a walnut bar top with a hand-rubbed oil finish, showing the grain and a small brass dowel inlay. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a polished brass espresso machine boiler with steam catching the warm afternoon light. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a Najdi-pattern wool rug weave under a banquette, showing the colour layering. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'workshop-dental-clinic': [
+    "Tight macro photograph of a limestone reception-desk edge with a brass-tip lamp casting warm light across it. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of an ash-slat acoustic ceiling looking up, showing the spacing rhythm and warm 2700K LED glow. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a brass-tip task-lamp head on a stone-vanity treatment-room counter. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'kafd-coworking-floor': [
+    "Tight macro photograph of an acoustic-linen panel inside a walnut phone room, showing the weave and a hand-fitted brass corner trim. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a limestone communal-table edge with a brass-tip pen tray catching the light. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a brass-and-ash detail on a phone-room door pull. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'hittin-townhouse-riyadh': [
+    "Tight macro photograph of a clay-velvet sofa weave with a hand-piped seam in bone linen. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a white-oak kitchen cabinet front with a finger-pull detail and a bone-quartz countertop edge. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a small carved cedar mashrabiya feature wall with afternoon light through it. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'olaya-roastery-riyadh': [
+    "Tight macro photograph of a brass-and-walnut bar corner with the brass espresso group head visible. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a polished concrete floor with a brass inlay strip marking the queue. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a Najdi-geometric acoustic ceiling tile from below, with warm pendant glow at the edge. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'bujairi-heritage-cafe': [
+    "Tight macro photograph of a hand-poured mud-plaster wall surface in three Najdi tones, showing the trowel marks. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a copper-clad coffee station with a dallah resting on it, hand-hammered patina. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a custom palm-leaf tasting tray weave with a date and a small ceramic cup on it. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
+  'kafd-private-office': [
+    "Tight macro photograph of a walnut partner-desk corner with a brushed-bronze edge inlay. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of midnight-wool boardroom wall upholstery with a hand-piped seam. 35mm macro, ultra-sharp, editorial, no text, no people.",
+    "Tight macro photograph of a carved cedar mihrab arch detail in a private prayer suite, soft warm light. 35mm macro, ultra-sharp, editorial, no text, no people.",
+  ],
 };
 
 // -----------------------------------------------------------------------------
@@ -381,6 +565,7 @@ if (!ONLY || ONLY === 'projects') {
   console.log('Case studies — interior heroes (Flux 1.1 Pro)');
   console.log('---------------------------------------------');
   for (const p of PROJECTS) {
+    if (!matchesId(p.id)) continue;
     await generate({
       prompt: p.prompt,
       outPath: `public/projects/${p.id}/hero.jpg`,
@@ -394,6 +579,7 @@ if (!ONLY || ONLY === 'exteriors') {
   console.log('\nCase studies — building exteriors (Flux 1.1 Pro)');
   console.log('------------------------------------------------');
   for (const e of EXTERIORS) {
+    if (!matchesId(e.id)) continue;
     await generate({
       prompt: e.prompt,
       outPath: `public/projects/${e.id}/exterior.jpg`,
@@ -407,6 +593,7 @@ if (!ONLY || ONLY === 'rooms') {
   console.log('\nCase studies — per-room photos (Flux Schnell)');
   console.log('---------------------------------------------');
   for (const [id, data] of Object.entries(ROOM_PROMPTS)) {
+    if (!matchesId(id)) continue;
     for (let i = 0; i < data.rooms.length; i++) {
       const room = data.rooms[i];
       const prompt =
@@ -417,6 +604,22 @@ if (!ONLY || ONLY === 'rooms') {
         outPath: `public/projects/${id}/rooms/${String(i + 1).padStart(2, '0')}.jpg`,
         model: 'black-forest-labs/flux-schnell',
         aspect: '4:3',
+      });
+    }
+  }
+}
+
+if (!ONLY || ONLY === 'closeups') {
+  console.log('\nCase studies — material close-ups (Flux Schnell)');
+  console.log('-------------------------------------------------');
+  for (const [id, prompts] of Object.entries(CLOSEUPS)) {
+    if (!matchesId(id)) continue;
+    for (let i = 0; i < prompts.length; i++) {
+      await generate({
+        prompt: prompts[i],
+        outPath: `public/projects/${id}/closeups/${String(i + 1).padStart(2, '0')}.jpg`,
+        model: 'black-forest-labs/flux-schnell',
+        aspect: '1:1',
       });
     }
   }
