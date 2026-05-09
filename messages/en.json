@@ -5,6 +5,7 @@
   },
   "Nav": {
     "howItWorks": "How it works",
+    "projects": "Our work",
     "forBusinesses": "For businesses",
     "forSuppliers": "For suppliers",
     "about": "About",
@@ -498,6 +499,62 @@
       "lede": "Initial consultation is free. We work with brands opening one or twelve locations.",
       "primary": "Request a brand consultation",
       "secondary": "Download the B2B brief"
+    }
+  },
+  "Projects": {
+    "hero": {
+      "eyebrow": "Our work",
+      "title": "Saudi homes and businesses, delivered.",
+      "lede": "Eight stories from across the Kingdom — homeowners who came with Pinterest boards full of dreams, and operators opening branches under tight brand discipline. Same platform. Same thirty-day promise."
+    },
+    "filters": {
+      "all": "All projects",
+      "residential": "Homes",
+      "commercial": "Businesses"
+    },
+    "cardLabels": {
+      "delivered": "Delivered",
+      "concept": "Concept",
+      "budget": "Project total",
+      "view": "View case study"
+    },
+    "detail": {
+      "labels": {
+        "client": "Client",
+        "city": "Location",
+        "area": "Area",
+        "rooms": "Rooms",
+        "concept": "Concept",
+        "delivered": "Delivered",
+        "budget": "Project total",
+        "savings": "Saved vs retail",
+        "inspirations": "Pinterest inspirations",
+        "items": "Items installed",
+        "suppliers": "Suppliers in the chain",
+        "timeline": "Delivery timeline",
+        "verdict": "What the client said",
+        "highlightItems": "Signature pieces"
+      },
+      "stages": [
+        {"k": "brief",     "label": "Brief & approval", "days": 7},
+        {"k": "produce",   "label": "Production",       "days": 18},
+        {"k": "qc",        "label": "QC & delivery",    "days": 3},
+        {"k": "install",   "label": "Install & handover","days": 2}
+      ],
+      "back": "Back to all projects"
+    },
+    "videoSection": {
+      "eyebrow": "Watch the platform in action",
+      "title": "Five minutes from quiz to keys.",
+      "lede": "A walkthrough of the full Diwan platform — from the taste quiz through the AI-generated concepts to the supplier portal.",
+      "captionPending": "Walkthrough video coming soon."
+    },
+    "cta": {
+      "eyebrow": "Your turn",
+      "title": "Whatever you live in, we can design it.",
+      "lede": "Apartment, villa, cafe, clinic, or chain — start with the same twelve questions and a photo of the space.",
+      "primary": "Start your space",
+      "secondary": "Speak to a designer"
     }
   },
   "Library": {

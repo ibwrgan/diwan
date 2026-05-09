@@ -24,7 +24,8 @@ export function Header() {
   }, [open]);
 
   const navLinks: Array<{href: string; label: string}> = [
-    {href: '/how-it-works',  label: t('howItWorks')},
+    {href: '/projects',       label: t('projects')},
+    {href: '/how-it-works',   label: t('howItWorks')},
     {href: '/for-businesses', label: t('forBusinesses')},
     {href: '/for-suppliers',  label: t('forSuppliers')},
     {href: '/about',          label: t('about')},
@@ -68,8 +69,6 @@ export function Header() {
       </div>
     </header>
 
-    {/* Mobile drawer — rendered as sibling so the header's backdrop-filter
-        doesn't create a containing block that clips fixed positioning. */}
     {open && (
       <div className="md:hidden fixed inset-0 z-[100]" role="dialog" aria-modal="true">
           {/* Backdrop */}
