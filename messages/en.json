@@ -501,6 +501,20 @@
       "secondary": "Download the B2B brief"
     }
   },
+  "Inspirations": {
+    "hero": {
+      "eyebrow": "Pinterest in. Diwan out.",
+      "title": "Bring us what you love. We translate it into your home.",
+      "lede": "Customers come to us with Pinterest boards full of dreams. We honor what they fell in love with — the carved geometry, the linen and travertine, the long-evening dining — and translate it into a Saudi home, sourced and built within thirty days. Below: real inspirations, real Diwan responses."
+    },
+    "labels": {
+      "source": "What the customer brought",
+      "diwanResponse": "Diwan's response — three interpretations",
+      "interpretation": "How we translated it",
+      "noInspirationsTitle": "No inspirations dropped yet.",
+      "noInspirationsBody": "Drop a Pinterest screenshot or reference photo into /public/inspirations/{slug}/source.jpg and Diwan responses into the same folder as 1.jpg, 2.jpg, 3.jpg — they appear here automatically."
+    }
+  },
   "Projects": {
     "hero": {
       "eyebrow": "Our work",
