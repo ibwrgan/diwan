@@ -5,7 +5,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import {Play, Pause, RotateCcw, Volume2, VolumeX} from 'lucide-react';
 import {SAMPLE_PLANS} from '@/data/floorPlans';
 import {FloorPlanSVG} from '@/components/space/FloorPlanSVG';
-import {PITCH_SCRIPT, TOTAL_DURATION} from './script';
+import {PITCH_SCRIPT, ALL_SEGMENTS, TOTAL_DURATION} from './script';
 
 const VO_SRC = '/pitch/voiceover-ar.m4a';
 const MUSIC_SRC = '/pitch/music.mp3';
@@ -85,6 +85,16 @@ export function PitchReel({locale}: {locale: string}) {
   const sceneProgress = (time - scene.start) / (scene.end - scene.start);
   const overallProgress = time / TOTAL_DURATION;
 
+  // Find the latest segment whose start time has passed.
+  const activeSegment = useMemo(() => {
+    let best = ALL_SEGMENTS[0];
+    for (const s of ALL_SEGMENTS) {
+      if (time >= s.at) best = s;
+      else break;
+    }
+    return best;
+  }, [time]);
+
   return (
     <div className="fixed inset-0 bg-ink text-bone overflow-hidden flex flex-col" dir={isAr ? 'rtl' : 'ltr'}>
       <audio
@@ -117,25 +127,38 @@ export function PitchReel({locale}: {locale: string}) {
         </span>
       </div>
 
-      {/* Subtitle bar */}
-      <div className="absolute inset-x-0 bottom-24 px-6 md:px-16 z-30">
-        <div className="max-w-5xl mx-auto">
+      {/* Subtitle bar — Arabic only, max 2 lines, time-synced segments */}
+      <div className="absolute inset-x-0 bottom-24 flex justify-center px-6 z-30 pointer-events-none">
+        <div className="w-full max-w-3xl">
           <AnimatePresence mode="wait">
-            <motion.p
-              key={sceneIndex}
+            <motion.div
+              key={activeSegment.at}
               initial={{opacity: 0, y: 12}}
               animate={{opacity: 1, y: 0}}
               exit={{opacity: 0, y: -8}}
-              transition={{duration: 0.4}}
-              className={`text-center font-${isAr ? 'arabic' : 'serif'} text-bone leading-snug drop-shadow-lg`}
+              transition={{duration: 0.35}}
+              className="bg-ink/55 backdrop-blur-sm rounded-md px-7 py-4 mx-auto"
               style={{
-                fontSize: 'clamp(20px, 2.6vw, 32px)',
-                lineHeight: 1.45,
-                textShadow: '0 2px 16px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.9)',
+                width: 'fit-content',
+                maxWidth: '100%',
               }}
+              dir="rtl"
             >
-              {isAr ? scene.ar : scene.en}
-            </motion.p>
+              <p
+                className="font-arabic font-medium text-bone text-center"
+                style={{
+                  fontSize: 'clamp(22px, 2.9vw, 36px)',
+                  lineHeight: 1.5,
+                  textShadow: '0 1px 3px rgba(0,0,0,0.6)',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {activeSegment.text}
+              </p>
+            </motion.div>
           </AnimatePresence>
         </div>
       </div>
