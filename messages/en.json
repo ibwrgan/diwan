@@ -558,10 +558,11 @@
       "back": "Back to all projects"
     },
     "videoSection": {
-      "eyebrow": "Watch the platform in action",
-      "title": "Five minutes from quiz to keys.",
-      "lede": "A walkthrough of the full Diwan platform — from the taste quiz through the AI-generated concepts to the supplier portal.",
-      "captionPending": "Walkthrough video coming soon."
+      "eyebrow": "Meet Diwan",
+      "title": "Three minutes. The whole story.",
+      "lede": "From inspiration to delivered keys — measurements, 2D engineering layouts, material specification, supplier orchestration, and twelve delivered projects across the Kingdom.",
+      "captionPending": "Walkthrough video coming soon.",
+      "openFullscreen": "Open fullscreen ↗"
     },
     "cta": {
       "eyebrow": "Your turn",

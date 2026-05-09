@@ -114,8 +114,8 @@ export function ProjectsClient({locale}: {locale: string}) {
         </div>
       </section>
 
-      {/* Video placeholder */}
-      <VideoSection />
+      {/* Embedded pitch reel */}
+      <VideoSection locale={locale} />
 
       {/* CTA */}
       <CTASection />
@@ -127,7 +127,7 @@ export function ProjectsClient({locale}: {locale: string}) {
   );
 }
 
-function VideoSection() {
+function VideoSection({locale}: {locale: string}) {
   const t = useTranslations('Projects.videoSection');
   return (
     <section className="midnight">
@@ -136,32 +136,25 @@ function VideoSection() {
           <span className="eyebrow">{t('eyebrow')}</span>
           <h2 className="h-display">{t('title')}</h2>
           <p className="lede max-w-[440px]">{t('lede')}</p>
+          <a
+            href={`/${locale}/pitch`}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2 mt-2 font-sans uppercase text-clay-400 hover:text-clay-700 transition-colors"
+            style={{fontSize: '11px', letterSpacing: '0.22em'}}
+          >
+            {t('openFullscreen')}
+          </a>
         </div>
         <div className="lg:col-span-7">
-          {/* Drop a /public/video/walkthrough.mp4 file and the page picks it up.
-              Until then, a branded placeholder is shown. */}
-          <div className="aspect-video bg-ink/40 rounded-sm relative overflow-hidden border border-cream-20">
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              controls
-              poster="/brand/logo.svg"
-              preload="none"
-            >
-              <source src="/video/walkthrough.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="flex flex-col items-center gap-3 text-cream-60">
-                <span
-                  className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-clay-700/30 border border-clay-400"
-                  aria-hidden
-                >
-                  <span className="ms-1 w-0 h-0 border-y-[10px] border-y-transparent border-s-[16px] border-s-clay-400" />
-                </span>
-                <span className="font-sans uppercase" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
-                  {t('captionPending')}
-                </span>
-              </div>
-            </div>
+          <div className="aspect-video bg-ink rounded-sm relative overflow-hidden border border-cream-20 shadow-2xl">
+            <iframe
+              src={`/${locale}/pitch?embed=1`}
+              title={t('title')}
+              className="absolute inset-0 w-full h-full border-0"
+              allow="autoplay; fullscreen"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
