@@ -145,21 +145,16 @@ export function PitchReel({locale}: {locale: string}) {
 
       {/* Subtitle bar — Arabic only, max 2 lines, time-synced segments */}
       <div className="absolute inset-x-0 bottom-24 flex justify-center px-6 z-30 pointer-events-none">
-        <div className="w-full max-w-3xl">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSegment.at}
-              initial={{opacity: 0, y: 12}}
-              animate={{opacity: 1, y: 0}}
-              exit={{opacity: 0, y: -8}}
-              transition={{duration: 0.35}}
-              className="bg-ink/55 backdrop-blur-sm rounded-md px-5 py-2.5 mx-auto"
-              style={{
-                width: 'fit-content',
-                maxWidth: '100%',
-              }}
-              dir="rtl"
-            >
+        <div className="relative w-full max-w-3xl flex justify-center" style={{minHeight: 70}}>
+          <motion.div
+            key={activeSegment.at}
+            initial={{opacity: 0, y: 8}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.18}}
+            className="bg-ink/55 backdrop-blur-sm rounded-md px-5 py-2.5"
+            style={{maxWidth: '100%'}}
+            dir="rtl"
+          >
               <p
                 className="font-arabic font-medium text-bone text-center"
                 style={{
@@ -174,8 +169,7 @@ export function PitchReel({locale}: {locale: string}) {
               >
                 {activeSegment.text}
               </p>
-            </motion.div>
-          </AnimatePresence>
+          </motion.div>
         </div>
       </div>
 
