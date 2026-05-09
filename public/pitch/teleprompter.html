@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ديوان · نص التعليق الصوتي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --clay-700: #B8552E;
+      --clay-400: #D9886B;
+      --midnight-950: #1A1F2E;
+      --sand-100: #F4EFE6;
+      --bone: #FAFAF7;
+      --ink: #1F1A14;
+      --ink-60: rgba(31, 26, 20, 0.6);
+      --ink-12: rgba(31, 26, 20, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--sand-100); color: var(--ink); line-height: 1.5; }
+    .page { max-width: 880px; margin: 0 auto; padding: 48px 32px 80px; }
+    .header { border-bottom: 1px solid var(--ink-12); padding-bottom: 32px; margin-bottom: 40px; }
+    .brand { font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 700; font-size: 32px; color: var(--clay-700); }
+    .subtitle { font-family: 'Fraunces', serif; font-size: 22px; margin-top: 8px; }
+    .meta { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-60); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 8px; }
+    .tips { background: var(--bone); border: 1px solid var(--ink-12); border-radius: 6px; padding: 24px; margin-bottom: 40px; }
+    .tips h2 { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.22em; color: var(--ink-60); text-transform: uppercase; margin-bottom: 12px; }
+    .tips ol { padding-inline-start: 24px; }
+    .tips li { font-size: 15px; margin-bottom: 8px; }
+    .tips code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--sand-100); padding: 2px 6px; border-radius: 3px; color: var(--clay-700); }
+    .scene { background: var(--bone); border: 1px solid var(--ink-12); border-radius: 6px; padding: 32px; margin-bottom: 28px; page-break-inside: avoid; }
+    .scene-head { display: flex; align-items: baseline; gap: 16px; padding-bottom: 18px; margin-bottom: 22px; border-bottom: 1px solid var(--ink-12); }
+    .scene-num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--clay-700); color: var(--bone); font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; border-radius: 50%; flex-shrink: 0; }
+    .scene-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; }
+    .scene-meta { margin-inline-start: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-60); }
+    .ar { font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 30px; line-height: 1.7; font-weight: 500; color: var(--ink); }
+    .en { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--ink-12); font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--ink-60); direction: ltr; text-align: left; }
+    .pause { text-align: center; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.22em; color: var(--ink-60); text-transform: uppercase; margin: 18px 0; }
+    .total { text-align: center; padding: 32px; background: var(--midnight-950); color: var(--bone); border-radius: 6px; margin-top: 40px; }
+    .total .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 48px; color: var(--clay-400); }
+    .total .lbl { font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7; margin-top: 8px; }
+    @media print {
+      body { background: white; }
+      .scene, .tips { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand">ديوان</div>
+      <div class="subtitle">نص التعليق الصوتي للفيديو التعريفي</div>
+      <div class="meta">DIWAN PITCH · RECORDING SCRIPT · ~2:50</div>
+    </header>
+
+    <section class="tips">
+      <h2>قبل التسجيل · BEFORE RECORDING</h2>
+      <ol>
+        <li>افتح <strong>QuickTime Player</strong> ← <strong>File → New Audio Recording</strong></li>
+        <li>سجِّل في غرفة هادئة. ابتعد عن مكيِّف الهواء وقلِّل صدى الجدران بقماش أو ستارة قريبة.</li>
+        <li>تكلَّم بنبرة ثقة وهدوء — كأنّك تشرح المشروع لمستثمر سعودي.</li>
+        <li>اقرأ كلّ مشهد كاملاً، ثم خذ سكتة هادئة (ثانيتين تقريباً) قبل المشهد التالي.</li>
+        <li>عند الانتهاء، احفظ الملف باسم <code>voiceover-ar.m4a</code> وضعه في:<br/>
+          <code>/Users/ibrahimkhalid/Downloads/Diwan/public/pitch/</code></li>
+        <li>القارئ التلقائي للريل سيلتقطه عند تحديث الصفحة. إذا اختلف توقيت أيّ مشهد عن الجدول أدناه، أخبرني وسأضبط التوقيتات.</li>
+      </ol>
+    </section>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">1</span>
+        <span class="scene-title">العنوان · Title</span>
+        <span class="scene-meta">00:00 → 00:10  ·  ~10s</span>
+      </div>
+      <p class="ar">ديوان — حيث تأخذ الفضاءات شكلها. بيوت ومحلّات سعوديّة، تُسلَّم خلال ثلاثين يوماً.</p>
+      <p class="en">Diwan — where spaces take shape. Saudi homes and businesses, delivered in thirty days.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">2</span>
+        <span class="scene-title">المشكلة · The Problem</span>
+        <span class="scene-meta">00:10 → 00:30  ·  ~20s</span>
+      </div>
+      <p class="ar">تتسلّم العائلة السعودية مفتاح بيتها — صندوقاً فارغاً. ثم تبدأ الرحلة: ستّة أشهر، ثمانية موردين، ثلاثة مقاولين بوعود متضاربة، ولا شخص واحد مسؤول عن النتيجة.</p>
+      <p class="en">A Saudi family receives the keys to their home — an empty box. Then begins six months, eight suppliers, three contractors with conflicting promises, and not one person accountable for the result.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">3</span>
+        <span class="scene-title">الوعد · The Promise</span>
+        <span class="scene-meta">00:30 → 00:46  ·  ~16s</span>
+      </div>
+      <p class="ar">وُجد ديوان لأنّ التصميم والتنفيذ قرار واحد — لا ثمانية. توقيع واحد. رقم هاتف واحد. ضمان واحد على كامل التجهيز لمدّة اثني عشر شهراً.</p>
+      <p class="en">Diwan exists because design and execution is one decision — not eight. One signature. One phone number. One twelve-month warranty across the entire fit-out.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">4</span>
+        <span class="scene-title">الخدمة الأولى · القياس والتصميم بالذكاء الاصطناعي</span>
+        <span class="scene-meta">00:46 → 01:11  ·  ~25s</span>
+      </div>
+      <p class="ar">ائتنا بإلهامات Pinterest، أو لوحة هويّة، أو حتى صور بيت ضيّقة من الجوّال. يحوّلها ذكاء ديوان إلى تصاميم أوّليّة خلال ثوانٍ. ثمّ يأتي فريقنا للقياس مجاناً — قياس دقيق بالملّيمتر — أو يقبل ديوان ملفّك الهندسي إن كان جاهزاً.</p>
+      <p class="en">Bring us Pinterest, a brand brief, or even tight phone photos of an empty space. Diwan AI turns them into early designs in seconds. Then our team measures your space for free — to the millimeter — or we accept your engineering file if you have one.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">5</span>
+        <span class="scene-title">الخدمة الثانية · المخطّط الهندسي ثنائي الأبعاد</span>
+        <span class="scene-meta">01:11 → 01:34  ·  ~23s</span>
+      </div>
+      <p class="ar">كلّ مشروع يخرج بمخطّط هندسي ثنائي الأبعاد مختوم — مجلس، وصالة عائلة، ومُصلَّى بقبلة دقيقة، ومطبخ، وغرف نوم — مرسوم بمنطقنا السعودي. توقّع مرّة واحدة على هذا الرّسم — يبدأ الإنتاج في اليوم نفسه.</p>
+      <p class="en">Every project ships with a stamped 2D engineering layout — majlis, family living, prayer room aligned to qibla, kitchen, bedrooms — drawn with Saudi spatial logic. Sign once on this drawing — production starts the same day.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">6</span>
+        <span class="scene-title">الخدمة الثالثة · المواد وسلسلة التوريد والتنفيذ</span>
+        <span class="scene-meta">01:34 → 02:03  ·  ~29s</span>
+      </div>
+      <p class="ar">نحدّد كلّ مادّة على حِدة — أرز محفور، نُحاس مَطْروق، حجر كلسي، طين مصبوب يدوياً، صوف وكتّان. شبكة موردينا من ستّة إلى أحد عشر موردًا تُورِّد تحت أمر شراء واحد بإسم ديوان. نُدير التركيب، والكهرباء، والسباكة، والقبول النهائي. أنت لا تتعامل إلا معنا.</p>
+      <p class="en">We specify every material — carved cedar, hammered brass, limestone, hand-poured mud plaster, wool and linen. Our six-to-eleven-supplier network ships under one Diwan PO. We manage installation, electrical, plumbing, and final sign-off. You only deal with us.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">7</span>
+        <span class="scene-title">أمثلة مُسلَّمة · Delivered examples</span>
+        <span class="scene-meta">02:03 → 02:25  ·  ~22s</span>
+      </div>
+      <p class="ar">اثنا عشر مشروعاً مُسلَّماً عبر المملكة. فيلا نجدية في النخيل، طابق استثماري خاص في KAFD، محمصة قهوة على شارع العُلَيّا، مقهى تراثي بمحاذاة البُجَيْري، تاون هاوس عائلي في حِطّين. كلّها تحت ديوان.</p>
+      <p class="en">Twelve delivered projects across the Kingdom. A Najdi villa in Al-Nakheel, a private investment-firm floor in KAFD, a roastery on Olaya Street, a heritage cafe near Al-Bujairi, a family townhouse in Hittin. All under Diwan.</p>
+    </article>
+
+    <p class="pause">— سكتة قصيرة —</p>
+
+    <article class="scene">
+      <div class="scene-head">
+        <span class="scene-num">8</span>
+        <span class="scene-title">ما يميّزنا والدعوة · Differentiators &amp; CTA</span>
+        <span class="scene-meta">02:25 → 02:52  ·  ~27s</span>
+      </div>
+      <p class="ar">ما يميّز ديوان: ثلاثون يوماً متوسّط التسليم. أرخص من المجموع التجزئة بأربعة عشر بالمائة. رقم واحد لمتابعة ما بعد البيع لاثني عشر شهراً. هويّة سعوديّة بيد متخصّصين. ابدأ فضاءك على diwan.sa</p>
+      <p class="en">What sets Diwan apart: 30-day average delivery. 14% below retail aggregate. One number for twelve-month aftercare. Saudi heritage, by specialists. Start your space at diwan.sa</p>
+    </article>
+
+    <div class="total">
+      <div class="num">02:52</div>
+      <div class="lbl">Total runtime · المدّة الإجمالية</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -7,28 +7,37 @@ import {SAMPLE_PLANS} from '@/data/floorPlans';
 import {FloorPlanSVG} from '@/components/space/FloorPlanSVG';
 import {PITCH_SCRIPT, TOTAL_DURATION} from './script';
 
-const AUDIO_SRC = '/pitch/voiceover-ar.m4a';
+const VO_SRC = '/pitch/voiceover-ar.m4a';
+const MUSIC_SRC = '/pitch/music.mp3';
 
 export function PitchReel({locale}: {locale: string}) {
   const isAr = locale === 'ar';
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const voRef = useRef<HTMLAudioElement | null>(null);
+  const musicRef = useRef<HTMLAudioElement | null>(null);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
-  const [hasAudio, setHasAudio] = useState(false);
+  const [hasVO, setHasVO] = useState(false);
+  const [hasMusic, setHasMusic] = useState(false);
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    fetch(AUDIO_SRC, {method: 'HEAD'}).then((r) => setHasAudio(r.ok)).catch(() => setHasAudio(false));
+    fetch(VO_SRC, {method: 'HEAD'}).then((r) => setHasVO(r.ok)).catch(() => setHasVO(false));
+    fetch(MUSIC_SRC, {method: 'HEAD'}).then((r) => setHasMusic(r.ok)).catch(() => setHasMusic(false));
   }, []);
+
+  // Music ducks to 25% under the VO; plays full when VO absent.
+  useEffect(() => {
+    if (musicRef.current) musicRef.current.volume = hasVO ? 0.25 : 0.55;
+  }, [hasVO]);
 
   useEffect(() => {
     if (!playing) return;
     let raf = 0;
     const t0 = performance.now() - time * 1000;
     const tick = () => {
-      const audio = audioRef.current;
-      const elapsed = audio && hasAudio ? audio.currentTime : (performance.now() - t0) / 1000;
+      const vo = voRef.current;
+      const elapsed = vo && hasVO ? vo.currentTime : (performance.now() - t0) / 1000;
       if (elapsed >= TOTAL_DURATION) {
         setTime(TOTAL_DURATION);
         setPlaying(false);
@@ -39,25 +48,33 @@ export function PitchReel({locale}: {locale: string}) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, hasAudio, time]);
+  }, [playing, hasVO, time]);
 
   const start = () => {
     setStarted(true);
-    if (audioRef.current && hasAudio) {
-      audioRef.current.currentTime = time;
-      audioRef.current.play().catch(() => {});
+    if (voRef.current && hasVO) {
+      voRef.current.currentTime = time;
+      voRef.current.play().catch(() => {});
+    }
+    if (musicRef.current && hasMusic) {
+      musicRef.current.play().catch(() => {});
     }
     setPlaying(true);
   };
   const pause = () => {
-    audioRef.current?.pause();
+    voRef.current?.pause();
+    musicRef.current?.pause();
     setPlaying(false);
   };
   const restart = () => {
     setTime(0);
-    if (audioRef.current) audioRef.current.currentTime = 0;
+    if (voRef.current) voRef.current.currentTime = 0;
+    if (musicRef.current) musicRef.current.currentTime = 0;
     if (!playing) start();
-    else if (audioRef.current && hasAudio) audioRef.current.play().catch(() => {});
+    else {
+      if (voRef.current && hasVO) voRef.current.play().catch(() => {});
+      if (musicRef.current && hasMusic) musicRef.current.play().catch(() => {});
+    }
   };
 
   const scene = useMemo(() => {
@@ -71,11 +88,18 @@ export function PitchReel({locale}: {locale: string}) {
   return (
     <div className="fixed inset-0 bg-ink text-bone overflow-hidden flex flex-col" dir={isAr ? 'rtl' : 'ltr'}>
       <audio
-        ref={audioRef}
-        src={AUDIO_SRC}
+        ref={voRef}
+        src={VO_SRC}
         preload="auto"
         muted={muted}
         onEnded={() => setPlaying(false)}
+      />
+      <audio
+        ref={musicRef}
+        src={MUSIC_SRC}
+        preload="auto"
+        loop
+        muted={muted}
       />
 
       <div className="absolute inset-0">
@@ -163,15 +187,10 @@ export function PitchReel({locale}: {locale: string}) {
                 {isAr ? 'تعرّف على ديوان في دقيقتَين' : 'Meet Diwan in two minutes'}
               </p>
               <p className="font-sans text-bone/60 mt-2" style={{fontSize: '14px'}}>
-                {isAr
-                  ? 'تعليق صوتي وترجمة بالعربية'
-                  : 'Arabic voice-over · English subtitles'}
+                {hasVO
+                  ? (isAr ? 'تعليق صوتي وترجمة' : 'Arabic voice-over · subtitles')
+                  : (isAr ? 'موسيقى مع ترجمة · تعليق صوتي قريباً' : 'Music + subtitles · voice-over coming soon')}
               </p>
-              {!hasAudio && (
-                <p className="font-sans italic text-bone/40 mt-3" style={{fontSize: '11px'}}>
-                  {isAr ? 'بدون صوت — يعمل بالترجمة فقط' : 'Silent mode — subtitles only'}
-                </p>
-              )}
             </div>
           </div>
         </button>
