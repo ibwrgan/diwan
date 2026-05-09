@@ -167,25 +167,46 @@ const INSPIRATIONS = [
 // Generation helpers
 // -----------------------------------------------------------------------------
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 async function generate({prompt, outPath, model = 'black-forest-labs/flux-1.1-pro', aspect = '4:3'}) {
   if (!FORCE && existsSync(outPath)) {
     console.log(`× skip (exists)  ${outPath}`);
     return;
   }
   console.log(`→ generating    ${outPath}`);
-  try {
-    const output = await replicate.run(model, {
-      input: {prompt, aspect_ratio: aspect, output_format: 'jpg', output_quality: 92, safety_tolerance: 2},
-    });
-    const url = Array.isArray(output) ? String(output[0]) : String(output);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
-    const buf = Buffer.from(await res.arrayBuffer());
-    mkdirSync(dirname(outPath), {recursive: true});
-    writeFileSync(outPath, buf);
-    console.log(`  ✓ saved ${(buf.length / 1024).toFixed(0)} KB`);
-  } catch (err) {
-    console.error(`  ✗ ${err?.message ?? err}`);
+
+  // Replicate throttles to 6/min when credit < $5, so we retry on 429 with the
+  // server-supplied retry_after (plus a small cushion).
+  const maxAttempts = 5;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const output = await replicate.run(model, {
+        input: {prompt, aspect_ratio: aspect, output_format: 'jpg', output_quality: 92, safety_tolerance: 2},
+      });
+      const url = Array.isArray(output) ? String(output[0]) : String(output);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+      const buf = Buffer.from(await res.arrayBuffer());
+      mkdirSync(dirname(outPath), {recursive: true});
+      writeFileSync(outPath, buf);
+      console.log(`  ✓ saved ${(buf.length / 1024).toFixed(0)} KB`);
+      // Pace requests to stay under the 6-per-minute throttle
+      await sleep(11_000);
+      return;
+    } catch (err) {
+      const msg = err?.message ?? String(err);
+      const m429 = msg.match(/429/);
+      const retryMatch = msg.match(/retry_after"?:\s*(\d+)/i);
+      const retryAfter = retryMatch ? Number(retryMatch[1]) + 2 : 12;
+      if (m429 && attempt < maxAttempts) {
+        console.log(`  · throttled, retrying in ${retryAfter}s (attempt ${attempt}/${maxAttempts})`);
+        await sleep(retryAfter * 1000);
+        continue;
+      }
+      console.error(`  ✗ ${msg}`);
+      return;
+    }
   }
 }
 
