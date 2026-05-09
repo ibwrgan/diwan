@@ -11,7 +11,8 @@ export type PitchVisual =
   | {kind: 'closeups'; sources: string[]}
   | {kind: 'montage'; sources: Array<{src: string; tagAr: string; tagEn: string}>}
   | {kind: 'numbers'; rows: Array<{numAr: string; numEn: string; labelAr: string; labelEn: string}>}
-  | {kind: 'cta'; lineAr: string; lineEn: string; url: string};
+  | {kind: 'cta'; lineAr: string; lineEn: string; url: string}
+  | {kind: 'illustrated'; scene: 'service' | 'install'};
 
 export type SubtitleSegment = {
   at: number;
@@ -92,7 +93,7 @@ export const PITCH_SCRIPT: PitchScene[] = [
       {at: 44,   text: 'مجاناً — وبدقّة'},
       {at: 46,   text: 'أو نقبل ملفّك الهندسي'},
     ],
-    visual: {kind: 'photoPair', left: '/pitch/ai-design.jpg', right: '/pitch/measuring-team.jpg'},
+    visual: {kind: 'illustrated', scene: 'service'},
   },
 
   // 5 — 2D engineering layout (14s)
@@ -128,12 +129,7 @@ export const PITCH_SCRIPT: PitchScene[] = [
       {at: 79,   text: 'تركيب · كهرباء · سباكة'},
       {at: 81.5, text: 'وصيانة لاثني عشر شهراً'},
     ],
-    visual: {kind: 'closeups', sources: [
-      '/projects/najdi-villa-nakheel/closeups/01.jpg',
-      '/projects/olaya-roastery-riyadh/closeups/02.jpg',
-      '/projects/bujairi-heritage-cafe/closeups/02.jpg',
-      '/projects/kafd-private-office/closeups/03.jpg',
-    ]},
+    visual: {kind: 'illustrated', scene: 'install'},
   },
 
   // 7 — Examples reel (16s)

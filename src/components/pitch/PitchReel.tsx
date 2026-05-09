@@ -6,6 +6,7 @@ import {Play, Pause, RotateCcw, Volume2, VolumeX, Maximize, Minimize} from 'luci
 import {SAMPLE_PLANS} from '@/data/floorPlans';
 import {FloorPlanSVG} from '@/components/space/FloorPlanSVG';
 import {PITCH_SCRIPT, ALL_SEGMENTS, TOTAL_DURATION} from './script';
+import {ServiceScene, InstallScene} from './IllustratedScenes';
 
 const VO_SRC = '/pitch/voiceover-ar.m4a';
 const MUSIC_SRC = '/pitch/music.mp3';
@@ -298,6 +299,21 @@ function SceneFrame({scene, progress, isAr}: {scene: typeof PITCH_SCRIPT[number]
         className="absolute inset-0 bg-cover bg-center"
         style={{backgroundImage: `url('${v.src}')`, transform: `scale(${scale})`}}
       />
+    );
+  }
+
+  if (v.kind === 'illustrated') {
+    return (
+      <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
+        transition={{duration: 0.5}}
+        className="absolute inset-0"
+      >
+        {v.scene === 'service' && <ServiceScene progress={progress} />}
+        {v.scene === 'install' && <InstallScene progress={progress} />}
+      </motion.div>
     );
   }
 
