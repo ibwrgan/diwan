@@ -30,24 +30,38 @@ const PHOTOS = [
       "documentary photography. No people, no text, no watermark.",
   },
   {
-    out: 'public/pitch/measuring-team.jpg',
+    out: 'public/pitch/empty-room.jpg',
     aspect: '16:9',
     prompt:
-      "Editorial photograph of two Saudi professionals (one in modern thobe, one in smart " +
-      "casual) inside a completely empty raw villa interior taking measurements. One holds a " +
-      "Bosch GLM laser distance meter pointed at a wall, the other holds a tablet sketching " +
-      "a floor plan. Bare concrete walls, no furniture, daylight from a window. Modern, " +
-      "professional, calm. 35mm, sharp, no text, no watermark.",
+      "Editorial wide-angle architectural photograph of a clean, empty Saudi villa interior — " +
+      "freshly plastered cream-colored walls, polished concrete floor, a single tall window " +
+      "letting in soft morning light, generous high ceiling, no furniture, no people, no " +
+      "construction debris, just a calm empty space ready for design. 35mm, sharp, " +
+      "professional architectural photography, golden-hour warm tones, ultra-sharp, " +
+      "no text, no watermark.",
   },
   {
-    out: 'public/pitch/ai-design.jpg',
+    out: 'public/pitch/install-progress.jpg',
     aspect: '16:9',
     prompt:
-      "Editorial split-frame composition: left half shows a Pinterest mood board on an iPad " +
-      "with carved cedar, brass, and clay-velvet swatches; right half shows a photoreal AI-" +
-      "generated interior render of a Najdi-style majlis with the same materials applied. " +
-      "Subtle line transition between the halves. Modern, clean, hopeful. No text, no people, " +
-      "no watermark.",
+      "Editorial wide-angle photograph of a Najdi-style Saudi majlis interior in mid-" +
+      "installation. A clay-velvet sofa is half-unwrapped from clear protective film, a " +
+      "brass pendant light is suspended mid-installation with cables visible, a Najdi-" +
+      "pattern wool rug is half-rolled out on a polished concrete floor. Carved cedar " +
+      "mashrabiya screens already mounted on the wall. Tools and a clay hardhat sit on " +
+      "a nearby step ladder. Soft afternoon light. No people visible. Architectural " +
+      "interior photography, 35mm, ultra-sharp, no text, no watermark.",
+  },
+  {
+    out: 'public/pitch/ipad-moodboard.jpg',
+    aspect: '16:9',
+    prompt:
+      "Editorial close-up photograph of an iPad lying on a walnut desk, screen showing a " +
+      "Pinterest-style mood board grid of nine images: carved cedar mashrabiya, brass " +
+      "espresso machine, clay-velvet sofa, terracotta tones, hammered brass tray, Najdi " +
+      "rug pattern, walnut shelving, hand-poured mud plaster wall, limestone floor. Soft " +
+      "warm window light. No people, no hands visible. 35mm, sharp focus on the iPad, " +
+      "shallow depth of field, professional product photography, no text overlays.",
   },
 ];
 
