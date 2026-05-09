@@ -1,4 +1,4 @@
-// Diwan pitch reel — 8 scenes, faster cadence (~120s).
+// Diwan pitch reel — 5 narrative scenes + CTA, 8 visual scenes (~2:05).
 // Subtitles are time-synced to the visual scene boundaries; each scene's
 // first subtitle appears AT or AFTER its `start` so captions never lead
 // the visual.
@@ -29,46 +29,54 @@ export type PitchScene = {
 };
 
 export const PITCH_SCRIPT: PitchScene[] = [
-  // 1 — Title (8s)
+  // VO Scene 1 — Intro + problem (0:00 → 0:30)
+  // Visual A — Title (0–8s)
   {
     start: 0,
     end: 8,
-    ar: 'ديوان — حيث تأخذ الفضاءات شكلها. بيوت ومحلّات سعوديّة، تُسلَّم خلال ثلاثين يوماً.',
-    en: 'Diwan — where spaces take shape. Saudi homes and businesses, delivered in thirty days.',
+    ar: 'ديوان... حيث تأخذ المساحات شكلها.',
+    en: 'Diwan... where spaces take shape.',
     segments: [
       {at: 0,   text: 'ديوان'},
-      {at: 2,   text: 'حيث تأخذ الفضاءات شكلها'},
-      {at: 5,   text: 'بيوت ومحلّات تُسلَّم في ثلاثين يوماً'},
+      {at: 2.5, text: 'حيث تأخذ المساحات شكلها'},
     ],
     visual: {kind: 'title', lineAr: 'ديوان', lineEn: 'DIWAN'},
   },
-
-  // 2 — The problem (12s) — raw shell + chaos, NOT delivered Diwan projects
+  // Visual B — Problem photos (8–30s)
   {
     start: 8,
-    end: 20,
-    ar: 'تتسلّم العائلة مفتاح بيتها — صندوقاً فارغاً. ستّة أشهر، عشرات الموردين، ومقاولون بوعود متضاربة. ولا أحد مسؤول عن النتيجة.',
-    en: 'A Saudi family receives the keys — an empty box. Six months, dozens of suppliers, contractors with conflicting promises. No one accountable.',
+    end: 30,
+    ar: 'مع رؤية 2030، تملّكت كثير من العائلات السعودية منازلها، لكن رحلة التشطيب لا تزال مرهقة. أشهر من الانتظار، زيارات لا تنتهي للمعارض، رسائل متواصلة مع مقاولين بوعود متضاربة، ولا شخص واحد يتحمّل مسؤولية النتيجة.',
+    en: 'With Vision 2030, many Saudi families have come to own their homes, but the fit-out journey remains exhausting. Months of waiting, endless showroom visits, constant messages with contractors making conflicting promises, and no one accountable.',
     segments: [
-      {at: 8,    text: 'تتسلّم مفتاح بيتك — صندوقاً فارغاً'},
-      {at: 11,   text: 'ستّة أشهر من المتابعة'},
-      {at: 13.5, text: 'عشرات الموردين'},
-      {at: 15.5, text: 'مقاولون بوعود متضاربة'},
-      {at: 18,   text: 'ولا أحد مسؤول'},
+      {at: 8,    text: 'مع رؤية 2030'},
+      {at: 10,   text: 'تملّكت كثير من العائلات السعودية منازلها'},
+      {at: 13.5, text: 'لكن رحلة التشطيب لا تزال مرهقة'},
+      {at: 17,   text: 'أشهر من الانتظار'},
+      {at: 19,   text: 'زيارات لا تنتهي للمعارض'},
+      {at: 21,   text: 'رسائل متواصلة مع مقاولين بوعود متضاربة'},
+      {at: 24.5, text: 'ولا شخص واحد يتحمّل المسؤوليّة'},
+      {at: 27.5, text: 'فضاؤك يجب أن يتماشى مع ذوقك — بلا متاعب'},
     ],
     visual: {kind: 'photoPair', left: '/pitch/problem-shell.jpg', right: '/pitch/problem-chaos.jpg'},
   },
 
-  // 3 — The Diwan promise (8s) — short, doesn't repeat scene 8
+  // VO Scene 2 — The Diwan promise (0:30 → 0:55)
+  // Visual C — Promise closeups
   {
-    start: 20,
-    end: 28,
-    ar: 'ديوان يجمع التصميم والتنفيذ والصيانة في قرار واحد.',
-    en: 'Diwan brings design, execution, and aftercare under one decision.',
+    start: 30,
+    end: 55,
+    ar: 'من هنا، وُجدت منصّة ديوان. منصّة سعوديّة لتجهيز المنازل والمشاريع التجاريّة وأماكن العمل المشتركة، تحت سقف واحد، وفي مدّة قياسيّة. التصميم والتنفيذ والصيانة ليست ثمانية قرارات — بل قرار واحد. علاقتك معنا، وعلاقة الموردين معنا، ونحن من يتحمّل الفارق.',
+    en: 'From here, Diwan was created. A Saudi platform fitting out homes, businesses, and co-working spaces under one roof, in record time. Design, execution, and maintenance are not eight decisions — they are one. Your relationship is with us, the supplier relationships are with us, and we own the gap.',
     segments: [
-      {at: 20, text: 'ديوان يجمعها كلّها'},
-      {at: 23, text: 'تصميم · تنفيذ · صيانة'},
-      {at: 26, text: 'في قرار واحد'},
+      {at: 30,   text: 'من هنا، وُجدت منصّة ديوان'},
+      {at: 33.5, text: 'منصّة سعوديّة لتجهيز المنازل والمشاريع'},
+      {at: 37,   text: 'وأماكن العمل المشتركة'},
+      {at: 39.5, text: 'تحت سقف واحد، وفي مدّة قياسيّة'},
+      {at: 43,   text: 'التصميم والتنفيذ والصيانة'},
+      {at: 46.5, text: 'قرار واحد — لا ثمانية'},
+      {at: 50,   text: 'علاقتك معنا، وعلاقة الموردين معنا'},
+      {at: 52.5, text: 'ونحن من يتحمّل الفارق'},
     ],
     visual: {kind: 'closeups', sources: [
       '/projects/kafd-private-office/closeups/02.jpg',
@@ -77,105 +85,100 @@ export const PITCH_SCRIPT: PitchScene[] = [
     ]},
   },
 
-  // 4 — AI design + free measurement (20s)
+  // VO Scene 3 — Tech & ease of starting (0:55 → 1:25)
+  // Visual D — AI design + measurement (illustrated)
   {
-    start: 28,
-    end: 48,
-    ar: 'صمّم بيتك بالذكاء الاصطناعي. ائتنا بإلهامات Pinterest أو لوحة هويّة، فيحوّلها ذكاؤنا إلى تصاميم خلال ثوانٍ. ثمّ يأتي فريقنا للقياس مجاناً، أو نقبل ملفّك الهندسي.',
-    en: 'Design your home with AI. Bring Pinterest or a brand brief — Diwan AI turns it into early designs in seconds. Then our team measures your space for free, or we accept your engineering file.',
+    start: 55,
+    end: 72,
+    ar: 'كيف نبدأ؟ تبدأ الرحلة بإلهامك. صورة من الإنترنت، أو مساحة تعكس ذوقك. في ثوانٍ، يحوّلها ذكاء ديوان إلى تصاميم أوّليّة مع تكلفة تقديريّة. ثمّ يأتي فريقنا لرفع المقاسات بدقّة الملّيمتر، مجاناً.',
+    en: 'How do we start? Your inspiration. A photo from the internet, or a space that reflects your taste. In seconds, Diwan AI turns it into early designs with cost estimates. Then our team measures to the millimeter, for free.',
     segments: [
-      {at: 28,   text: 'صمّم بيتك بالذكاء الاصطناعي'},
-      {at: 31,   text: 'ائتنا بإلهامات Pinterest'},
-      {at: 33.5, text: 'أو لوحة هويّة'},
-      {at: 35.5, text: 'يحوّلها ذكاؤنا إلى تصاميم'},
-      {at: 38.5, text: 'خلال ثوانٍ'},
-      {at: 41,   text: 'فريقنا يأتي ويقيس فضاءك'},
-      {at: 44,   text: 'مجاناً — وبدقّة'},
-      {at: 46,   text: 'أو نقبل ملفّك الهندسي'},
+      {at: 55,   text: 'كيف نبدأ؟ بإلهامك'},
+      {at: 57,   text: 'صورة من الإنترنت'},
+      {at: 59,   text: 'أو مساحة تعكس ذوقك'},
+      {at: 61,   text: 'يحوّلها ذكاء ديوان إلى تصاميم'},
+      {at: 64,   text: 'مع تكلفة تقديريّة'},
+      {at: 66.5, text: 'فريقنا يرفع المقاسات'},
+      {at: 69,   text: 'بدقّة الملّيمتر، مجاناً'},
     ],
     visual: {kind: 'illustrated', scene: 'service'},
   },
-
-  // 5 — 2D engineering layout (14s)
+  // Visual E — Stamped 2D engineering layout (72–85s)
   {
-    start: 48,
-    end: 62,
-    ar: 'كلّ مشروع يخرج بمخطّط هندسي ثنائي الأبعاد مختوم — مرسوم بمنطقنا السعودي. توقّع مرّة واحدة، يبدأ الإنتاج في اليوم نفسه.',
-    en: 'Every project ships with a stamped 2D engineering layout, drawn with Saudi spatial logic. Sign once and production starts the same day.',
+    start: 72,
+    end: 85,
+    ar: 'عبر خطوات بسيطة، يخرج مشروعك بمخطّط هندسي معتمد — مجلس، صالة، مطبخ، وغرف نوم. بتوقيع واحد منك، يبدأ الإنتاج في اليوم نفسه.',
+    en: 'In a few simple steps, your project ships with a stamped engineering layout — majlis, family living, kitchen, bedrooms. One signature from you, and production starts the same day.',
     segments: [
-      {at: 48,   text: 'مخطّط هندسي ثنائي الأبعاد مختوم'},
-      {at: 51,   text: 'مجلس · صالة عائلة · مُصلَّى'},
-      {at: 54,   text: 'مطبخ · غرف نوم · بقبلة دقيقة'},
-      {at: 57,   text: 'بمنطقنا السعودي'},
-      {at: 59.5, text: 'توقّع مرّة، يبدأ الإنتاج فوراً'},
+      {at: 72,   text: 'مشروعك يخرج بمخطّط هندسي معتمد'},
+      {at: 75,   text: 'مجلس · صالة · مطبخ · غرف نوم'},
+      {at: 78.5, text: 'بتوقيع واحد منك'},
+      {at: 81,   text: 'يبدأ الإنتاج في اليوم نفسه'},
     ],
     visual: {kind: 'plan', planId: 'villa-4br', label: 'Stamped 2D engineering layout'},
   },
 
-  // 6 — Materials, supplier network, installation, MAINTENANCE (22s)
+  // VO Scene 4 — Quality + execution (1:25 → 1:45)
+  // Visual F — Materials + supplier network + install + maintenance (illustrated)
   {
-    start: 62,
-    end: 84,
-    ar: 'نختار كلّ مادّة بدقّة — أرز محفور، نُحاس مَطْروق، حجر كلسي، طين مصبوب يدوياً، صوف وكتّان. شبكة موردين واسعة تُناسب كلّ فكرة، تُورِّد تحت أمر شراء واحد بإسم ديوان. نُدير التركيب والكهرباء والسباكة، ثمّ خدمة الصيانة لاثني عشر شهراً.',
-    en: 'We curate every material — carved cedar, hammered brass, limestone, hand-poured mud plaster, wool and linen. A wide supplier network suited to any idea, ordered under a single Diwan PO. We manage installation, electrical, plumbing, and twelve months of maintenance service.',
+    start: 85,
+    end: 105,
+    ar: 'نختار كلّ مادّة بشغف — أرز محفور، نُحاس مَطْروق، حجر كلسي، وطين مصبوب يدوياً. عبر شبكة موردين واسعة، نُدير كلّ شيء: التركيب، والكهرباء، والسباكة، والتسليم النهائي. لا حوارات في السعر، ولا ضمان مفقود — وصيانة موحَّدة لاثني عشر شهراً برقم تواصل واحد.',
+    en: 'We curate every material — carved cedar, hammered brass, limestone, hand-poured mud plaster. Through a wide supplier network, we manage everything: installation, electrical, plumbing, final delivery. No pricing arguments, no missing warranty — and twelve months of single-source maintenance with one number to call.',
     segments: [
-      {at: 62,   text: 'نختار كلّ مادّة بدقّة'},
-      {at: 64.5, text: 'أرز محفور · نُحاس مَطْروق'},
-      {at: 67,   text: 'حجر كلسي · طين مصبوب'},
-      {at: 69.5, text: 'صوف وكتّان'},
-      {at: 71.5, text: 'شبكة موردين واسعة'},
-      {at: 74,   text: 'تُناسب كلّ فكرة'},
-      {at: 76.5, text: 'أمر شراء واحد بإسم ديوان'},
-      {at: 79,   text: 'تركيب · كهرباء · سباكة'},
-      {at: 81.5, text: 'وصيانة لاثني عشر شهراً'},
+      {at:  85,   text: 'نختار كلّ مادّة بشغف'},
+      {at:  87.5, text: 'أرز محفور · نُحاس مَطْروق'},
+      {at:  90,   text: 'حجر كلسي · طين مصبوب يدوياً'},
+      {at:  92.5, text: 'شبكة موردين واسعة'},
+      {at:  95,   text: 'تركيب · كهرباء · سباكة · تسليم'},
+      {at:  98.5, text: 'لا حوارات سعر، ولا ضمان مفقود'},
+      {at: 101.5, text: 'صيانة موحَّدة لاثني عشر شهراً'},
     ],
     visual: {kind: 'illustrated', scene: 'install'},
   },
 
-  // 7 — Examples reel (16s)
+  // VO Scene 5 — Achievements + close (1:45 → 2:00)
+  // Visual G — Project montage
   {
-    start: 84,
-    end: 100,
-    ar: 'اثنا عشر مشروعاً مُسلَّماً عبر المملكة — بيوت، ومكاتب، ومحلّات. كلّها تحت ديوان.',
-    en: 'Twelve delivered projects across the Kingdom — homes, offices, and businesses. All under Diwan.',
+    start: 105,
+    end: 120,
+    ar: 'أكثر من ثلاثين مشروعاً سلّمناها حول المملكة. فيلا نجديّة في النخيل، مقرّ استثماري في المركز المالي، ومقهى تراثي في البُجَيْري. كلّها تحت ديوان.',
+    en: 'More than thirty projects delivered across the Kingdom. A Najdi villa in Al-Nakheel, an investment headquarters in KAFD, a heritage cafe in Al-Bujairi. All under Diwan.',
     segments: [
-      {at: 84,   text: 'اثنا عشر مشروعاً مُسلَّماً'},
-      {at: 86.5, text: 'فيلا نجديّة · النخيل'},
-      {at: 89,   text: 'طابق استثماري · KAFD'},
-      {at: 91.5, text: 'محمصة قهوة · العُلَيّا'},
-      {at: 94,   text: 'مقهى تراثي · البُجَيْري'},
-      {at: 96.5, text: 'تاون هاوس · حِطّين'},
-      {at: 98.5, text: 'كلّها تحت ديوان'},
+      {at: 105,   text: 'أكثر من ثلاثين مشروعاً مُسلَّماً'},
+      {at: 107.5, text: 'فيلا نجديّة · النخيل'},
+      {at: 110,   text: 'مقرّ استثماري · المركز المالي'},
+      {at: 113,   text: 'مقهى تراثي · البُجَيْري'},
+      {at: 116,   text: 'كلّها تحت ديوان'},
     ],
     visual: {kind: 'montage', sources: [
-      {src: '/projects/najdi-villa-nakheel/hero.jpg',     tagAr: 'فيلا نجديّة · النخيل',    tagEn: 'Najdi Villa · Al-Nakheel'},
-      {src: '/projects/kafd-private-office/hero.jpg',     tagAr: 'طابق استثماري · KAFD',   tagEn: 'Investment Floor · KAFD'},
-      {src: '/projects/olaya-roastery-riyadh/hero.jpg',   tagAr: 'محمصة قهوة · العُلَيّا',   tagEn: 'Roastery · Olaya'},
-      {src: '/projects/bujairi-heritage-cafe/hero.jpg',   tagAr: 'مقهى تراثي · البُجَيْري', tagEn: 'Heritage Cafe · Al-Bujairi'},
-      {src: '/projects/hittin-townhouse-riyadh/hero.jpg', tagAr: 'تاون هاوس · حِطّين',     tagEn: 'Townhouse · Hittin'},
+      {src: '/projects/najdi-villa-nakheel/hero.jpg',     tagAr: 'فيلا نجديّة · النخيل',       tagEn: 'Najdi Villa · Al-Nakheel'},
+      {src: '/projects/kafd-private-office/hero.jpg',     tagAr: 'مقرّ استثماري · المركز المالي', tagEn: 'Investment HQ · KAFD'},
+      {src: '/projects/olaya-roastery-riyadh/hero.jpg',   tagAr: 'محمصة قهوة · العُلَيّا',       tagEn: 'Roastery · Olaya'},
+      {src: '/projects/bujairi-heritage-cafe/hero.jpg',   tagAr: 'مقهى تراثي · البُجَيْري',     tagEn: 'Heritage Cafe · Al-Bujairi'},
+      {src: '/projects/hittin-townhouse-riyadh/hero.jpg', tagAr: 'تاون هاوس · حِطّين',         tagEn: 'Townhouse · Hittin'},
     ]},
   },
 
-  // 8 — Differentiators + CTA (20s)
+  // CTA + differentiators (2:00 → 2:25)
+  // Visual H — Numbers + CTA
   {
-    start: 100,
-    end: 120,
-    ar: 'ما يميّز ديوان: ثلاثون يوماً متوسّط التسليم. أرخص بأربعة عشر بالمائة. صيانة موحَّدة لاثني عشر شهراً. هويّة سعوديّة بيد متخصّصين. ابدأ فضاءك على diwan.sa',
-    en: 'What sets Diwan apart: 30-day average delivery, 14% below retail, twelve-month single-source maintenance, Saudi heritage by specialists. Start your space at diwan.sa',
+    start: 120,
+    end: 145,
+    ar: 'سرعة في التسليم، أوفر بأربعة عشر بالمائة من السوق، وهويّة سعوديّة بأيدي متخصّصين. ديوان — لا قوالب جاهزة. ابدأ فضاءك على diwan.sa',
+    en: 'Speed in delivery, 14% cheaper than the market, and Saudi heritage in expert hands. Diwan — no ready-made templates. Start your space at diwan.sa',
     segments: [
-      {at: 100,   text: 'ما يميّز ديوان'},
-      {at: 102.5, text: 'ثلاثون يوماً متوسّط التسليم'},
-      {at: 106,   text: 'أرخص بأربعة عشر بالمائة'},
-      {at: 109.5, text: 'صيانة موحَّدة لاثني عشر شهراً'},
-      {at: 113,   text: 'هويّة سعوديّة بيد متخصّصين'},
-      {at: 116,   text: 'ابدأ فضاءك'},
-      {at: 118,   text: 'diwan.sa'},
+      {at: 120,   text: 'سرعة في التسليم'},
+      {at: 124,   text: 'أوفر بأربعة عشر بالمائة من السوق'},
+      {at: 128.5, text: 'هويّة سعوديّة بأيدي متخصّصين'},
+      {at: 133,   text: 'ديوان — لا قوالب جاهزة'},
+      {at: 138,   text: 'ابدأ فضاءك على diwan.sa'},
     ],
     visual: {kind: 'numbers', rows: [
-      {numAr: '30',  numEn: '30',  labelAr: 'يوماً متوسّط التسليم', labelEn: 'days · average delivery'},
-      {numAr: '14%', numEn: '14%', labelAr: 'أرخص من التجزئة',     labelEn: 'below retail aggregate'},
-      {numAr: '12',  numEn: '12',  labelAr: 'شهراً صيانة موحَّدة',  labelEn: 'months · single-source maintenance'},
-      {numAr: '1',   numEn: '1',   labelAr: 'رقم لكل المشروع',     labelEn: 'number for the whole project'},
+      {numAr: '30',  numEn: '30',  labelAr: 'يوماً متوسّط التسليم',  labelEn: 'days · average delivery'},
+      {numAr: '14%', numEn: '14%', labelAr: 'أوفر من السوق',         labelEn: 'cheaper than market'},
+      {numAr: '12',  numEn: '12',  labelAr: 'شهراً صيانة موحَّدة',   labelEn: 'months · single-source maintenance'},
+      {numAr: '1',   numEn: '1',   labelAr: 'رقم لكل المشروع',       labelEn: 'number for the whole project'},
     ]},
   },
 ];
