@@ -287,31 +287,49 @@ function CaseStudyModal({study, onClose, locale}: {study: CaseStudy; onClose: ()
                 </div>
               </div>
 
+              {/* Building exterior */}
+              <div className="flex flex-col gap-3 mt-4">
+                <h3 className="font-sans uppercase text-ink-60" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
+                  Building exterior
+                </h3>
+                <div
+                  className="aspect-[16/9] rounded-sm relative overflow-hidden"
+                  style={{background: artTreatments[study.conceptArt]?.bg}}
+                >
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{backgroundImage: `url('/projects/${study.id}/exterior.jpg')`}}
+                  />
+                </div>
+              </div>
+
               {/* Room views */}
               <div className="flex flex-col gap-3 mt-4">
                 <h3 className="font-sans uppercase text-ink-60" style={{fontSize: '11px', letterSpacing: '0.22em'}}>
                   Rooms designed
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {study.roomViews.map((r, i) => (
-                    <figure key={i} className="flex flex-col gap-1.5">
-                      <div
-                        style={{background: artTreatments[r.art]?.bg}}
-                        className="aspect-[4/3] rounded-sm relative overflow-hidden"
-                      >
-                        {r.photo && (
+                  {study.roomViews.map((r, i) => {
+                    const autoPhoto = `/projects/${study.id}/rooms/${String(i + 1).padStart(2, '0')}.jpg`;
+                    const photoUrl = r.photo ?? autoPhoto;
+                    return (
+                      <figure key={i} className="flex flex-col gap-1.5">
+                        <div
+                          style={{background: artTreatments[r.art]?.bg}}
+                          className="aspect-[4/3] rounded-sm relative overflow-hidden"
+                        >
                           <div
                             className="absolute inset-0 bg-cover bg-center"
-                            style={{backgroundImage: `url('${r.photo}')`}}
+                            style={{backgroundImage: `url('${photoUrl}')`}}
                           />
-                        )}
-                        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 to-transparent" />
-                        <span className="absolute bottom-2 start-2 font-sans uppercase text-sand-100" style={{fontSize: '10px', letterSpacing: '0.16em'}}>
-                          {isAr ? r.nameAr : r.nameEn}
-                        </span>
-                      </div>
-                    </figure>
-                  ))}
+                          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 to-transparent" />
+                          <span className="absolute bottom-2 start-2 font-sans uppercase text-sand-100" style={{fontSize: '10px', letterSpacing: '0.16em'}}>
+                            {isAr ? r.nameAr : r.nameEn}
+                          </span>
+                        </div>
+                      </figure>
+                    );
+                  })}
                 </div>
               </div>
 

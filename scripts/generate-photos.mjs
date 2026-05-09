@@ -109,6 +109,166 @@ const PROJECTS = [
 ];
 
 // -----------------------------------------------------------------------------
+// Building exteriors (1 per project)
+// -----------------------------------------------------------------------------
+
+const EXTERIORS = [
+  {
+    id: 'najdi-villa-nakheel',
+    prompt:
+      "Editorial architectural photograph of a contemporary Saudi family villa exterior in Riyadh's Al-Nakheel district. " +
+      "Sand-coloured stone walls with carved geometric Najdi patterns, modest arched windows with brass-detail frames, " +
+      "low date palms in the front, a paved limestone driveway. Golden-hour light. Architectural photography, " +
+      "35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'coastal-jeddah-corniche',
+    prompt:
+      "Editorial architectural photograph of a modern Jeddah apartment building exterior near the Red Sea corniche. " +
+      "Pale travertine cladding, recessed Hijazi-style wood shutters on every floor, generous balconies overlooking " +
+      "the sea. Soft afternoon light. Architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'riyadh-contemporary-penthouse',
+    prompt:
+      "Editorial architectural photograph at twilight from a penthouse balcony in Riyadh's Olaya district, looking " +
+      "across the city skyline. Limestone parapet, glass railing, the building's brass-trimmed roof structure visible. " +
+      "Sunset over the city below. Architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'cocoon-family-compound',
+    prompt:
+      "Editorial architectural photograph of a large Saudi multi-generational family compound exterior in Riyadh's " +
+      "Diplomatic Quarter. Two-storey villa, sand-stone walls, deep-set windows, a covered entrance with carved cedar " +
+      "mashrabiya screen, mature trees in the courtyard. Late-afternoon golden light. Architectural photography, " +
+      "35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'open-living-3br-villa',
+    prompt:
+      "Editorial architectural photograph of a modern Saudi 3-bedroom family villa exterior in Riyadh's Al-Yasmin. " +
+      "White stucco facade, full-height Hijazi shutters, low-key entrance with a single olive tree in the front yard, " +
+      "warm afternoon light. Architectural photography, 35mm, ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'boutique-cafe-dq',
+    prompt:
+      "Editorial architectural photograph of a boutique specialty coffee cafe storefront in Riyadh's Diplomatic " +
+      "Quarter at dusk. Walnut-framed glass facade, warm brass-tinted interior visible through the windows, a single " +
+      "minimal Arabic-and-Latin wordmark on the wall, low banquette seating glimpsed inside, a small outdoor terrace " +
+      "with two cane chairs. Late-afternoon golden light. Architectural photography, 35mm, ultra-sharp, no text " +
+      "watermark, no people.",
+  },
+  {
+    id: 'workshop-dental-clinic',
+    prompt:
+      "Editorial architectural photograph of a boutique dental clinic exterior in Olaya, Riyadh. Limestone facade, " +
+      "frosted glass entry, a single ash-wood door with brass handle, a small olive tree planter, calm refined " +
+      "presence. No clinical signage, no medical iconography. Soft daylight. Architectural photography, 35mm, " +
+      "ultra-sharp, no text, no people, no watermark.",
+  },
+  {
+    id: 'kafd-coworking-floor',
+    prompt:
+      "Editorial architectural photograph of the entrance lobby on the second floor of a boutique co-working space " +
+      "in Riyadh's KAFD. Warm walnut reception desk, limestone floor, large picture window overlooking the KAFD " +
+      "skyline, brass and ash detailing. Soft late-morning daylight. Architectural photography, 35mm, ultra-sharp, " +
+      "no text, no people, no watermark.",
+  },
+];
+
+// -----------------------------------------------------------------------------
+// Per-room photos for each project (saved as rooms/01.jpg, 02.jpg, ...)
+// Order matches study.roomViews in src/data/projects.ts
+// -----------------------------------------------------------------------------
+
+const ROOM_PROMPTS = {
+  'najdi-villa-nakheel': {
+    style: "Modern Najdi style. Carved cedar mashrabiya, brass pendants, walnut and travertine, layered Najdi-pattern wool rugs, warm clay velvet upholstery",
+    rooms: [
+      "Men's majlis with low ceremonial seating around the perimeter",
+      "Family living room with sectional sofa and TV unit",
+      "Dining room with long walnut table for eight under a brass pendant cluster",
+      "Master bedroom with upholstered headboard and warm clay tones",
+      "Prayer niche with a wool rug and recessed mihrab",
+      "Family kitchen with walnut cabinetry and a 3-metre travertine island",
+    ],
+  },
+  'coastal-jeddah-corniche': {
+    style: "Coastal Hijazi style. Pale ash floors, travertine surfaces, bone-linen upholstery, Hijazi pale-wood shutters, brass-tip ash detailing",
+    rooms: [
+      "Living room with a bone-linen 3-seat sofa and a sea view",
+      "Dining nook with cane chairs around a travertine table",
+      "Open kitchen with travertine island and pale ash cabinetry",
+      "Master bedroom with linen headboard and ivory walls",
+      "Bathroom with a travertine vanity and brass fixtures",
+    ],
+  },
+  'riyadh-contemporary-penthouse': {
+    style: "Riyadh Contemporary minimalism. Limestone floors, travertine sectional, Hijazi shutters, single sculptural objects per room, no rugs, brushed brass detailing",
+    rooms: [
+      "Living room with a 4-metre travertine sectional and a single Najdi-craft entrance bench",
+      "Master suite with midnight wall and brushed-brass fittings",
+      "Concealed kitchen with stone surfaces and walnut detailing",
+      "Library with built-in walnut shelves and a single armchair",
+      "Guest bathroom with limestone vanity and minimal fittings",
+    ],
+  },
+  'cocoon-family-compound': {
+    style: "Cocoon style. Deep midnight velvet, walnut everywhere, heavy wool rugs, brass-inlay accent panels, layered cushions, warm evening lighting",
+    rooms: [
+      "Men's majlis with 16-seat deep-velvet ceremonial seating",
+      "Women's majlis with softer-velvet seating and brass details",
+      "Family dining for fourteen with a long walnut table and brass pendants",
+      "Family living with deep-clay sectional and walnut media unit",
+      "Master suite with upholstered headboard wall in deep velvet",
+      "Family kitchen with walnut cabinetry and a long communal island",
+    ],
+  },
+  'open-living-3br-villa': {
+    style: "Open Living style. Pale oak floors, white-oak kitchen island, stain-resistant linen sectional, Hijazi shutters across windows, soft boundaries",
+    rooms: [
+      "Open living-dining-kitchen volume with a 3-metre oak island",
+      "Pale-oak kitchen island with seating for six",
+      "Family dining table next to the kitchen island",
+      "Master bedroom with linen headboard and pale oak floor",
+      "Kids' room with built-in storage and a small desk",
+    ],
+  },
+  'boutique-cafe-dq': {
+    style: "Boutique cafe in Modern Najdi mood. Walnut bar, brass espresso machine, layered Najdi rugs, banquette seating in clay velvet, brass pendants",
+    rooms: [
+      "Walnut bar 4 metres linear with a brass espresso machine centre stage",
+      "Banquette seating zone with clay-velvet seats and Najdi-pattern wool rug",
+      "Long communal table under a brass pendant cluster",
+      "Behind-the-bar working kitchen with stainless surfaces and walnut detailing",
+      "Outdoor terrace with low cane seating and brass side tables",
+    ],
+  },
+  'workshop-dental-clinic': {
+    style: "Boutique dental clinic in Workshop Quiet style. Limestone reception, ash slat ceiling, brass-tip task lighting, warm 2700K LED, no fluorescent tubes, no clinical iconography",
+    rooms: [
+      "Limestone reception desk 4 metres custom with brass-tip lamp",
+      "Treatment room 1 with stone vanity and ash-wood chair",
+      "Consult room with walnut writing desk and two ash armchairs",
+      "Recovery room with linen drapes and warm soft light",
+      "Patient bathroom with travertine vanity and brass fittings",
+    ],
+  },
+  'kafd-coworking-floor': {
+    style: "Boutique co-working in Open Living style. Limestone floors, walnut phone rooms, communal limestone table, full-height windows, brass and ash detailing",
+    rooms: [
+      "Open-plan workspace with limestone floor and full-height windows",
+      "Walnut phone room with acoustic linen panels and brass desk lamp",
+      "Boardroom with built-in walnut media wall and limestone table",
+      "Pantry with walnut cabinetry, travertine counter, integrated coffee station",
+      "Prayer room with Najdi-craft mashrabiya screen and a wool rug",
+      "Director's office with walnut desk and a single ash armchair",
+    ],
+  },
+};
+
+// -----------------------------------------------------------------------------
 // Inspiration sets — three Diwan-styled responses each (saved as diwan-1/2/3.jpg)
 // -----------------------------------------------------------------------------
 
@@ -218,8 +378,8 @@ const start = Date.now();
 console.log('\nDiwan photo generator\n=====================\n');
 
 if (!ONLY || ONLY === 'projects') {
-  console.log('Case studies (Flux 1.1 Pro)');
-  console.log('---------------------------');
+  console.log('Case studies — interior heroes (Flux 1.1 Pro)');
+  console.log('---------------------------------------------');
   for (const p of PROJECTS) {
     await generate({
       prompt: p.prompt,
@@ -227,6 +387,38 @@ if (!ONLY || ONLY === 'projects') {
       model: 'black-forest-labs/flux-1.1-pro',
       aspect: '4:3',
     });
+  }
+}
+
+if (!ONLY || ONLY === 'exteriors') {
+  console.log('\nCase studies — building exteriors (Flux 1.1 Pro)');
+  console.log('------------------------------------------------');
+  for (const e of EXTERIORS) {
+    await generate({
+      prompt: e.prompt,
+      outPath: `public/projects/${e.id}/exterior.jpg`,
+      model: 'black-forest-labs/flux-1.1-pro',
+      aspect: '16:9',
+    });
+  }
+}
+
+if (!ONLY || ONLY === 'rooms') {
+  console.log('\nCase studies — per-room photos (Flux Schnell)');
+  console.log('---------------------------------------------');
+  for (const [id, data] of Object.entries(ROOM_PROMPTS)) {
+    for (let i = 0; i < data.rooms.length; i++) {
+      const room = data.rooms[i];
+      const prompt =
+        `Editorial interior photograph of a ${room}. ${data.style}. ` +
+        `Architectural photography, 35mm, soft directional natural light, ultra-sharp, no text, no people, no watermark.`;
+      await generate({
+        prompt,
+        outPath: `public/projects/${id}/rooms/${String(i + 1).padStart(2, '0')}.jpg`,
+        model: 'black-forest-labs/flux-schnell',
+        aspect: '4:3',
+      });
+    }
   }
 }
 
