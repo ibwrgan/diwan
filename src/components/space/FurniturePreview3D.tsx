@@ -1,8 +1,8 @@
 'use client';
 
-import {Canvas} from '@react-three/fiber';
+import {Canvas, useThree} from '@react-three/fiber';
 import {OrbitControls, Environment, RoundedBox, Cylinder, Sphere, ContactShadows} from '@react-three/drei';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import * as THREE from 'three';
 import type {FurnitureItem} from '@/data/furnitureCatalog';
 
@@ -13,11 +13,12 @@ import type {FurnitureItem} from '@/data/furnitureCatalog';
 
 type Props = {
   item: FurnitureItem;
+  onSceneReady?: (scene: THREE.Scene) => void;
 };
 
 type Palette = {primary: string; secondary: string; accent: string; brass: string; ink: string};
 
-export function FurniturePreview3D({item}: Props) {
+export function FurniturePreview3D({item, onSceneReady}: Props) {
   // Centre the piece on the origin and pick a camera distance based on
   // its bounding box.
   const wM = item.dimensionsCm.w / 100;
@@ -62,6 +63,7 @@ export function FurniturePreview3D({item}: Props) {
       <ContactShadows position={[0, 0.001, 0]} opacity={0.45} scale={reach * 4} blur={2.4} far={reach * 2} />
 
       <FurnitureGeometry item={item} palette={palette} />
+      {onSceneReady && <SceneSnapshot onReady={onSceneReady} />}
 
       <OrbitControls
         enablePan={false}
@@ -75,6 +77,16 @@ export function FurniturePreview3D({item}: Props) {
       <Environment preset="apartment" />
     </Canvas>
   );
+}
+
+// Captures the running Three.js scene so the parent can export it to GLB
+// for AR handoff (model-viewer on Android Scene Viewer / WebXR).
+function SceneSnapshot({onReady}: {onReady: (s: THREE.Scene) => void}) {
+  const {scene} = useThree();
+  useEffect(() => {
+    onReady(scene);
+  }, [scene, onReady]);
+  return null;
 }
 
 // ── Per-category procedural geometry ───────────────────────────────────────

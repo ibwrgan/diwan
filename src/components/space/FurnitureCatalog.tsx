@@ -1,8 +1,9 @@
 'use client';
 
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import dynamic from 'next/dynamic';
-import {Camera, Eye, Plus, X, Check, Search, SlidersHorizontal, Info} from 'lucide-react';
+import {Camera, Eye, Plus, X, Check, Search, SlidersHorizontal, Maximize} from 'lucide-react';
+import type * as THREE from 'three';
 import {
   FURNITURE_CATALOG,
   ALL_STYLES,
@@ -16,13 +17,48 @@ import {
   type PriceBracket,
 } from '@/data/furnitureCatalog';
 
-// Procedural Three.js preview — replaces the prior <model-viewer> GLB
-// playback that was showing Khronos sample assets (Duck/Avocado/etc).
-// The new component composes real furniture geometry per category.
+// Procedural Three.js preview — composes real furniture geometry per
+// category and exports it to a runtime GLB for AR handoff.
 const FurniturePreview3D = dynamic(
   () => import('./FurniturePreview3D').then((m) => m.FurniturePreview3D),
   {ssr: false, loading: () => <div className="absolute inset-0 flex items-center justify-center text-ink-60 font-sans" style={{fontSize: '12px', letterSpacing: '0.18em'}}>LOADING 3D…</div>},
 );
+
+// Lazy-load model-viewer (web component) only on the client. We use it
+// purely for the AR handoff — the in-page 3D preview is the procedural
+// Three.js Canvas. The model-viewer's `src` is set to a runtime-built
+// GLB blob URL so AR shows the actual furniture, not a Khronos sample.
+let modelViewerLoaded = false;
+function ensureModelViewer() {
+  if (typeof window === 'undefined' || modelViewerLoaded) return;
+  if (customElements.get('model-viewer')) {
+    modelViewerLoaded = true;
+    return;
+  }
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+  document.head.appendChild(s);
+  modelViewerLoaded = true;
+}
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'model-viewer': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          src?: string;
+          ar?: boolean | string;
+          'ar-modes'?: string;
+          'ar-scale'?: string;
+          'ar-placement'?: string;
+        },
+        HTMLElement
+      >;
+    }
+  }
+}
 
 const CATEGORIES: Array<{key: FurnitureCategory | 'all'; ar: string; en: string}> = [
   {key: 'all',        ar: 'الكل',       en: 'All'},
@@ -409,6 +445,104 @@ function FurnitureCard({
 }
 
 function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean; onClose: () => void}) {
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const mvRef = useRef<HTMLElement | null>(null);
+  const [arBlobUrl, setArBlobUrl] = useState<string | null>(null);
+  const [arBusy, setArBusy] = useState(false);
+  const [arSupported, setArSupported] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    ensureModelViewer();
+  }, []);
+
+  // Check AR availability after the model-viewer is ready + has a src.
+  useEffect(() => {
+    const mv = mvRef.current as (HTMLElement & {canActivateAR?: boolean}) | null;
+    if (!mv || !arBlobUrl) return;
+    const check = () => setArSupported(Boolean(mv.canActivateAR));
+    const t = setTimeout(check, 600);
+    return () => clearTimeout(t);
+  }, [arBlobUrl]);
+
+  // Free the blob URL when the modal closes.
+  useEffect(() => {
+    return () => {
+      if (arBlobUrl) URL.revokeObjectURL(arBlobUrl);
+    };
+  }, [arBlobUrl]);
+
+  async function exportSceneToGLB(): Promise<string> {
+    const live = sceneRef.current;
+    if (!live) throw new Error('Scene not ready');
+    const THREE = await import('three');
+    const mod = await import('three/examples/jsm/exporters/GLTFExporter.js');
+
+    // Build a clean scene with ONLY the furniture meshes — no HDR
+    // environment, no lights, no contact shadows, no floor plane. Lights
+    // and the apartment env map can't be safely serialized to GLB and
+    // weren't part of the piece anyway. World transforms are baked in
+    // so the cloned hierarchy preserves the on-screen pose.
+    live.updateMatrixWorld(true);
+    const clean = new THREE.Scene();
+    clean.name = item.id;
+
+    live.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      // Skip the big floor planes — they'd dominate the AR placement
+      const geomType = obj.geometry?.type ?? '';
+      if (geomType === 'PlaneGeometry') return;
+      // Skip ContactShadows' internal mesh (drei tags these as 'contact-shadows')
+      if (obj.parent && obj.parent.type === 'Group' && obj.parent.name?.toLowerCase().includes('contact')) return;
+
+      const cloned = new THREE.Mesh(obj.geometry, obj.material);
+      // Bake the world transform onto the new mesh so the AR pose matches.
+      const pos = new THREE.Vector3();
+      const quat = new THREE.Quaternion();
+      const scale = new THREE.Vector3();
+      obj.matrixWorld.decompose(pos, quat, scale);
+      cloned.position.copy(pos);
+      cloned.quaternion.copy(quat);
+      cloned.scale.copy(scale);
+      cloned.castShadow = false;
+      cloned.receiveShadow = false;
+      clean.add(cloned);
+    });
+
+    const exporter = new mod.GLTFExporter();
+    return new Promise((resolve, reject) => {
+      exporter.parse(
+        clean,
+        (out) => {
+          if (out instanceof ArrayBuffer) {
+            const blob = new Blob([out], {type: 'model/gltf-binary'});
+            resolve(URL.createObjectURL(blob));
+          } else {
+            reject(new Error('Expected binary GLB output'));
+          }
+        },
+        (err) => reject(err),
+        {binary: true},
+      );
+    });
+  }
+
+  async function handleViewInRoom() {
+    if (arBusy) return;
+    setArBusy(true);
+    try {
+      const url = await exportSceneToGLB();
+      setArBlobUrl(url);
+      // Wait for the model-viewer to load the new src before activating AR.
+      await new Promise((r) => setTimeout(r, 350));
+      const mv = mvRef.current as (HTMLElement & {activateAR?: () => Promise<void>}) | null;
+      await mv?.activateAR?.();
+    } catch (err) {
+      console.warn('AR export failed', err);
+    } finally {
+      setArBusy(false);
+    }
+  }
+
   return (
     <div className="fixed inset-0 z-[80] bg-ink/85 backdrop-blur-sm flex items-center justify-center p-4" dir={isAr ? 'rtl' : 'ltr'}>
       <div className="bg-bone rounded-sm w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
@@ -425,25 +559,68 @@ function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean
         </header>
 
         <div className="flex-1 relative bg-sand-100 min-h-[420px] overflow-hidden">
-          <FurniturePreview3D item={item} />
+          <FurniturePreview3D
+            item={item}
+            onSceneReady={(scene) => {
+              sceneRef.current = scene;
+            }}
+          />
           <span className="absolute top-3 start-3 inline-flex items-center gap-1.5 bg-bone/90 text-ink-60 rounded-full px-3 py-1 font-mono uppercase" style={{fontSize: '10px', letterSpacing: '0.18em'}}>
             <Eye className="h-3 w-3" />
             {isAr ? 'دوّر بالماوس · قرّب بالعجلة' : 'Drag to rotate · scroll to zoom'}
           </span>
+          {/* Hidden model-viewer used purely for the AR handoff. Its
+              src is set to a runtime-built GLB blob exported from the
+              live Three.js scene above, so AR shows real geometry. */}
+          {arBlobUrl && (
+            // @ts-expect-error - model-viewer is a custom element registered via CDN
+            <model-viewer
+              ref={mvRef}
+              src={arBlobUrl}
+              ar
+              ar-modes="webxr scene-viewer"
+              ar-scale="auto"
+              ar-placement="floor"
+              style={{position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none', bottom: 0, right: 0}}
+            />
+          )}
         </div>
 
         <footer className="p-5 flex flex-wrap items-center gap-3 border-t border-ink-12">
           <p className="flex-1 min-w-[200px] font-sans text-ink-60 leading-snug" style={{fontSize: '13px'}}>
             {isAr ? item.descAr : item.descEn}
           </p>
-          <span
-            className="inline-flex items-center gap-2 bg-sand-100 border border-ink-12 text-ink-60 rounded-sm px-3 py-2 font-sans"
-            style={{fontSize: '12px'}}
-            title={isAr ? 'سيتوفّر الواقع المعزّز عند رفع نماذج 3D حقيقيّة لكل قطعة' : 'AR opens once real 3D model files are uploaded for each item'}
+          <button
+            onClick={handleViewInRoom}
+            disabled={arBusy || arSupported === false}
+            className={[
+              'inline-flex items-center gap-2 rounded-sm px-4 py-2.5 font-sans transition-colors',
+              arBusy
+                ? 'bg-ink-12 text-ink-60 cursor-wait'
+                : arSupported === false
+                ? 'bg-ink-12 text-ink-60 cursor-not-allowed'
+                : 'bg-clay-700 text-bone hover:bg-clay-400',
+            ].join(' ')}
+            style={{fontSize: '13px', letterSpacing: '0.04em'}}
+            title={
+              arSupported === false
+                ? isAr
+                  ? 'الواقع المعزّز غير مدعوم على هذا الجهاز'
+                  : 'AR not supported on this device — try Android Chrome or iOS Safari on a phone'
+                : isAr
+                ? 'وجّه كاميرتك على غرفتك'
+                : 'Point your camera at the room'
+            }
           >
-            <Info className="h-3.5 w-3.5" />
-            {isAr ? 'الواقع المعزّز قريباً' : 'Camera AR — coming soon'}
-          </span>
+            <Maximize className="h-4 w-4" />
+            {arBusy
+              ? isAr
+                ? 'يجهّز…'
+                : 'Preparing AR…'
+              : isAr
+              ? 'شاهد في غرفتك'
+              : 'View in your room'}
+          </button>
         </footer>
       </div>
     </div>
