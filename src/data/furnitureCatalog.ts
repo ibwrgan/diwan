@@ -61,46 +61,166 @@ const CDN_MODELS = [
   'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb',
 ];
 
-// Posters cycle through real project closeups so each card shows real
-// material texture instead of an empty placeholder.
-const POSTER_POOL = [
-  '/projects/najdi-villa-nakheel/closeups/01.jpg',
-  '/projects/najdi-villa-nakheel/closeups/02.jpg',
-  '/projects/najdi-villa-nakheel/closeups/03.jpg',
-  '/projects/coastal-jeddah-corniche/closeups/01.jpg',
-  '/projects/coastal-jeddah-corniche/closeups/02.jpg',
-  '/projects/coastal-jeddah-corniche/closeups/03.jpg',
-  '/projects/riyadh-contemporary-penthouse/closeups/01.jpg',
-  '/projects/riyadh-contemporary-penthouse/closeups/02.jpg',
-  '/projects/riyadh-contemporary-penthouse/closeups/03.jpg',
-  '/projects/cocoon-family-compound/closeups/01.jpg',
-  '/projects/cocoon-family-compound/closeups/02.jpg',
-  '/projects/cocoon-family-compound/closeups/03.jpg',
-  '/projects/open-living-3br-villa/closeups/01.jpg',
-  '/projects/open-living-3br-villa/closeups/02.jpg',
-  '/projects/open-living-3br-villa/closeups/03.jpg',
-  '/projects/boutique-cafe-dq/closeups/01.jpg',
-  '/projects/boutique-cafe-dq/closeups/02.jpg',
-  '/projects/boutique-cafe-dq/closeups/03.jpg',
-  '/projects/workshop-dental-clinic/closeups/01.jpg',
-  '/projects/workshop-dental-clinic/closeups/02.jpg',
-  '/projects/workshop-dental-clinic/closeups/03.jpg',
-  '/projects/kafd-coworking-floor/closeups/01.jpg',
-  '/projects/kafd-coworking-floor/closeups/02.jpg',
-  '/projects/kafd-coworking-floor/closeups/03.jpg',
-  '/projects/hittin-townhouse-riyadh/closeups/01.jpg',
-  '/projects/hittin-townhouse-riyadh/closeups/02.jpg',
-  '/projects/hittin-townhouse-riyadh/closeups/03.jpg',
-  '/projects/olaya-roastery-riyadh/closeups/01.jpg',
-  '/projects/olaya-roastery-riyadh/closeups/02.jpg',
-  '/projects/olaya-roastery-riyadh/closeups/03.jpg',
-  '/projects/bujairi-heritage-cafe/closeups/01.jpg',
-  '/projects/bujairi-heritage-cafe/closeups/02.jpg',
-  '/projects/bujairi-heritage-cafe/closeups/03.jpg',
-  '/projects/kafd-private-office/closeups/01.jpg',
-  '/projects/kafd-private-office/closeups/02.jpg',
-  '/projects/kafd-private-office/closeups/03.jpg',
-];
+// Posters mapped to material + category so each card shows imagery
+// that matches what the item actually IS — rather than a random closeup.
+//
+// Each material key points to a list of project closeups that prominently
+// show that material (clay velvet weave, hammered brass detail, walnut
+// grain, mashrabiya pattern, etc). Items also carry a category-level
+// fallback so e.g. lighting items always pick a brass/lamp closeup
+// even when the material entry is sparse.
+
+const MATERIAL_POSTERS: Record<string, string[]> = {
+  'clay-velvet': [
+    '/projects/najdi-villa-nakheel/closeups/03.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/01.jpg',
+    '/projects/cocoon-family-compound/closeups/01.jpg',
+  ],
+  'midnight-velvet': [
+    '/projects/cocoon-family-compound/closeups/01.jpg',
+    '/projects/kafd-private-office/closeups/02.jpg',
+  ],
+  walnut: [
+    '/projects/cocoon-family-compound/closeups/02.jpg',
+    '/projects/kafd-private-office/closeups/01.jpg',
+    '/projects/boutique-cafe-dq/closeups/01.jpg',
+  ],
+  oak: [
+    '/projects/open-living-3br-villa/closeups/01.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/02.jpg',
+  ],
+  ash: [
+    '/projects/coastal-jeddah-corniche/closeups/02.jpg',
+    '/projects/workshop-dental-clinic/closeups/02.jpg',
+  ],
+  'carved-cedar': [
+    '/projects/najdi-villa-nakheel/closeups/01.jpg',
+    '/projects/kafd-private-office/closeups/03.jpg',
+    '/projects/bujairi-heritage-cafe/closeups/03.jpg',
+  ],
+  'hammered-brass': [
+    '/projects/najdi-villa-nakheel/closeups/02.jpg',
+    '/projects/boutique-cafe-dq/closeups/02.jpg',
+    '/projects/olaya-roastery-riyadh/closeups/01.jpg',
+    '/projects/workshop-dental-clinic/closeups/03.jpg',
+  ],
+  'brushed-bronze': [
+    '/projects/riyadh-contemporary-penthouse/closeups/02.jpg',
+    '/projects/kafd-private-office/closeups/01.jpg',
+  ],
+  travertine: [
+    '/projects/coastal-jeddah-corniche/closeups/01.jpg',
+    '/projects/riyadh-contemporary-penthouse/closeups/01.jpg',
+  ],
+  marble: [
+    '/projects/riyadh-contemporary-penthouse/closeups/01.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/02.jpg',
+  ],
+  limestone: [
+    '/projects/riyadh-contemporary-penthouse/closeups/01.jpg',
+    '/projects/workshop-dental-clinic/closeups/01.jpg',
+    '/projects/kafd-coworking-floor/closeups/02.jpg',
+  ],
+  'mud-plaster': [
+    '/projects/bujairi-heritage-cafe/closeups/01.jpg',
+  ],
+  wool: [
+    '/projects/najdi-villa-nakheel/closeups/03.jpg',
+    '/projects/boutique-cafe-dq/closeups/03.jpg',
+  ],
+  linen: [
+    '/projects/coastal-jeddah-corniche/closeups/03.jpg',
+    '/projects/open-living-3br-villa/closeups/03.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/03.jpg',
+  ],
+  leather: [
+    '/projects/cocoon-family-compound/closeups/01.jpg',
+    '/projects/kafd-private-office/closeups/02.jpg',
+  ],
+  rattan: [
+    '/projects/coastal-jeddah-corniche/closeups/02.jpg',
+    '/projects/open-living-3br-villa/closeups/01.jpg',
+  ],
+  ceramic: [
+    '/projects/bujairi-heritage-cafe/closeups/03.jpg',
+    '/projects/workshop-dental-clinic/closeups/02.jpg',
+  ],
+  glass: [
+    '/projects/riyadh-contemporary-penthouse/closeups/03.jpg',
+    '/projects/kafd-coworking-floor/closeups/01.jpg',
+  ],
+};
+
+const CATEGORY_POSTERS: Record<FurnitureCategory, string[]> = {
+  seating: [
+    '/projects/najdi-villa-nakheel/closeups/03.jpg',
+    '/projects/cocoon-family-compound/closeups/01.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/01.jpg',
+  ],
+  tables: [
+    '/projects/coastal-jeddah-corniche/closeups/01.jpg',
+    '/projects/cocoon-family-compound/closeups/02.jpg',
+    '/projects/riyadh-contemporary-penthouse/closeups/02.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/02.jpg',
+  ],
+  beds: [
+    '/projects/cocoon-family-compound/closeups/02.jpg',
+    '/projects/hittin-townhouse-riyadh/closeups/03.jpg',
+    '/projects/najdi-villa-nakheel/closeups/03.jpg',
+  ],
+  storage: [
+    '/projects/cocoon-family-compound/closeups/02.jpg',
+    '/projects/kafd-private-office/closeups/01.jpg',
+    '/projects/kafd-coworking-floor/closeups/03.jpg',
+  ],
+  lighting: [
+    '/projects/najdi-villa-nakheel/closeups/02.jpg',
+    '/projects/boutique-cafe-dq/closeups/02.jpg',
+    '/projects/olaya-roastery-riyadh/closeups/01.jpg',
+    '/projects/workshop-dental-clinic/closeups/03.jpg',
+  ],
+  rugs: [
+    '/projects/najdi-villa-nakheel/closeups/01.jpg',
+    '/projects/boutique-cafe-dq/closeups/03.jpg',
+  ],
+  'wall-decor': [
+    '/projects/najdi-villa-nakheel/closeups/01.jpg',
+    '/projects/kafd-private-office/closeups/03.jpg',
+    '/projects/bujairi-heritage-cafe/closeups/01.jpg',
+    '/projects/cocoon-family-compound/closeups/03.jpg',
+  ],
+  kitchen: [
+    '/projects/open-living-3br-villa/closeups/02.jpg',
+    '/projects/boutique-cafe-dq/closeups/01.jpg',
+    '/projects/olaya-roastery-riyadh/closeups/01.jpg',
+  ],
+  bath: [
+    '/projects/coastal-jeddah-corniche/closeups/01.jpg',
+    '/projects/workshop-dental-clinic/closeups/01.jpg',
+    '/projects/riyadh-contemporary-penthouse/closeups/01.jpg',
+  ],
+  textiles: [
+    '/projects/najdi-villa-nakheel/closeups/03.jpg',
+    '/projects/coastal-jeddah-corniche/closeups/03.jpg',
+    '/projects/cocoon-family-compound/closeups/01.jpg',
+  ],
+  plants: [
+    '/projects/coastal-jeddah-corniche/exterior.jpg',
+    '/projects/hittin-townhouse-riyadh/exterior.jpg',
+  ],
+  accents: [
+    '/projects/bujairi-heritage-cafe/closeups/02.jpg',
+    '/projects/najdi-villa-nakheel/closeups/02.jpg',
+    '/projects/olaya-roastery-riyadh/closeups/01.jpg',
+  ],
+};
+
+function pickPoster(category: FurnitureCategory, matKey: string, seed: number): string {
+  const matPool = MATERIAL_POSTERS[matKey];
+  if (matPool && matPool.length) return matPool[Math.floor(seed * matPool.length) % matPool.length];
+  const catPool = CATEGORY_POSTERS[category];
+  return catPool[Math.floor(seed * catPool.length) % catPool.length];
+}
 
 // Material / finish tags + their hex palettes
 const MATERIALS = {
@@ -326,7 +446,7 @@ function expand(): FurnitureItem[] {
         const descAr = `${tpl.descAr} (${mat.ar}، ${STYLES_AR[style]})`;
         const descEn = `${tpl.descEn} (${mat.en}, ${style})`;
         const tags = [matKey, style.toLowerCase().replace(/\s+/g, '-'), tpl.category];
-        const poster = POSTER_POOL[Math.floor(seed * POSTER_POOL.length)];
+        const poster = pickPoster(tpl.category, matKey as string, seed);
         const glb = CDN_MODELS[Math.floor(seed * CDN_MODELS.length)];
 
         out.push({
