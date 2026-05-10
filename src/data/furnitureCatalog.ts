@@ -215,7 +215,107 @@ const CATEGORY_POSTERS: Record<FurnitureCategory, string[]> = {
   ],
 };
 
+// Photoreal product photographs (generated via Replicate Flux 1.1 Pro).
+// Each entry is a per-(category, material) studio shot of a real-looking
+// piece. The catalog maps items here first; only when no specific photo
+// exists do we fall back to a project closeup.
+//
+// To regenerate: node --env-file=.env.local scripts/generate-furniture-photos.mjs
+const PRODUCT_PHOTOS: Record<string, string> = {
+  // seating
+  'seating|clay-velvet':     '/furniture/cards/seating-sofa-clay-velvet.jpg',
+  'seating|midnight-velvet': '/furniture/cards/seating-sofa-midnight-velvet.jpg',
+  'seating|linen':           '/furniture/cards/seating-sofa-linen.jpg',
+  'seating|wool':            '/furniture/cards/seating-sofa-wool.jpg',
+  'seating|leather':         '/furniture/cards/seating-sectional-leather.jpg',
+  'seating|walnut':          '/furniture/cards/seating-armchair-walnut.jpg',
+  'seating|carved-cedar':    '/furniture/cards/seating-armchair-cedar.jpg',
+  'seating|oak':             '/furniture/cards/seating-bench-walnut.jpg',
+  'seating|ash':             '/furniture/cards/seating-armchair-walnut.jpg',
+  'seating|hammered-brass':  '/furniture/cards/seating-stool-brass.jpg',
+  'seating|brushed-bronze':  '/furniture/cards/seating-stool-brass.jpg',
+  'seating|rattan':          '/furniture/cards/seating-armchair-walnut.jpg',
+  // tables
+  'tables|travertine':       '/furniture/cards/tables-coffee-travertine.jpg',
+  'tables|marble':           '/furniture/cards/tables-dining-marble.jpg',
+  'tables|limestone':        '/furniture/cards/tables-coffee-travertine.jpg',
+  'tables|walnut':           '/furniture/cards/tables-dining-walnut.jpg',
+  'tables|oak':              '/furniture/cards/tables-dining-walnut.jpg',
+  'tables|ash':              '/furniture/cards/tables-desk-walnut.jpg',
+  'tables|carved-cedar':     '/furniture/cards/tables-coffee-walnut.jpg',
+  'tables|hammered-brass':   '/furniture/cards/tables-side-brass.jpg',
+  'tables|brushed-bronze':   '/furniture/cards/tables-side-brass.jpg',
+  'tables|leather':          '/furniture/cards/tables-desk-walnut.jpg',
+  // beds
+  'beds|walnut':             '/furniture/cards/beds-king-walnut.jpg',
+  'beds|carved-cedar':       '/furniture/cards/beds-king-walnut.jpg',
+  'beds|oak':                '/furniture/cards/beds-king-walnut.jpg',
+  'beds|linen':              '/furniture/cards/beds-headboard-linen.jpg',
+  'beds|midnight-velvet':    '/furniture/cards/beds-king-velvet.jpg',
+  'beds|clay-velvet':        '/furniture/cards/beds-king-velvet.jpg',
+  // storage
+  'storage|walnut':          '/furniture/cards/storage-credenza-walnut.jpg',
+  'storage|oak':             '/furniture/cards/storage-bookshelf-oak.jpg',
+  'storage|ash':             '/furniture/cards/storage-bookshelf-oak.jpg',
+  'storage|carved-cedar':    '/furniture/cards/storage-credenza-walnut.jpg',
+  'storage|hammered-brass':  '/furniture/cards/storage-bookshelf-oak.jpg',
+  'storage|glass':           '/furniture/cards/storage-wardrobe-walnut.jpg',
+  // lighting
+  'lighting|hammered-brass': '/furniture/cards/lighting-pendant-brass.jpg',
+  'lighting|brushed-bronze': '/furniture/cards/lighting-cluster-brass.jpg',
+  'lighting|carved-cedar':   '/furniture/cards/lighting-lantern-cedar.jpg',
+  'lighting|linen':          '/furniture/cards/lighting-floor-lamp.jpg',
+  'lighting|ceramic':        '/furniture/cards/lighting-table-lamp.jpg',
+  'lighting|glass':          '/furniture/cards/lighting-chandelier-brass.jpg',
+  // rugs
+  'rugs|wool':               '/furniture/cards/rugs-najdi-wool.jpg',
+  'rugs|linen':              '/furniture/cards/rugs-modern-solid.jpg',
+  // wall-decor
+  'wall-decor|carved-cedar':    '/furniture/cards/wall-mashrabiya-cedar.jpg',
+  'wall-decor|walnut':          '/furniture/cards/wall-calligraphy-walnut.jpg',
+  'wall-decor|hammered-brass':  '/furniture/cards/wall-sculpture-brass.jpg',
+  'wall-decor|brushed-bronze':  '/furniture/cards/wall-mirror-brass-round.jpg',
+  'wall-decor|glass':           '/furniture/cards/wall-mirror-brass-round.jpg',
+  'wall-decor|leather':         '/furniture/cards/wall-mirror-leather.jpg',
+  'wall-decor|ceramic':         '/furniture/cards/wall-tile-ceramic.jpg',
+  'wall-decor|mud-plaster':     '/furniture/cards/wall-mashrabiya-cedar.jpg',
+  // kitchen
+  'kitchen|marble':          '/furniture/cards/kitchen-island-marble.jpg',
+  'kitchen|travertine':      '/furniture/cards/kitchen-island-marble.jpg',
+  'kitchen|walnut':          '/furniture/cards/kitchen-island-marble.jpg',
+  'kitchen|oak':             '/furniture/cards/kitchen-pantry-oak.jpg',
+  'kitchen|hammered-brass':  '/furniture/cards/kitchen-island-marble.jpg',
+  // bath
+  'bath|ceramic':            '/furniture/cards/bath-tub-ceramic.jpg',
+  'bath|marble':             '/furniture/cards/bath-vanity-marble.jpg',
+  'bath|travertine':         '/furniture/cards/bath-vanity-marble.jpg',
+  'bath|walnut':             '/furniture/cards/bath-vanity-marble.jpg',
+  'bath|carved-cedar':       '/furniture/cards/bath-vanity-marble.jpg',
+  // textiles
+  'textiles|linen':          '/furniture/cards/textiles-drape-linen.jpg',
+  'textiles|clay-velvet':    '/furniture/cards/textiles-cushion-velvet.jpg',
+  'textiles|midnight-velvet':'/furniture/cards/textiles-cushion-velvet.jpg',
+  'textiles|wool':           '/furniture/cards/textiles-throw-wool.jpg',
+  // plants
+  'plants|ceramic':          '/furniture/cards/plants-palm.jpg',
+  'plants|hammered-brass':   '/furniture/cards/plants-fiddle-leaf.jpg',
+  // accents
+  'accents|hammered-brass':  '/furniture/cards/accents-tray-brass.jpg',
+  'accents|brushed-bronze':  '/furniture/cards/accents-candle-holder-brass.jpg',
+  'accents|ceramic':         '/furniture/cards/accents-vase-ceramic.jpg',
+  'accents|travertine':      '/furniture/cards/accents-vase-ceramic.jpg',
+  'accents|marble':          '/furniture/cards/accents-vase-ceramic.jpg',
+  'accents|walnut':          '/furniture/cards/accents-vase-ceramic.jpg',
+  'accents|carved-cedar':    '/furniture/cards/accents-vase-ceramic.jpg',
+  'accents|linen':           '/furniture/cards/accents-tray-brass.jpg',
+};
+
 function pickPoster(category: FurnitureCategory, matKey: string, seed: number): string {
+  // Prefer photoreal product shots when we have one for this combo.
+  const productKey = `${category}|${matKey}`;
+  if (PRODUCT_PHOTOS[productKey]) return PRODUCT_PHOTOS[productKey];
+
+  // Closeup fallback: pick by material first, then category.
   const matPool = MATERIAL_POSTERS[matKey];
   if (matPool && matPool.length) return matPool[Math.floor(seed * matPool.length) % matPool.length];
   const catPool = CATEGORY_POSTERS[category];
