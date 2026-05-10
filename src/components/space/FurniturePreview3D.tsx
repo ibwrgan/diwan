@@ -16,7 +16,7 @@ type Props = {
   onSceneReady?: (scene: THREE.Scene) => void;
 };
 
-type Palette = {primary: string; secondary: string; accent: string; brass: string; ink: string};
+export type Palette = {primary: string; secondary: string; accent: string; brass: string; ink: string};
 
 export function FurniturePreview3D({item, onSceneReady}: Props) {
   // Centre the piece on the origin and pick a camera distance based on
@@ -91,7 +91,7 @@ function SceneSnapshot({onReady}: {onReady: (s: THREE.Scene) => void}) {
 
 // ── Per-category procedural geometry ───────────────────────────────────────
 
-function FurnitureGeometry({item, palette}: {item: FurnitureItem; palette: Palette}) {
+export function FurnitureGeometry({item, palette}: {item: FurnitureItem; palette: Palette}) {
   const wM = item.dimensionsCm.w / 100;
   const dM = item.dimensionsCm.d / 100;
   const hM = item.dimensionsCm.h / 100;

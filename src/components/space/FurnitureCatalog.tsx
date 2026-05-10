@@ -24,6 +24,13 @@ const FurniturePreview3D = dynamic(
   {ssr: false, loading: () => <div className="absolute inset-0 flex items-center justify-center text-ink-60 font-sans" style={{fontSize: '12px', letterSpacing: '0.18em'}}>LOADING 3D…</div>},
 );
 
+// Webcam-based AR fallback for devices without Scene Viewer / Quick Look /
+// WebXR. Opens the device camera and overlays the procedural model.
+const CameraARFallback = dynamic(
+  () => import('./CameraARFallback').then((m) => m.CameraARFallback),
+  {ssr: false},
+);
+
 // Lazy-load model-viewer (web component) only on the client. We use it
 // purely for the AR handoff — the in-page 3D preview is the procedural
 // Three.js Canvas. The model-viewer's `src` is set to a runtime-built
@@ -449,20 +456,11 @@ function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean
   const mvRef = useRef<HTMLElement | null>(null);
   const [arBlobUrl, setArBlobUrl] = useState<string | null>(null);
   const [arBusy, setArBusy] = useState(false);
-  const [arSupported, setArSupported] = useState<boolean | null>(null);
+  const [showCameraFallback, setShowCameraFallback] = useState(false);
 
   useEffect(() => {
     ensureModelViewer();
   }, []);
-
-  // Check AR availability after the model-viewer is ready + has a src.
-  useEffect(() => {
-    const mv = mvRef.current as (HTMLElement & {canActivateAR?: boolean}) | null;
-    if (!mv || !arBlobUrl) return;
-    const check = () => setArSupported(Boolean(mv.canActivateAR));
-    const t = setTimeout(check, 600);
-    return () => clearTimeout(t);
-  }, [arBlobUrl]);
 
   // Free the blob URL when the modal closes.
   useEffect(() => {
@@ -532,12 +530,22 @@ function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean
     try {
       const url = await exportSceneToGLB();
       setArBlobUrl(url);
-      // Wait for the model-viewer to load the new src before activating AR.
+      // Wait for the model-viewer to load the new src + decide if AR is
+      // supported by the device.
       await new Promise((r) => setTimeout(r, 350));
-      const mv = mvRef.current as (HTMLElement & {activateAR?: () => Promise<void>}) | null;
-      await mv?.activateAR?.();
+      const mv = mvRef.current as (HTMLElement & {canActivateAR?: boolean; activateAR?: () => Promise<void>}) | null;
+      if (mv?.canActivateAR && mv.activateAR) {
+        // Real AR path: hand off to Scene Viewer / Quick Look / WebXR.
+        await mv.activateAR();
+      } else {
+        // Fallback: open the device camera in-page and overlay the model.
+        setShowCameraFallback(true);
+      }
     } catch (err) {
       console.warn('AR export failed', err);
+      // Even if export fails, still open the camera fallback so the user
+      // sees something in their room.
+      setShowCameraFallback(true);
     } finally {
       setArBusy(false);
     }
@@ -592,37 +600,30 @@ function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean
           </p>
           <button
             onClick={handleViewInRoom}
-            disabled={arBusy || arSupported === false}
+            disabled={arBusy}
             className={[
               'inline-flex items-center gap-2 rounded-sm px-4 py-2.5 font-sans transition-colors',
               arBusy
                 ? 'bg-ink-12 text-ink-60 cursor-wait'
-                : arSupported === false
-                ? 'bg-ink-12 text-ink-60 cursor-not-allowed'
                 : 'bg-clay-700 text-bone hover:bg-clay-400',
             ].join(' ')}
             style={{fontSize: '13px', letterSpacing: '0.04em'}}
-            title={
-              arSupported === false
-                ? isAr
-                  ? 'الواقع المعزّز غير مدعوم على هذا الجهاز'
-                  : 'AR not supported on this device — try Android Chrome or iOS Safari on a phone'
-                : isAr
-                ? 'وجّه كاميرتك على غرفتك'
-                : 'Point your camera at the room'
-            }
+            title={isAr ? 'وجّه كاميرتك على غرفتك' : 'Open your camera and place the piece in your room'}
           >
             <Maximize className="h-4 w-4" />
             {arBusy
               ? isAr
                 ? 'يجهّز…'
-                : 'Preparing AR…'
+                : 'Opening camera…'
               : isAr
               ? 'شاهد في غرفتك'
               : 'View in your room'}
           </button>
         </footer>
       </div>
+      {showCameraFallback && (
+        <CameraARFallback item={item} onClose={() => setShowCameraFallback(false)} />
+      )}
     </div>
   );
 }
