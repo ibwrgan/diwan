@@ -10,6 +10,7 @@ import {INSPIRATION_BOARDS, artTreatments} from '@/data/inspirationBoards';
 import {loadSpace, saveSpace, type SpaceState, type TaggedRoom, type MeasurementMode, SPACE_INITIAL} from '@/lib/spaceStore';
 import {FloorPlanSVG} from './FloorPlanSVG';
 import {FreeVisitModal} from './FreeVisitModal';
+import {FurnitureCatalog} from './FurnitureCatalog';
 
 const PLAN_UNIT_M = 0.5;
 
@@ -110,6 +111,17 @@ export function SpaceFlow({locale}: {locale: string}) {
   function bumpUploadCount(n: number) {
     setState((p) => ({...p, inspirations: {...p.inspirations, uploadCount: Math.min(10, p.inspirations.uploadCount + n)}}));
   }
+  function toggleFurniture(id: string) {
+    setState((p) => {
+      const has = (p.furnitureIds ?? []).includes(id);
+      return {
+        ...p,
+        furnitureIds: has
+          ? (p.furnitureIds ?? []).filter((x) => x !== id)
+          : [...(p.furnitureIds ?? []), id],
+      };
+    });
+  }
 
   const canProceedFrom: Record<1 | 2 | 3 | 4, boolean> = {
     1: state.measurementMode !== null,
@@ -201,6 +213,28 @@ export function SpaceFlow({locale}: {locale: string}) {
                   onChange={(patch) => currentRoom && updateRoom(currentRoom.id, patch)}
                 />
               </aside>
+            </div>
+
+            {/* Furniture catalog — pick pieces and (on supported devices)
+                see them placed in your room via camera AR. */}
+            <div className="flex flex-col gap-5 mt-10 pt-10 border-t border-ink-12">
+              <header className="flex flex-col gap-2 max-w-[680px]">
+                <span className="eyebrow">{t('step3.catalogEyebrow')}</span>
+                <h2 className="h-section">{t('step3.catalogTitle')}</h2>
+                <p className="lede !text-ink-60" style={{fontSize: '15px'}}>
+                  {t('step3.catalogLede')}
+                </p>
+              </header>
+              <FurnitureCatalog
+                locale={locale}
+                selectedIds={state.furnitureIds ?? []}
+                onToggle={toggleFurniture}
+              />
+              {(state.furnitureIds ?? []).length > 0 && (
+                <p className="font-mono text-ink-60 tabular self-end" style={{fontSize: '12px'}}>
+                  {(state.furnitureIds ?? []).length} {t('step3.itemsSelected')}
+                </p>
+              )}
             </div>
           </section>
         )}

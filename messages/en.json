@@ -370,7 +370,11 @@
       "selectRoom": "Click a room on the plan to edit it",
       "dimensionsLabel": "Dimensions",
       "metersAbbr": "m",
-      "totalArea": "Total area"
+      "totalArea": "Total area",
+      "catalogEyebrow": "Pick your pieces",
+      "catalogTitle": "Browse furniture · view in your room",
+      "catalogLede": "Tap any item to spin it in 3D. On a phone or tablet, tap 'View in your room' to use your camera and place it on the floor at real size.",
+      "itemsSelected": "items selected"
     },
     "step4": {
       "title": "Inspirations.",

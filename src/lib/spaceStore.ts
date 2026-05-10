@@ -36,6 +36,7 @@ export type SpaceState = {
     pinterestUrls: string[];
     uploadCount: number;
   };
+  furnitureIds: string[];    // selected furniture catalog item ids
   step: 1 | 2 | 3 | 4;
 };
 
@@ -46,6 +47,7 @@ export const SPACE_INITIAL: SpaceState = {
   planSize: null,
   rooms: [],
   inspirations: {boardIds: [], pinterestUrls: [], uploadCount: 0},
+  furnitureIds: [],
   step: 1,
 };
 
