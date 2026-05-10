@@ -310,12 +310,161 @@ const PRODUCT_PHOTOS: Record<string, string> = {
   'accents|linen':           '/furniture/cards/accents-tray-brass.jpg',
 };
 
-function pickPoster(category: FurnitureCategory, matKey: string, seed: number): string {
-  // Prefer photoreal product shots when we have one for this combo.
+// Variant-set 2 photos — adds style axis so different styles within the
+// same (category, material) combo get visually distinct cards. Generated
+// by scripts/generate-furniture-photos-v2.mjs with brand-style cues
+// (IKEA Scandinavian, West Elm modern, CB2 contemporary, RH heritage,
+// Najdi heritage). Pick by (category|material|styleSlug) when available,
+// else fall back to (category|material), else closeup.
+const VARIANT_PHOTOS: Record<string, string> = {
+  // Each style is matched to a specific generated variant slug.
+  // Styles in the catalog: 'Modern Najdi', 'Heritage Najdi', 'Hijazi
+  // Coastal', 'Contemporary', 'Industrial', 'Minimalist', 'Cocoon',
+  // 'Open Living'. We map them to the closest brand vibe in v2.
+
+  // seating sofas — most common, get the most variety
+  'seating|clay-velvet|heritage-najdi':  '/furniture/cards/seating-sofa-clay-velvet-najdi.jpg',
+  'seating|clay-velvet|modern-najdi':    '/furniture/cards/seating-sofa-clay-velvet-najdi.jpg',
+  'seating|clay-velvet|contemporary':    '/furniture/cards/seating-sofa-clay-velvet-westelm.jpg',
+  'seating|clay-velvet|cocoon':          '/furniture/cards/seating-sofa-clay-velvet-westelm.jpg',
+  'seating|linen|minimalist':            '/furniture/cards/seating-sofa-linen-ikea.jpg',
+  'seating|linen|open-living':           '/furniture/cards/seating-sofa-linen-ikea.jpg',
+  'seating|linen|hijazi-coastal':        '/furniture/cards/seating-sofa-linen-ikea.jpg',
+  'seating|leather|industrial':          '/furniture/cards/seating-sofa-leather-rh.jpg',
+  'seating|leather|cocoon':              '/furniture/cards/seating-sofa-leather-rh.jpg',
+  'seating|leather|contemporary':        '/furniture/cards/seating-sectional-leather.jpg',
+  'seating|wool|contemporary':           '/furniture/cards/seating-sofa-wool-cb2.jpg',
+  'seating|wool|minimalist':             '/furniture/cards/seating-sofa-wool-cb2.jpg',
+  'seating|midnight-velvet|cocoon':      '/furniture/cards/seating-sofa-midnight-velvet.jpg',
+  'seating|midnight-velvet|industrial':  '/furniture/cards/seating-sofa-midnight-velvet.jpg',
+  // sectionals
+  'seating|clay-velvet|modern-najdi-sec':'/furniture/cards/seating-sectional-l-clay-velvet.jpg',
+  'seating|linen|open-living-sec':       '/furniture/cards/seating-sectional-l-linen.jpg',
+  // armchairs
+  'seating|walnut|heritage-najdi':       '/furniture/cards/seating-armchair-walnut-najdi.jpg',
+  'seating|walnut|modern-najdi':         '/furniture/cards/seating-armchair-walnut-najdi.jpg',
+  'seating|carved-cedar|heritage-najdi': '/furniture/cards/seating-armchair-walnut-najdi.jpg',
+  'seating|rattan|contemporary':         '/furniture/cards/seating-armchair-rattan.jpg',
+  'seating|rattan|hijazi-coastal':       '/furniture/cards/seating-armchair-rattan.jpg',
+  'seating|leather|heritage-najdi':      '/furniture/cards/seating-armchair-leather-vintage.jpg',
+  'seating|wool|minimalist-arm':         '/furniture/cards/seating-lounge-chair-wool.jpg',
+  // benches & stools
+  'seating|walnut|heritage-najdi-bench': '/furniture/cards/seating-bench-walnut-long.jpg',
+  'seating|leather|contemporary-bar':    '/furniture/cards/seating-bar-stool-leather.jpg',
+  // floor cushions / poufs
+  'seating|clay-velvet|heritage-najdi-pouf': '/furniture/cards/seating-floor-cushion-velvet.jpg',
+  'seating|leather|industrial-pouf':     '/furniture/cards/seating-pouf-leather.jpg',
+
+  // tables
+  'tables|walnut|heritage-najdi':        '/furniture/cards/tables-coffee-walnut-najdi.jpg',
+  'tables|walnut|modern-najdi':          '/furniture/cards/tables-coffee-walnut-najdi.jpg',
+  'tables|marble|contemporary':          '/furniture/cards/tables-coffee-marble-cb2.jpg',
+  'tables|marble|cocoon':                '/furniture/cards/tables-coffee-marble-cb2.jpg',
+  'tables|glass|industrial':             '/furniture/cards/tables-coffee-glass.jpg',
+  'tables|rattan|hijazi-coastal':        '/furniture/cards/tables-coffee-rattan.jpg',
+  'tables|walnut|contemporary':          '/furniture/cards/tables-dining-walnut-westelm.jpg',
+  'tables|walnut|open-living':           '/furniture/cards/tables-dining-walnut-westelm.jpg',
+  'tables|oak|minimalist':               '/furniture/cards/tables-dining-oak-ikea.jpg',
+  'tables|oak|open-living':              '/furniture/cards/tables-dining-oak-ikea.jpg',
+  'tables|marble|industrial':            '/furniture/cards/tables-dining-marble-cb2.jpg',
+  'tables|walnut|industrial':            '/furniture/cards/tables-dining-12-walnut.jpg',
+  'tables|hammered-brass|contemporary':  '/furniture/cards/tables-side-brass.jpg',
+  'tables|hammered-brass|industrial':    '/furniture/cards/tables-nesting-brass.jpg',
+  'tables|leather|industrial':           '/furniture/cards/tables-desk-executive-leather.jpg',
+
+  // beds
+  'beds|walnut|heritage-najdi':          '/furniture/cards/beds-king-walnut-najdi.jpg',
+  'beds|walnut|modern-najdi':            '/furniture/cards/beds-king-walnut-najdi.jpg',
+  'beds|carved-cedar|heritage-najdi':    '/furniture/cards/beds-king-walnut-najdi.jpg',
+  'beds|midnight-velvet|cocoon':         '/furniture/cards/beds-king-velvet-cb2.jpg',
+  'beds|midnight-velvet|contemporary':   '/furniture/cards/beds-king-velvet-cb2.jpg',
+  'beds|linen|minimalist':               '/furniture/cards/beds-king-linen-westelm.jpg',
+  'beds|linen|open-living':              '/furniture/cards/beds-king-linen-westelm.jpg',
+  'beds|oak|minimalist':                 '/furniture/cards/beds-queen-oak-ikea.jpg',
+  'beds|oak|open-living':                '/furniture/cards/beds-queen-oak-ikea.jpg',
+  'beds|rattan|hijazi-coastal':          '/furniture/cards/beds-daybed-rattan.jpg',
+  'beds|midnight-velvet|industrial':     '/furniture/cards/beds-headboard-velvet.jpg',
+
+  // storage
+  'storage|walnut|contemporary':         '/furniture/cards/storage-credenza-walnut-westelm.jpg',
+  'storage|walnut|open-living':          '/furniture/cards/storage-credenza-walnut-westelm.jpg',
+  'storage|walnut|heritage-najdi':       '/furniture/cards/storage-wardrobe-walnut-najdi.jpg',
+  'storage|walnut|industrial':           '/furniture/cards/storage-bookshelf-walnut.jpg',
+  'storage|oak|minimalist':              '/furniture/cards/storage-bookshelf-oak-ikea.jpg',
+  'storage|glass|industrial':            '/furniture/cards/storage-display-glass.jpg',
+
+  // lighting
+  'lighting|hammered-brass|heritage-najdi': '/furniture/cards/lighting-pendant-cluster.jpg',
+  'lighting|hammered-brass|modern-najdi':   '/furniture/cards/lighting-pendant-cluster.jpg',
+  'lighting|glass|contemporary':         '/furniture/cards/lighting-pendant-glass.jpg',
+  'lighting|glass|industrial':           '/furniture/cards/lighting-chandelier-modern.jpg',
+  'lighting|brushed-bronze|contemporary':'/furniture/cards/lighting-floor-arc.jpg',
+  'lighting|linen|minimalist':           '/furniture/cards/lighting-floor-tripod.jpg',
+  'lighting|ceramic|minimalist':         '/furniture/cards/lighting-table-ceramic.jpg',
+  'lighting|hammered-brass|contemporary':'/furniture/cards/lighting-table-brass.jpg',
+  'lighting|hammered-brass|industrial':  '/furniture/cards/lighting-sconce-modern.jpg',
+
+  // rugs
+  'rugs|wool|hijazi-coastal':            '/furniture/cards/rugs-hijazi-wool.jpg',
+  'rugs|wool|heritage-najdi':            '/furniture/cards/rugs-najdi-wool.jpg',
+  'rugs|wool|industrial':                '/furniture/cards/rugs-vintage-wool.jpg',
+  'rugs|wool|minimalist':                '/furniture/cards/rugs-modern-stripes.jpg',
+  'rugs|wool|contemporary':              '/furniture/cards/rugs-round-wool.jpg',
+
+  // wall-decor
+  'wall-decor|carved-cedar|heritage-najdi': '/furniture/cards/wall-mashrabiya-tall.jpg',
+  'wall-decor|brushed-bronze|contemporary': '/furniture/cards/wall-mirror-arch.jpg',
+  'wall-decor|walnut|contemporary':      '/furniture/cards/wall-mirror-rectangular.jpg',
+  'wall-decor|walnut|minimalist':        '/furniture/cards/wall-art-large.jpg',
+  'wall-decor|walnut|heritage-najdi':    '/furniture/cards/wall-calligraphy-arabic.jpg',
+  'wall-decor|wool|heritage-najdi':      '/furniture/cards/wall-tapestry-wool.jpg',
+
+  // kitchen
+  'kitchen|walnut|contemporary':         '/furniture/cards/kitchen-island-walnut.jpg',
+  'kitchen|walnut|industrial':           '/furniture/cards/kitchen-bar-counter.jpg',
+  'kitchen|walnut|open-living':          '/furniture/cards/kitchen-pantry-walnut.jpg',
+
+  // bath
+  'bath|ceramic|contemporary':           '/furniture/cards/bath-tub-modern.jpg',
+  'bath|marble|contemporary':            '/furniture/cards/bath-vanity-double.jpg',
+  'bath|travertine|heritage-najdi':      '/furniture/cards/bath-vanity-single.jpg',
+
+  // textiles
+  'textiles|clay-velvet|heritage-najdi': '/furniture/cards/textiles-drape-velvet.jpg',
+  'textiles|linen|contemporary':         '/furniture/cards/textiles-cushion-bolster.jpg',
+  'textiles|wool|minimalist':            '/furniture/cards/textiles-throw-fringed.jpg',
+  'textiles|linen|open-living':          '/furniture/cards/textiles-bedding-linen.jpg',
+
+  // plants
+  'plants|ceramic|minimalist':           '/furniture/cards/plants-snake-plant.jpg',
+  'plants|ceramic|contemporary':         '/furniture/cards/plants-monstera.jpg',
+  'plants|hammered-brass|industrial':    '/furniture/cards/plants-planter-tripod.jpg',
+
+  // accents
+  'accents|hammered-brass|heritage-najdi':'/furniture/cards/accents-tray-engraved.jpg',
+  'accents|hammered-brass|modern-najdi':  '/furniture/cards/accents-coffee-set-brass.jpg',
+  'accents|ceramic|contemporary':        '/furniture/cards/accents-vase-tall.jpg',
+  'accents|glass|minimalist':            '/furniture/cards/accents-vase-glass.jpg',
+  'accents|travertine|minimalist':       '/furniture/cards/accents-bowl-travertine.jpg',
+  'accents|hammered-brass|industrial':   '/furniture/cards/accents-candle-trio.jpg',
+  'accents|linen|minimalist':            '/furniture/cards/accents-coffee-table-books.jpg',
+  'accents|walnut|minimalist':           '/furniture/cards/accents-sculpture-wood.jpg',
+};
+
+function styleSlug(style: string): string {
+  return style.toLowerCase().replace(/\s+/g, '-');
+}
+
+function pickPoster(category: FurnitureCategory, matKey: string, seed: number, style?: string): string {
+  // 1. Most specific: (category, material, style) variant photo
+  if (style) {
+    const variantKey = `${category}|${matKey}|${styleSlug(style)}`;
+    if (VARIANT_PHOTOS[variantKey]) return VARIANT_PHOTOS[variantKey];
+  }
+  // 2. (category, material) base photo
   const productKey = `${category}|${matKey}`;
   if (PRODUCT_PHOTOS[productKey]) return PRODUCT_PHOTOS[productKey];
-
-  // Closeup fallback: pick by material first, then category.
+  // 3. Closeup fallback by material then category
   const matPool = MATERIAL_POSTERS[matKey];
   if (matPool && matPool.length) return matPool[Math.floor(seed * matPool.length) % matPool.length];
   const catPool = CATEGORY_POSTERS[category];
@@ -546,7 +695,7 @@ function expand(): FurnitureItem[] {
         const descAr = `${tpl.descAr} (${mat.ar}، ${STYLES_AR[style]})`;
         const descEn = `${tpl.descEn} (${mat.en}, ${style})`;
         const tags = [matKey, style.toLowerCase().replace(/\s+/g, '-'), tpl.category];
-        const poster = pickPoster(tpl.category, matKey as string, seed);
+        const poster = pickPoster(tpl.category, matKey as string, seed, style);
         const glb = CDN_MODELS[Math.floor(seed * CDN_MODELS.length)];
 
         out.push({
