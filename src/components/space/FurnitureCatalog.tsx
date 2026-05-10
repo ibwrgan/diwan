@@ -1,7 +1,8 @@
 'use client';
 
-import {useEffect, useMemo, useRef, useState} from 'react';
-import {Camera, Eye, Plus, X, Check, Maximize, Search, SlidersHorizontal} from 'lucide-react';
+import {useEffect, useMemo, useState} from 'react';
+import dynamic from 'next/dynamic';
+import {Camera, Eye, Plus, X, Check, Search, SlidersHorizontal, Info} from 'lucide-react';
 import {
   FURNITURE_CATALOG,
   ALL_STYLES,
@@ -15,46 +16,13 @@ import {
   type PriceBracket,
 } from '@/data/furnitureCatalog';
 
-// Lazy-load model-viewer (web component) only on the client.
-let modelViewerLoaded = false;
-function ensureModelViewer() {
-  if (typeof window === 'undefined' || modelViewerLoaded) return;
-  if (customElements.get('model-viewer')) {
-    modelViewerLoaded = true;
-    return;
-  }
-  const s = document.createElement('script');
-  s.type = 'module';
-  s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
-  document.head.appendChild(s);
-  modelViewerLoaded = true;
-}
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      'model-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        src?: string;
-        'ios-src'?: string;
-        ar?: boolean | string;
-        'ar-modes'?: string;
-        'ar-scale'?: string;
-        'ar-placement'?: string;
-        'camera-controls'?: boolean | string;
-        'auto-rotate'?: boolean | string;
-        'shadow-intensity'?: string | number;
-        'environment-image'?: string;
-        'tone-mapping'?: string;
-        exposure?: string | number;
-        poster?: string;
-        alt?: string;
-        loading?: string;
-        reveal?: string;
-      }, HTMLElement>;
-    }
-  }
-}
+// Procedural Three.js preview — replaces the prior <model-viewer> GLB
+// playback that was showing Khronos sample assets (Duck/Avocado/etc).
+// The new component composes real furniture geometry per category.
+const FurniturePreview3D = dynamic(
+  () => import('./FurniturePreview3D').then((m) => m.FurniturePreview3D),
+  {ssr: false, loading: () => <div className="absolute inset-0 flex items-center justify-center text-ink-60 font-sans" style={{fontSize: '12px', letterSpacing: '0.18em'}}>LOADING 3D…</div>},
+);
 
 const CATEGORIES: Array<{key: FurnitureCategory | 'all'; ar: string; en: string}> = [
   {key: 'all',        ar: 'الكل',       en: 'All'},
@@ -90,10 +58,6 @@ export function FurnitureCatalog({locale, selectedIds, onToggle}: Props) {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [page, setPage] = useState(1);
   const [previewItem, setPreviewItem] = useState<FurnitureItem | null>(null);
-
-  useEffect(() => {
-    ensureModelViewer();
-  }, []);
 
   // Reset to page 1 whenever a filter changes
   useEffect(() => {
@@ -445,22 +409,6 @@ function FurnitureCard({
 }
 
 function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean; onClose: () => void}) {
-  const mvRef = useRef<HTMLElement | null>(null);
-  const [arSupported, setArSupported] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const mv = mvRef.current as (HTMLElement & {canActivateAR?: boolean}) | null;
-    if (!mv) return;
-    const checkAr = () => setArSupported(Boolean(mv.canActivateAR));
-    const t = setTimeout(checkAr, 600);
-    return () => clearTimeout(t);
-  }, []);
-
-  function activateAR() {
-    const mv = mvRef.current as (HTMLElement & {activateAR?: () => Promise<void>}) | null;
-    mv?.activateAR?.()?.catch?.(() => {});
-  }
-
   return (
     <div className="fixed inset-0 z-[80] bg-ink/85 backdrop-blur-sm flex items-center justify-center p-4" dir={isAr ? 'rtl' : 'ltr'}>
       <div className="bg-bone rounded-sm w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
@@ -477,52 +425,25 @@ function PreviewModal({item, isAr, onClose}: {item: FurnitureItem; isAr: boolean
         </header>
 
         <div className="flex-1 relative bg-sand-100 min-h-[420px] overflow-hidden">
-          {/* @ts-expect-error - model-viewer is a custom element registered via CDN */}
-          <model-viewer
-            ref={mvRef}
-            src={item.glb}
-            ios-src={item.usdz}
-            poster={item.poster}
-            alt={isAr ? item.nameAr : item.nameEn}
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            ar-scale="auto"
-            ar-placement="floor"
-            camera-controls
-            auto-rotate
-            shadow-intensity="1.2"
-            tone-mapping="aces"
-            exposure="1.0"
-            environment-image="neutral"
-            loading="eager"
-            reveal="auto"
-            style={{width: '100%', height: '100%', backgroundColor: '#F4EFE6'}}
-          />
+          <FurniturePreview3D item={item} />
+          <span className="absolute top-3 start-3 inline-flex items-center gap-1.5 bg-bone/90 text-ink-60 rounded-full px-3 py-1 font-mono uppercase" style={{fontSize: '10px', letterSpacing: '0.18em'}}>
+            <Eye className="h-3 w-3" />
+            {isAr ? 'دوّر بالماوس · قرّب بالعجلة' : 'Drag to rotate · scroll to zoom'}
+          </span>
         </div>
 
         <footer className="p-5 flex flex-wrap items-center gap-3 border-t border-ink-12">
           <p className="flex-1 min-w-[200px] font-sans text-ink-60 leading-snug" style={{fontSize: '13px'}}>
             {isAr ? item.descAr : item.descEn}
           </p>
-          <button
-            onClick={activateAR}
-            disabled={arSupported === false}
-            className={[
-              'inline-flex items-center gap-2 rounded-sm px-4 py-2.5 font-sans transition-colors',
-              arSupported === false
-                ? 'bg-ink-12 text-ink-60 cursor-not-allowed'
-                : 'bg-clay-700 text-bone hover:bg-clay-400',
-            ].join(' ')}
-            style={{fontSize: '13px', letterSpacing: '0.04em'}}
-            title={
-              arSupported === false
-                ? isAr ? 'الواقع المعزّز غير مدعوم' : 'AR not supported on this device'
-                : isAr ? 'وجّه كاميرتك على غرفتك' : 'Point your camera at the room'
-            }
+          <span
+            className="inline-flex items-center gap-2 bg-sand-100 border border-ink-12 text-ink-60 rounded-sm px-3 py-2 font-sans"
+            style={{fontSize: '12px'}}
+            title={isAr ? 'سيتوفّر الواقع المعزّز عند رفع نماذج 3D حقيقيّة لكل قطعة' : 'AR opens once real 3D model files are uploaded for each item'}
           >
-            <Maximize className="h-4 w-4" />
-            {isAr ? 'شاهد في غرفتك' : 'View in your room'}
-          </button>
+            <Info className="h-3.5 w-3.5" />
+            {isAr ? 'الواقع المعزّز قريباً' : 'Camera AR — coming soon'}
+          </span>
         </footer>
       </div>
     </div>
